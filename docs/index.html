@@ -876,16 +876,19 @@ function goldClass(g) {
 function renderTable() {
   document.getElementById('weekCount').textContent = TEST_WEEKS.length;
   const tbody = document.getElementById('weekTableBody');
-  tbody.innerHTML = TEST_WEEKS.map((w, i) => `
-    <tr data-idx="${i}" onclick="selectWeek(${i})">
+  const display = [...TEST_WEEKS].reverse(); // most recent first
+  tbody.innerHTML = display.map((w, i) => {
+    const origIdx = TEST_WEEKS.length - 1 - i;
+    return `
+    <tr data-idx="${origIdx}" onclick="selectWeek(${origIdx})">
       <td class="td-date">${w.week}</td>
       <td class="td-events">${w.events.toLocaleString()}</td>
       <td class="td-goldstein ${goldClass(w.goldstein)}">${w.goldstein.toFixed(1)}</td>
       <td>
         <span class="escalation-chip" style="${chipStyle(w.level)}">${w.level}</span>
       </td>
-    </tr>
-  `).join('');
+    </tr>`;
+  }).join('');
 }
 
 // ── Typewriter ─────────────────────────────────────────────────────────────
