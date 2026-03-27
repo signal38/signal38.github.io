@@ -81,7 +81,7 @@ The notebooks share common setup via `scripts/colab_utils.py`. Notebooks that pu
 
 Create a [fine-grained personal access token](https://github.com/settings/tokens?type=beta) scoped to the `signal38` organization with **Contents: Read and Write** permission. Then add it to Colab: open the key icon in the left sidebar → **Secrets** → **Add new secret**, name it `GITHUB_TOKEN`, paste the token, and enable notebook access.
 
-![Colab Secrets panel showing GITHUB_TOKEN](docs/assets/colab-secrets.png)
+<img src="docs/assets/colab-secrets.png" width="420" alt="Colab Secrets panel showing GITHUB_TOKEN" />
 
 For ACLED credentials, register at [acleddata.com](https://acleddata.com/register/) and retrieve your API key from your account page. Add `ACLED_EMAIL` and `ACLED_KEY` as additional Colab secrets.
 
