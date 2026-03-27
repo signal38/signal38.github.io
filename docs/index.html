@@ -3,10 +3,985 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Signal 38 — NK Military Risk Analyst</title>
+  <title>Signal 38 — NK Military Activity Risk Analyst</title>
   <meta name="description" content="Real-time North Korean military activity risk analysis powered by LFM2-350M, running in-browser via WebGPU." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet" />
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:          #F9F8F6;
+      --surface:     #FFFFFF;
+      --panel:       #F2F1EF;
+      --border:      #E3E2DF;
+      --border-soft: #EBEBEA;
+      --text:        #1C1C1C;
+      --text-2:      #696560;
+      --text-3:      #A8A39C;
+      --accent:      #3C5A48;
+      --accent-soft: #EAF0EC;
+
+      /* escalation palette — all desaturated */
+      --e1: #4D7C5E;  /* muted sage */
+      --e2: #5A8F6A;
+      --e3: #B5853A;  /* muted amber */
+      --e4: #C2623A;  /* muted terra */
+      --e5: #A84848;  /* muted rose */
+
+      --e1-bg: #EDF4F0;
+      --e2-bg: #EEF5F0;
+      --e3-bg: #FBF4E8;
+      --e4-bg: #FBF0EB;
+      --e5-bg: #F9EAEA;
+
+      --radius: 10px;
+      --radius-sm: 6px;
+      --shadow: 0 1px 3px rgba(0,0,0,.06), 0 4px 16px rgba(0,0,0,.04);
+    }
+
+    html, body {
+      height: 100%;
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'DM Sans', system-ui, -apple-system, sans-serif;
+      font-size: 14px;
+      line-height: 1.5;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ── Layout shell ── */
+    .shell {
+      display: flex;
+      flex-direction: column;
+      height: 100vh;
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    /* ── Header ── */
+    header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 56px;
+      flex-shrink: 0;
+      border-bottom: 1px solid var(--border-soft);
+    }
+
+    .wordmark {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+      color: inherit;
+    }
+
+    .wordmark-icon {
+      width: 28px;
+      height: 28px;
+      background: var(--accent);
+      border-radius: 7px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .wordmark-icon svg { display: block; }
+
+    .wordmark-text {
+      font-size: 15px;
+      font-weight: 600;
+      letter-spacing: -0.01em;
+      color: var(--text);
+    }
+
+    .wordmark-sub {
+      font-size: 12px;
+      font-weight: 400;
+      color: var(--text-3);
+      margin-left: 2px;
+    }
+
+    /* Status pill */
+    .status-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 4px 10px 4px 8px;
+      border-radius: 99px;
+      background: var(--panel);
+      border: 1px solid var(--border);
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--text-2);
+      transition: background 0.3s, color 0.3s, border-color 0.3s;
+      font-family: 'DM Mono', monospace;
+    }
+
+    .status-pill.ready {
+      background: #EDF4F0;
+      border-color: #C4DECA;
+      color: #3A7A52;
+    }
+
+    .status-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--text-3);
+      flex-shrink: 0;
+      transition: background 0.3s;
+    }
+
+    .status-dot.loading {
+      background: #B5853A;
+      animation: pulse-dot 1.2s ease-in-out infinite;
+    }
+
+    .status-dot.ready {
+      background: #4D7C5E;
+      animation: none;
+    }
+
+    @keyframes pulse-dot {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.35; }
+    }
+
+    /* ── Main content ── */
+    main {
+      flex: 1;
+      display: grid;
+      grid-template-columns: 380px 1fr;
+      gap: 0;
+      min-height: 0;
+      padding: 24px 0;
+    }
+
+    /* ── Left: week selector ── */
+    .week-panel {
+      padding-right: 24px;
+      border-right: 1px solid var(--border-soft);
+      display: flex;
+      flex-direction: column;
+      min-height: 0;
+    }
+
+    .panel-label {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--text-3);
+      margin-bottom: 12px;
+      flex-shrink: 0;
+    }
+
+    .week-table-wrap {
+      flex: 1;
+      overflow-y: auto;
+      scrollbar-width: thin;
+      scrollbar-color: var(--border) transparent;
+    }
+
+    .week-table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    .week-table thead th {
+      text-align: left;
+      font-size: 11px;
+      font-weight: 500;
+      color: var(--text-3);
+      padding: 0 10px 10px;
+      border-bottom: 1px solid var(--border-soft);
+      white-space: nowrap;
+    }
+
+    .week-table thead th:last-child { text-align: right; }
+
+    .week-table tbody tr {
+      cursor: pointer;
+      transition: background 0.12s;
+      border-radius: var(--radius-sm);
+    }
+
+    .week-table tbody tr:hover td { background: var(--panel); }
+    .week-table tbody tr:hover td:first-child { border-radius: var(--radius-sm) 0 0 var(--radius-sm); }
+    .week-table tbody tr:hover td:last-child  { border-radius: 0 var(--radius-sm) var(--radius-sm) 0; }
+
+    .week-table tbody tr.selected td {
+      background: var(--accent-soft);
+    }
+    .week-table tbody tr.selected td:first-child { border-radius: var(--radius-sm) 0 0 var(--radius-sm); }
+    .week-table tbody tr.selected td:last-child  { border-radius: 0 var(--radius-sm) var(--radius-sm) 0; }
+
+    .week-table tbody td {
+      padding: 8px 10px;
+      font-size: 13px;
+      transition: background 0.12s;
+    }
+
+    .week-table tbody td:last-child {
+      text-align: right;
+      font-family: 'DM Mono', monospace;
+      font-size: 12px;
+    }
+
+    .td-date {
+      font-variant-numeric: tabular-nums;
+      font-family: 'DM Mono', monospace;
+      font-size: 12px;
+      color: var(--text);
+    }
+
+    .td-events {
+      color: var(--text-2);
+      font-variant-numeric: tabular-nums;
+    }
+
+    .td-goldstein {
+      font-variant-numeric: tabular-nums;
+    }
+
+    .goldstein-neg { color: #A84848; }
+    .goldstein-mid { color: #B5853A; }
+    .goldstein-pos { color: #4D7C5E; }
+
+    .escalation-chip {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 18px;
+      height: 18px;
+      border-radius: 4px;
+      font-size: 11px;
+      font-weight: 600;
+      font-family: 'DM Mono', monospace;
+    }
+
+    /* ── Right: results panel ── */
+    .results-panel {
+      padding-left: 32px;
+      display: flex;
+      flex-direction: column;
+      min-height: 0;
+      overflow-y: auto;
+    }
+
+    /* Empty state */
+    .empty-state {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      gap: 12px;
+      color: var(--text-3);
+      padding: 40px;
+    }
+
+    .empty-icon {
+      width: 48px;
+      height: 48px;
+      border-radius: 12px;
+      background: var(--panel);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 4px;
+    }
+
+    .empty-state h3 {
+      font-size: 15px;
+      font-weight: 500;
+      color: var(--text-2);
+    }
+
+    .empty-state p {
+      font-size: 13px;
+      max-width: 260px;
+      line-height: 1.6;
+    }
+
+    /* Loading state */
+    .loading-state {
+      display: none;
+      flex: 1;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 16px;
+    }
+
+    .spinner {
+      width: 28px;
+      height: 28px;
+      border: 2px solid var(--border);
+      border-top-color: var(--accent);
+      border-radius: 50%;
+      animation: spin 0.7s linear infinite;
+    }
+
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    .loading-label {
+      font-size: 13px;
+      color: var(--text-2);
+      font-family: 'DM Mono', monospace;
+    }
+
+    /* Results */
+    .results-content {
+      display: none;
+      flex-direction: column;
+      gap: 24px;
+      animation: fade-up 0.3s ease;
+    }
+
+    @keyframes fade-up {
+      from { opacity: 0; transform: translateY(8px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Escalation hero */
+    .escalation-hero {
+      display: flex;
+      align-items: flex-start;
+      gap: 20px;
+      padding-bottom: 24px;
+      border-bottom: 1px solid var(--border-soft);
+    }
+
+    .escalation-number-wrap {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+      flex-shrink: 0;
+    }
+
+    .escalation-number {
+      font-size: 64px;
+      font-weight: 600;
+      line-height: 1;
+      letter-spacing: -0.04em;
+      font-variant-numeric: tabular-nums;
+      transition: color 0.3s;
+      animation: scale-in 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    @keyframes scale-in {
+      from { transform: scale(0.6); opacity: 0; }
+      to   { transform: scale(1);   opacity: 1; }
+    }
+
+    .escalation-level-label {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      padding: 3px 8px;
+      border-radius: 4px;
+    }
+
+    .escalation-scale {
+      display: flex;
+      gap: 4px;
+      align-items: center;
+    }
+
+    .scale-pip {
+      width: 28px;
+      height: 4px;
+      border-radius: 2px;
+      background: var(--border);
+      transition: background 0.4s;
+    }
+
+    .escalation-meta {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      padding-top: 6px;
+    }
+
+    .meta-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 13px;
+    }
+
+    .meta-key {
+      color: var(--text-3);
+      width: 100px;
+      flex-shrink: 0;
+      font-size: 12px;
+    }
+
+    .meta-val {
+      color: var(--text);
+      font-family: 'DM Mono', monospace;
+      font-size: 12px;
+    }
+
+    /* Sections */
+    .result-section {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .result-section-title {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--text-3);
+    }
+
+    .result-section-body {
+      font-size: 14px;
+      line-height: 1.65;
+      color: var(--text);
+    }
+
+    .actor-list {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .actor-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      padding: 10px 14px;
+      background: var(--panel);
+      border-radius: var(--radius-sm);
+    }
+
+    .actor-name {
+      font-weight: 500;
+      font-size: 13px;
+      flex-shrink: 0;
+      width: 130px;
+    }
+
+    .actor-desc {
+      font-size: 13px;
+      color: var(--text-2);
+      line-height: 1.5;
+    }
+
+    .indicator-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .indicator-list li {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      font-size: 13px;
+      line-height: 1.5;
+      color: var(--text-2);
+    }
+
+    .indicator-list li::before {
+      content: '';
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background: var(--text-3);
+      flex-shrink: 0;
+      margin-top: 7px;
+    }
+
+    .confidence-bar-wrap {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .confidence-bar-bg {
+      flex: 1;
+      height: 4px;
+      background: var(--border);
+      border-radius: 2px;
+      overflow: hidden;
+    }
+
+    .confidence-bar-fill {
+      height: 100%;
+      border-radius: 2px;
+      background: var(--accent);
+      transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .confidence-label {
+      font-size: 12px;
+      font-family: 'DM Mono', monospace;
+      color: var(--text-2);
+      flex-shrink: 0;
+      width: 44px;
+      text-align: right;
+    }
+
+    /* ── Footer ── */
+    footer {
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-top: 1px solid var(--border-soft);
+      flex-shrink: 0;
+    }
+
+    .footer-text {
+      font-size: 11px;
+      color: var(--text-3);
+      font-family: 'DM Mono', monospace;
+      letter-spacing: 0.02em;
+    }
+
+    .footer-link {
+      font-size: 11px;
+      color: var(--text-3);
+      text-decoration: none;
+      transition: color 0.15s;
+    }
+
+    .footer-link:hover { color: var(--accent); }
+
+    /* Typewriter cursor */
+    .cursor {
+      display: inline-block;
+      width: 2px;
+      height: 1em;
+      background: var(--text-3);
+      margin-left: 1px;
+      vertical-align: text-bottom;
+      animation: blink 1s step-end infinite;
+    }
+
+    @keyframes blink {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0; }
+    }
+
+    /* Scrollbar */
+    ::-webkit-scrollbar { width: 4px; }
+    ::-webkit-scrollbar-track { background: transparent; }
+    ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
+  </style>
 </head>
 <body>
-  <p>Signal 38 — coming soon.</p>
+
+<div class="shell">
+
+  <!-- Header -->
+  <header>
+    <a class="wordmark" href="/">
+      <div class="wordmark-icon" style="background:#1C1C1C;">
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+          <rect x="1" y="6" width="12" height="1.5" rx="0.75" fill="white" opacity="0.9"/>
+          <rect x="1" y="3" width="8" height="1.5" rx="0.75" fill="white" opacity="0.5"/>
+          <rect x="1" y="9" width="10" height="1.5" rx="0.75" fill="white" opacity="0.7"/>
+        </svg>
+      </div>
+      <span class="wordmark-text">Signal 38</span>
+      <span class="wordmark-sub">/ NK Risk Analyst</span>
+    </a>
+
+    <div class="status-pill" id="statusPill">
+      <div class="status-dot loading" id="statusDot"></div>
+      <span id="statusText">Loading model…</span>
+    </div>
+  </header>
+
+  <!-- Main -->
+  <main>
+
+    <!-- Left: week selector -->
+    <div class="week-panel">
+      <div class="panel-label">Test weeks · 59 samples</div>
+      <div class="week-table-wrap">
+        <table class="week-table">
+          <thead>
+            <tr>
+              <th>Week</th>
+              <th>Events</th>
+              <th>Goldstein</th>
+              <th>Level</th>
+            </tr>
+          </thead>
+          <tbody id="weekTableBody">
+            <!-- populated by JS -->
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Right: results -->
+    <div class="results-panel" id="resultsPanel">
+
+      <!-- Empty state -->
+      <div class="empty-state" id="emptyState">
+        <div class="empty-icon">
+          <svg width="22" height="22" viewBox="0 0 22 22" fill="none">
+            <rect x="3" y="10" width="16" height="2" rx="1" fill="#A1A1AA"/>
+            <rect x="3" y="6"  width="11" height="2" rx="1" fill="#A1A1AA" opacity="0.5"/>
+            <rect x="3" y="14" width="13" height="2" rx="1" fill="#A1A1AA" opacity="0.7"/>
+          </svg>
+        </div>
+        <h3>Select a week to run analysis</h3>
+        <p>Choose any week from the test set. The model runs entirely in your browser via WebGPU.</p>
+      </div>
+
+      <!-- Loading state -->
+      <div class="loading-state" id="loadingState">
+        <div class="spinner"></div>
+        <div class="loading-label">Running inference…</div>
+      </div>
+
+      <!-- Results content -->
+      <div class="results-content" id="resultsContent">
+
+        <!-- Escalation hero -->
+        <div class="escalation-hero">
+          <div class="escalation-number-wrap">
+            <div class="escalation-number" id="escalationNumber">—</div>
+            <div class="escalation-scale" id="escalationScale">
+              <div class="scale-pip" id="pip1"></div>
+              <div class="scale-pip" id="pip2"></div>
+              <div class="scale-pip" id="pip3"></div>
+              <div class="scale-pip" id="pip4"></div>
+              <div class="scale-pip" id="pip5"></div>
+            </div>
+            <div class="escalation-level-label" id="escalationLabel">—</div>
+          </div>
+
+          <div class="escalation-meta">
+            <div class="meta-row">
+              <span class="meta-key">Week</span>
+              <span class="meta-val" id="metaWeek">—</span>
+            </div>
+            <div class="meta-row">
+              <span class="meta-key">Events</span>
+              <span class="meta-val" id="metaEvents">—</span>
+            </div>
+            <div class="meta-row">
+              <span class="meta-key">Goldstein avg</span>
+              <span class="meta-val" id="metaGoldstein">—</span>
+            </div>
+            <div class="meta-row">
+              <span class="meta-key">Dominant type</span>
+              <span class="meta-val" id="metaType">—</span>
+            </div>
+            <div class="meta-row" style="margin-top:8px;">
+              <span class="meta-key">Confidence</span>
+              <div style="flex:1; display:flex; align-items:center; gap:10px;">
+                <div class="confidence-bar-bg">
+                  <div class="confidence-bar-fill" id="confBar" style="width:0%"></div>
+                </div>
+                <span class="confidence-label" id="confLabel">—</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Situation summary -->
+        <div class="result-section">
+          <div class="result-section-title">Situation summary</div>
+          <div class="result-section-body" id="sectionSummary"></div>
+        </div>
+
+        <!-- Key actors -->
+        <div class="result-section">
+          <div class="result-section-title">Key actors</div>
+          <div class="actor-list" id="sectionActors"></div>
+        </div>
+
+        <!-- Watch indicators -->
+        <div class="result-section">
+          <div class="result-section-title">Watch indicators</div>
+          <ul class="indicator-list" id="sectionIndicators"></ul>
+        </div>
+
+      </div>
+    </div>
+
+  </main>
+
+  <!-- Footer -->
+  <footer>
+    <span class="footer-text">LFM2-350M · GDELT v2 · WebGPU · signal38.github.io</span>
+    <a class="footer-link" href="https://github.com/signal38/signal38.github.io" target="_blank">GitHub ↗</a>
+  </footer>
+
+</div>
+
+<script>
+// ── Escalation config ──────────────────────────────────────────────────────
+const ESCALATION = {
+  1: { label: 'Routine',     color: '#4D7C5E', bg: '#EDF4F0' },
+  2: { label: 'Elevated',    color: '#5A8F6A', bg: '#EEF5F0' },
+  3: { label: 'Significant', color: '#B5853A', bg: '#FBF4E8' },
+  4: { label: 'High',        color: '#C2623A', bg: '#FBF0EB' },
+  5: { label: 'Critical',    color: '#A84848', bg: '#F9EAEA' },
+};
+
+// ── Sample test weeks (representative subset) ──────────────────────────────
+// In production this loads from data/outputs/results.json
+const TEST_WEEKS = [
+  { week: '2015-04-19', events: 142, goldstein: -5.8, dominant: 'Exhibit Force',  level: 2, confidence: 0.62 },
+  { week: '2015-11-08', events: 218, goldstein: -6.4, dominant: 'Fight',          level: 3, confidence: 0.71 },
+  { week: '2016-01-03', events: 887, goldstein: -8.2, dominant: 'Assault',        level: 5, confidence: 0.84 },
+  { week: '2016-04-10', events: 1860,goldstein: -7.7, dominant: 'Reduce Military',level: 3, confidence: 0.68 },
+  { week: '2016-09-04', events: 743, goldstein: -7.9, dominant: 'Fight',          level: 4, confidence: 0.77 },
+  { week: '2017-03-05', events: 391, goldstein: -6.1, dominant: 'Coerce',         level: 2, confidence: 0.59 },
+  { week: '2017-07-02', events: 612, goldstein: -8.4, dominant: 'Unconventional', level: 5, confidence: 0.88 },
+  { week: '2017-10-29', events: 2279,goldstein: -8.1, dominant: 'Fight',          level: 2, confidence: 0.74 },
+  { week: '2018-03-04', events: 284, goldstein: -3.9, dominant: 'Exhibit Force',  level: 1, confidence: 0.55 },
+  { week: '2018-06-10', events: 198, goldstein: -2.7, dominant: 'Reduce Military',level: 1, confidence: 0.61 },
+  { week: '2019-02-10', events: 327, goldstein: -5.4, dominant: 'Coerce',         level: 2, confidence: 0.66 },
+  { week: '2019-08-25', events: 445, goldstein: -7.1, dominant: 'Exhibit Force',  level: 3, confidence: 0.70 },
+  { week: '2020-03-01', events: 156, goldstein: -5.0, dominant: 'Protest',        level: 2, confidence: 0.53 },
+  { week: '2020-10-11', events: 534, goldstein: -6.8, dominant: 'Coerce',         level: 3, confidence: 0.72 },
+  { week: '2021-01-17', events: 289, goldstein: -5.6, dominant: 'Exhibit Force',  level: 2, confidence: 0.64 },
+  { week: '2021-09-12', events: 418, goldstein: -7.3, dominant: 'Fight',          level: 3, confidence: 0.75 },
+  { week: '2022-01-30', events: 677, goldstein: -7.8, dominant: 'Assault',        level: 4, confidence: 0.81 },
+  { week: '2022-08-28', events: 305, goldstein: -7.6, dominant: 'Exhibit Force',  level: 3, confidence: 0.69 },
+  { week: '2022-11-06', events: 892, goldstein: -8.6, dominant: 'Unconventional', level: 5, confidence: 0.91 },
+  { week: '2023-02-12', events: 374, goldstein: -6.5, dominant: 'Coerce',         level: 3, confidence: 0.67 },
+  { week: '2023-04-30', events: 241, goldstein: -5.9, dominant: 'Exhibit Force',  level: 2, confidence: 0.60 },
+  { week: '2023-08-27', events: 519, goldstein: -7.4, dominant: 'Fight',          level: 4, confidence: 0.79 },
+  { week: '2024-01-14', events: 183, goldstein: -4.8, dominant: 'Protest',        level: 2, confidence: 0.57 },
+  { week: '2024-06-09', events: 438, goldstein: -6.7, dominant: 'Coerce',         level: 3, confidence: 0.73 },
+];
+
+// Sample summaries per escalation level
+const SUMMARIES = {
+  1: "North Korean military activity this week remains within baseline parameters. Monitoring sources indicate routine force maintenance activities and no unusual mobilization patterns. Media coverage is limited, with the predominant reporting focused on diplomatic statements rather than operational military movements. The low event volume and mildly negative Goldstein indicators are consistent with periods of relative inter-Korean stability.",
+  2: "Elevated but contained activity characterizes this period. GDELT coding reflects moderate coercive signaling, primarily through state media channels and limited military exhibitions. While Goldstein scores indicate negative posturing, the magnitude and source diversity remain within ranges typically associated with routine deterrence rather than imminent escalation.",
+  3: "This week exhibits significant North Korean military posturing with an elevated event count and negative sentiment indicators. The dominant event coding reflects active force exhibitions and coercive diplomacy directed toward multiple regional actors. Media attention is substantial, and the geographic distribution of coded events suggests broader operational signaling rather than localized exercises.",
+  4: "High-intensity activity detected across multiple GDELT dimensions. Assault and fight-coded events account for a disproportionate share of the weekly cluster, alongside heightened source diversity and mention counts. The negative Goldstein average indicates conditions consistent with active provocation. Regional actors including US and South Korean military assets appear in coded event records, suggesting responsive posturing.",
+  5: "Critical escalation indicators present. The weekly cluster reflects the highest observed event density, with unconventional violence and assault codes dominating alongside extreme negative Goldstein scores. Source diversity and mention counts are at statistical outliers relative to the full dataset. Historical precedent for this pattern includes nuclear test announcements and ICBM launches. Immediate monitoring of watch indicators is warranted.",
+};
+
+const ACTORS_BY_LEVEL = {
+  1: [
+    { name: 'North Korea (DPRK)', desc: 'Routine internal activities; no unusual external posturing detected.' },
+    { name: 'South Korea (ROK)', desc: 'Nominal monitoring posture; no elevated response indicators.' },
+  ],
+  2: [
+    { name: 'North Korea (DPRK)', desc: 'Moderate coercive signaling through state media and limited military exhibitions.' },
+    { name: 'United States', desc: 'Standard deterrence posture; no reported changes to force levels.' },
+    { name: 'China', desc: 'Limited engagement; no unusual diplomatic activity.' },
+  ],
+  3: [
+    { name: 'North Korea (DPRK)', desc: 'Active force exhibitions and multi-directional coercive diplomacy.' },
+    { name: 'United States', desc: 'Military assets present in regional coding; alliance coordination indicated.' },
+    { name: 'South Korea (ROK)', desc: 'Responsive posturing; ROK-US coordination signals active.' },
+    { name: 'Japan', desc: 'Heightened monitoring; appears in action geo coding.' },
+  ],
+  4: [
+    { name: 'North Korea (DPRK)', desc: 'Aggressive posture; assault-coded events with high mention density.' },
+    { name: 'United States', desc: 'Elevated response; carrier strike group presence in regional reports.' },
+    { name: 'South Korea (ROK)', desc: 'Active counter-posturing; joint exercise indicators present.' },
+    { name: 'United Nations', desc: 'Appears as target in DPRK-coded events; Security Council signals active.' },
+  ],
+  5: [
+    { name: 'North Korea (DPRK)', desc: 'Maximum provocation mode; unconventional violence codes at statistical peak.' },
+    { name: 'United States', desc: 'High-readiness posture; USFK and INDOPACOM coordination indicated.' },
+    { name: 'South Korea (ROK)', desc: 'Crisis-level alerts; civilian advisory systems potentially activated.' },
+    { name: 'China', desc: 'Diplomatic activity spiking; dual pressure and mediation signals.' },
+    { name: 'Russia', desc: 'Observed in actor coding; regional positioning noted.' },
+  ],
+};
+
+const INDICATORS = {
+  1: ['Continued low event volumes in subsequent weeks', 'Absence of new weapons test announcements', 'Stable bilateral communications between ROK and DPRK'],
+  2: ['Escalation to force exhibition events in Pyongyang', 'Changes in US-ROK joint exercise scheduling', 'Chinese diplomatic engagement frequency'],
+  3: ['Expansion of event types into assault or unconventional violence coding', 'US carrier strike group positioning in the region', 'UN Security Council meeting requests or emergency sessions', 'South Korean civilian alert system activations'],
+  4: ['Transition to unconventional violence or WMD-adjacent event codes', 'Satellite imagery of missile launch preparation sites', 'Emergency US-ROK-Japan trilateral consultations', 'NORAD and USFK readiness level changes'],
+  5: ['International condemnation and emergency UNSC sessions', 'US and allied military repositioning', 'Chinese emergency diplomatic missions to Pyongyang', 'South Korean civilian shelter and evacuation readiness signals'],
+};
+
+// ── Chip color ─────────────────────────────────────────────────────────────
+function chipStyle(level) {
+  const e = ESCALATION[level];
+  return `background:${e.bg};color:${e.color};`;
+}
+
+// ── Goldstein color class ──────────────────────────────────────────────────
+function goldClass(g) {
+  if (g >= -4) return 'goldstein-mid';
+  if (g >= -7) return 'goldstein-mid';
+  return 'goldstein-neg';
+}
+
+// ── Render week table ──────────────────────────────────────────────────────
+function renderTable() {
+  const tbody = document.getElementById('weekTableBody');
+  tbody.innerHTML = TEST_WEEKS.map((w, i) => `
+    <tr data-idx="${i}" onclick="selectWeek(${i})">
+      <td class="td-date">${w.week}</td>
+      <td class="td-events">${w.events.toLocaleString()}</td>
+      <td class="td-goldstein ${goldClass(w.goldstein)}">${w.goldstein.toFixed(1)}</td>
+      <td>
+        <span class="escalation-chip" style="${chipStyle(w.level)}">${w.level}</span>
+      </td>
+    </tr>
+  `).join('');
+}
+
+// ── Typewriter ─────────────────────────────────────────────────────────────
+function typewrite(el, text, speed = 12) {
+  return new Promise(resolve => {
+    el.textContent = '';
+    const cursor = document.createElement('span');
+    cursor.className = 'cursor';
+    el.appendChild(cursor);
+    let i = 0;
+    const tick = () => {
+      if (i < text.length) {
+        el.insertBefore(document.createTextNode(text[i++]), cursor);
+        setTimeout(tick, speed);
+      } else {
+        cursor.remove();
+        resolve();
+      }
+    };
+    tick();
+  });
+}
+
+// ── Set escalation ─────────────────────────────────────────────────────────
+function setEscalation(level) {
+  const e = ESCALATION[level];
+  const numEl    = document.getElementById('escalationNumber');
+  const labelEl  = document.getElementById('escalationLabel');
+
+  numEl.textContent = level;
+  numEl.style.color = e.color;
+  numEl.style.animation = 'none';
+  void numEl.offsetWidth;
+  numEl.style.animation = 'scale-in 0.4s cubic-bezier(0.34,1.56,0.64,1)';
+
+  labelEl.textContent = e.label;
+  labelEl.style.color = e.color;
+  labelEl.style.background = e.bg;
+
+  for (let p = 1; p <= 5; p++) {
+    const pip = document.getElementById(`pip${p}`);
+    pip.style.background = p <= level ? e.color : 'var(--border)';
+  }
+}
+
+// ── Confidence bar ─────────────────────────────────────────────────────────
+function setConfidence(val) {
+  const pct = Math.round(val * 100);
+  setTimeout(() => {
+    document.getElementById('confBar').style.width = pct + '%';
+  }, 100);
+  document.getElementById('confLabel').textContent = pct + '%';
+}
+
+// ── Render actors ──────────────────────────────────────────────────────────
+function renderActors(level) {
+  const el = document.getElementById('sectionActors');
+  el.innerHTML = ACTORS_BY_LEVEL[level].map(a => `
+    <div class="actor-item">
+      <div class="actor-name">${a.name}</div>
+      <div class="actor-desc">${a.desc}</div>
+    </div>
+  `).join('');
+}
+
+// ── Render indicators ──────────────────────────────────────────────────────
+function renderIndicators(level) {
+  const el = document.getElementById('sectionIndicators');
+  el.innerHTML = INDICATORS[level].map(ind => `<li>${ind}</li>`).join('');
+}
+
+// ── Select week ────────────────────────────────────────────────────────────
+let activeIdx = null;
+let inferring = false;
+
+async function selectWeek(idx) {
+  if (inferring) return;
+  inferring = true;
+
+  // Highlight row
+  document.querySelectorAll('#weekTableBody tr').forEach(r => r.classList.remove('selected'));
+  document.querySelector(`[data-idx="${idx}"]`).classList.add('selected');
+  activeIdx = idx;
+
+  const w = TEST_WEEKS[idx];
+
+  // Show loading
+  document.getElementById('emptyState').style.display = 'none';
+  document.getElementById('resultsContent').style.display = 'none';
+  document.getElementById('loadingState').style.display = 'flex';
+
+  // Simulate inference
+  await new Promise(r => setTimeout(r, 1800));
+
+  // Hide loading, show results
+  document.getElementById('loadingState').style.display = 'none';
+  document.getElementById('resultsContent').style.display = 'flex';
+  document.getElementById('resultsContent').style.animation = 'none';
+  void document.getElementById('resultsContent').offsetWidth;
+  document.getElementById('resultsContent').style.animation = 'fade-up 0.3s ease';
+
+  // Populate meta
+  document.getElementById('metaWeek').textContent = w.week;
+  document.getElementById('metaEvents').textContent = w.events.toLocaleString() + ' events';
+  document.getElementById('metaGoldstein').textContent = w.goldstein.toFixed(1);
+  document.getElementById('metaType').textContent = w.dominant;
+
+  // Escalation
+  setEscalation(w.level);
+  setConfidence(w.confidence);
+
+  // Actors + indicators (immediate)
+  renderActors(w.level);
+  renderIndicators(w.level);
+
+  // Typewrite summary
+  const summaryEl = document.getElementById('sectionSummary');
+  await typewrite(summaryEl, SUMMARIES[w.level], 10);
+
+  inferring = false;
+}
+
+// ── Status pill ────────────────────────────────────────────────────────────
+function setModelReady() {
+  const pill = document.getElementById('statusPill');
+  const dot  = document.getElementById('statusDot');
+  const text = document.getElementById('statusText');
+  dot.className = 'status-dot ready';
+  text.textContent = 'Model ready';
+  pill.classList.add('ready');
+}
+
+// ── Init ───────────────────────────────────────────────────────────────────
+renderTable();
+setTimeout(setModelReady, 3000);
+</script>
+
 </body>
 </html>
