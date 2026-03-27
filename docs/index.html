@@ -157,7 +157,7 @@
     main {
       flex: 1;
       display: grid;
-      grid-template-columns: 380px 1fr;
+      grid-template-columns: 360px 1fr;
       grid-template-rows: 1fr;
       gap: 0;
       min-height: 0;
@@ -220,7 +220,7 @@
     .week-table tbody tr:hover td:last-child  { border-radius: 0 var(--radius-sm) var(--radius-sm) 0; }
 
     .week-table tbody tr.selected td {
-      background: var(--accent-soft);
+      background: #DDE8E1;
     }
     .week-table tbody tr.selected td:first-child { border-radius: var(--radius-sm) 0 0 var(--radius-sm); }
     .week-table tbody tr.selected td:last-child  { border-radius: 0 var(--radius-sm) var(--radius-sm) 0; }
@@ -246,10 +246,14 @@
 
     .td-events {
       color: var(--text-2);
+      font-family: 'DM Mono', monospace;
+      font-size: 12px;
       font-variant-numeric: tabular-nums;
     }
 
     .td-goldstein {
+      font-family: 'DM Mono', monospace;
+      font-size: 12px;
       font-variant-numeric: tabular-nums;
     }
 
@@ -431,9 +435,9 @@
     }
 
     .escalation-level-label {
-      font-size: 11px;
+      font-size: 12px;
       font-weight: 600;
-      letter-spacing: 0.05em;
+      letter-spacing: 0.06em;
       text-transform: uppercase;
       padding: 3px 8px;
       border-radius: 4px;
