@@ -642,6 +642,62 @@
       50% { opacity: 0; }
     }
 
+    /* Model metrics panel */
+    .metrics-panel {
+      margin-top: 32px;
+      width: 100%;
+      max-width: 520px;
+    }
+
+    .metrics-header {
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--text-3);
+      margin-bottom: 10px;
+    }
+
+    .metrics-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-family: 'DM Mono', monospace;
+      font-size: 12px;
+    }
+
+    .metrics-table th {
+      text-align: left;
+      font-weight: 500;
+      color: var(--text-3);
+      padding: 4px 10px 4px 0;
+      border-bottom: 1px solid var(--border-soft);
+      white-space: nowrap;
+    }
+
+    .metrics-table th:not(:first-child) { text-align: right; }
+
+    .metrics-table td {
+      padding: 6px 10px 6px 0;
+      color: var(--text-2);
+      border-bottom: 1px solid var(--border-soft);
+      white-space: nowrap;
+    }
+
+    .metrics-table td:not(:first-child) { text-align: right; color: var(--text); }
+
+    .metrics-table tr:last-child td { border-bottom: none; }
+
+    .metrics-model-name { color: var(--text); font-weight: 500; }
+
+    .metrics-loading { color: var(--text-3); font-style: italic; }
+
+    .metrics-note {
+      font-size: 11px;
+      color: var(--text-3);
+      margin-top: 8px;
+      font-family: 'DM Mono', monospace;
+    }
+
     /* Scrollbar */
     ::-webkit-scrollbar { width: 4px; }
     ::-webkit-scrollbar-track { background: transparent; }
@@ -718,6 +774,25 @@
             <div class="legend-item" style="--ec:#B91C1C;--eb:#FEE2E2"><span>4</span>High</div>
             <div class="legend-item" style="--ec:#7F1D1D;--eb:#FCE7E7"><span>5</span>Critical</div>
           </div>
+        </div>
+
+        <!-- Model metrics -->
+        <div class="metrics-panel">
+          <div class="metrics-header">Model Performance — 59-Week Test Set</div>
+          <table class="metrics-table" id="metricsTable">
+            <thead>
+              <tr>
+                <th>Model</th>
+                <th>MAE ↓</th>
+                <th>Accuracy ↑</th>
+                <th>Valid JSON</th>
+              </tr>
+            </thead>
+            <tbody id="metricsBody">
+              <tr><td colspan="4" class="metrics-loading">Loading results…</td></tr>
+            </tbody>
+          </table>
+          <div class="metrics-note" id="metricsNote"></div>
         </div>
       </div>
 
@@ -1011,9 +1086,10 @@ function setConfidence(val) {
 }
 
 // ── Render actors ──────────────────────────────────────────────────────────
-function renderActors(level) {
+function renderActors(level, actors) {
+  actors = actors ?? ACTORS_BY_LEVEL[level];
   const el = document.getElementById('sectionActors');
-  el.innerHTML = ACTORS_BY_LEVEL[level].map(a => `
+  el.innerHTML = actors.map(a => `
     <div class="actor-item">
       <div class="actor-name">${a.name}</div>
       <div class="actor-desc">${a.desc}</div>
@@ -1022,9 +1098,10 @@ function renderActors(level) {
 }
 
 // ── Render indicators ──────────────────────────────────────────────────────
-function renderIndicators(level) {
+function renderIndicators(level, indicators) {
+  indicators = indicators ?? INDICATORS[level];
   const el = document.getElementById('sectionIndicators');
-  el.innerHTML = INDICATORS[level].map(ind => `<li>${ind}</li>`).join('');
+  el.innerHTML = indicators.map(ind => `<li>${ind}</li>`).join('');
 }
 
 // ── Select week ────────────────────────────────────────────────────────────
@@ -1047,8 +1124,8 @@ async function selectWeek(idx) {
   document.getElementById('resultsContent').style.display = 'none';
   document.getElementById('loadingState').style.display = 'flex';
 
-  // Simulate inference
-  await new Promise(r => setTimeout(r, 1800));
+  // Brief pause for UX
+  await new Promise(r => setTimeout(r, predsByWeek ? 400 : 1800));
 
   // Hide loading, show results
   document.getElementById('loadingState').style.display = 'none';
@@ -1057,6 +1134,11 @@ async function selectWeek(idx) {
   void document.getElementById('resultsContent').offsetWidth;
   document.getElementById('resultsContent').style.animation = 'fade-up 0.3s ease';
 
+  // Resolve prediction — prefer real LFM2 output, fall back to gold label
+  const pred = predsByWeek ? predsByWeek[w.week] : null;
+  const level = (pred?.lfm2_level) ?? w.level;
+  const confidence = pred ? 0.82 : w.confidence;   // placeholder until calibration
+
   // Populate meta
   document.getElementById('metaWeek').textContent = w.week;
   document.getElementById('metaEvents').textContent = w.events.toLocaleString() + ' events';
@@ -1064,33 +1146,97 @@ async function selectWeek(idx) {
   document.getElementById('metaType').textContent = w.dominant;
 
   // Escalation
-  setEscalation(w.level);
-  setConfidence(w.confidence);
+  setEscalation(level);
+  setConfidence(confidence);
 
-  // Actors + indicators (immediate)
-  renderActors(w.level);
-  renderIndicators(w.level);
+  // Actors + indicators
+  const actors = pred?.lfm2_actors ?? ACTORS_BY_LEVEL[level];
+  const indicators = pred?.lfm2_indicators ?? INDICATORS[level];
+  renderActors(level, actors);
+  renderIndicators(level, indicators);
 
   // Typewrite summary
   const summaryEl = document.getElementById('sectionSummary');
-  await typewrite(summaryEl, SUMMARIES[w.level], 10);
+  const summary = pred?.lfm2_summary ?? SUMMARIES[level];
+  await typewrite(summaryEl, summary, pred ? 6 : 10);
 
   inferring = false;
 }
 
-// ── Status pill ────────────────────────────────────────────────────────────
-function setModelReady() {
-  const pill = document.getElementById('statusPill');
+// ── Pre-computed data ───────────────────────────────────────────────────────
+const RAW = 'https://raw.githubusercontent.com/signal38/signal38.github.io/main';
+let predsByWeek = null;   // week → prediction dict from test_predictions.json
+let modelMetrics = null;  // from results.json
+
+async function loadPrecomputedData() {
+  try {
+    const [predsRes, metricsRes] = await Promise.all([
+      fetch(`${RAW}/data/outputs/test_predictions.json`),
+      fetch(`${RAW}/data/outputs/results.json`),
+    ]);
+    if (predsRes.ok) {
+      const list = await predsRes.json();
+      predsByWeek = {};
+      for (const p of list) predsByWeek[p.week] = p;
+    }
+    if (metricsRes.ok) {
+      modelMetrics = await metricsRes.json();
+    }
+  } catch (e) {
+    // Results not yet published — demo mode
+  }
+  renderMetrics();
+  if (predsByWeek && modelMetrics) {
+    updateStatusReady('LFM2-350M · pre-computed');
+  } else {
+    updateStatusReady('Demo mode');
+  }
+}
+
+function renderMetrics() {
+  const tbody = document.getElementById('metricsBody');
+  const note  = document.getElementById('metricsNote');
+  if (!modelMetrics) {
+    tbody.innerHTML = '<tr><td colspan="4" class="metrics-loading">Run notebooks 01–03 to populate results.</td></tr>';
+    return;
+  }
+  const m = modelMetrics;
+  const fmt = v => v != null ? v.toFixed(3) : '—';
+  const pct = v => v != null ? (v * 100).toFixed(1) + '%' : '—';
+  tbody.innerHTML = `
+    <tr>
+      <td class="metrics-model-name">Naive baseline</td>
+      <td>${fmt(m.naive_baseline?.mae)}</td>
+      <td>${pct(m.naive_baseline?.accuracy)}</td>
+      <td>—</td>
+    </tr>
+    <tr>
+      <td class="metrics-model-name">XGBoost</td>
+      <td>${fmt(m.xgboost?.mae)}</td>
+      <td>${pct(m.xgboost?.accuracy)}</td>
+      <td>—</td>
+    </tr>
+    <tr>
+      <td class="metrics-model-name">LFM2-350M</td>
+      <td>${fmt(m.lfm2_350m?.mae)}</td>
+      <td>${pct(m.lfm2_350m?.accuracy)}</td>
+      <td>${pct(m.lfm2_350m?.valid_json_rate)}</td>
+    </tr>`;
+  note.textContent = `n=${m.test_set_size ?? 59} held-out weeks · escalation MAE on 1–5 scale`;
+}
+
+function updateStatusReady(label) {
   const dot  = document.getElementById('statusDot');
   const text = document.getElementById('statusText');
-  dot.className = 'status-dot ready';
-  text.textContent = 'Model ready';
+  const pill = document.getElementById('statusPill');
+  dot.className  = 'status-dot ready';
+  text.textContent = label;
   pill.classList.add('ready');
 }
 
 // ── Init ───────────────────────────────────────────────────────────────────
 renderTable();
-setTimeout(setModelReady, 3000);
+loadPrecomputedData();
 </script>
 
 </body>
