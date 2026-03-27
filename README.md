@@ -77,7 +77,7 @@ Colab notebooks are self-contained. Open any notebook via the badge above, conne
 
 ## Colab setup
 
-The notebooks share common setup via `scripts/colab_utils.py`. Notebooks that publish artifacts back to this repo require a `GITHUB_TOKEN` Colab secret. Notebook 00 additionally requires `ACLED_EMAIL` and `ACLED_KEY`.
+The notebooks share common setup via `scripts/colab_utils.py`. Notebooks that publish artifacts back to this repo require a `GITHUB_TOKEN` Colab secret. Notebook 00 additionally requires `ACLED_EMAIL` and `ACLED_PASSWORD`.
 
 **Setting up the GitHub token (one-time):**
 
@@ -85,7 +85,7 @@ Create a [fine-grained personal access token](https://github.com/settings/tokens
 
 <img src="docs/assets/colab-secrets.png" width="420" alt="Colab Secrets panel showing GITHUB_TOKEN" />
 
-For ACLED credentials (notebook 00), register at [acleddata.com](https://acleddata.com/register/) and add `ACLED_EMAIL` and `ACLED_KEY` as Colab secrets.
+For ACLED credentials (notebook 00), register at [acleddata.com](https://acleddata.com/register/) and add `ACLED_EMAIL` and `ACLED_PASSWORD` as Colab secrets.
 
 For HuggingFace Hub (notebook 04), create a write token at [huggingface.co/settings/tokens](https://huggingface.co/settings/tokens) and add it as `HF_TOKEN`.
 
