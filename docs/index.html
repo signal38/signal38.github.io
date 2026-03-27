@@ -158,8 +158,10 @@
       flex: 1;
       display: grid;
       grid-template-columns: 380px 1fr;
+      grid-template-rows: 1fr;
       gap: 0;
       min-height: 0;
+      overflow: hidden;
       padding: 24px 0;
     }
 
@@ -167,6 +169,7 @@
     .week-panel {
       padding-right: 24px;
       border-right: 1px solid var(--border-soft);
+      overflow: hidden;
       display: flex;
       flex-direction: column;
       min-height: 0;
@@ -616,7 +619,7 @@
 
     <!-- Left: week selector -->
     <div class="week-panel">
-      <div class="panel-label">Test weeks · 59 samples</div>
+      <div class="panel-label">Test weeks · <span id="weekCount">59</span> samples</div>
       <div class="week-table-wrap">
         <table class="week-table">
           <thead>
@@ -745,31 +748,67 @@ const ESCALATION = {
 
 // ── Sample test weeks (representative subset) ──────────────────────────────
 // In production this loads from data/outputs/results.json
+// Real test set — 59 weeks extracted from data/training/test.jsonl
 const TEST_WEEKS = [
-  { week: '2015-04-19', events: 142, goldstein: -5.8, dominant: 'Exhibit Force',  level: 2, confidence: 0.62 },
-  { week: '2015-11-08', events: 218, goldstein: -6.4, dominant: 'Fight',          level: 3, confidence: 0.71 },
-  { week: '2016-01-03', events: 887, goldstein: -8.2, dominant: 'Assault',        level: 5, confidence: 0.84 },
-  { week: '2016-04-10', events: 1860,goldstein: -7.7, dominant: 'Reduce Military',level: 3, confidence: 0.68 },
-  { week: '2016-09-04', events: 743, goldstein: -7.9, dominant: 'Fight',          level: 4, confidence: 0.77 },
-  { week: '2017-03-05', events: 391, goldstein: -6.1, dominant: 'Coerce',         level: 2, confidence: 0.59 },
-  { week: '2017-07-02', events: 612, goldstein: -8.4, dominant: 'Unconventional', level: 5, confidence: 0.88 },
-  { week: '2017-10-29', events: 2279,goldstein: -8.1, dominant: 'Fight',          level: 2, confidence: 0.74 },
-  { week: '2018-03-04', events: 284, goldstein: -3.9, dominant: 'Exhibit Force',  level: 1, confidence: 0.55 },
-  { week: '2018-06-10', events: 198, goldstein: -2.7, dominant: 'Reduce Military',level: 1, confidence: 0.61 },
-  { week: '2019-02-10', events: 327, goldstein: -5.4, dominant: 'Coerce',         level: 2, confidence: 0.66 },
-  { week: '2019-08-25', events: 445, goldstein: -7.1, dominant: 'Exhibit Force',  level: 3, confidence: 0.70 },
-  { week: '2020-03-01', events: 156, goldstein: -5.0, dominant: 'Protest',        level: 2, confidence: 0.53 },
-  { week: '2020-10-11', events: 534, goldstein: -6.8, dominant: 'Coerce',         level: 3, confidence: 0.72 },
-  { week: '2021-01-17', events: 289, goldstein: -5.6, dominant: 'Exhibit Force',  level: 2, confidence: 0.64 },
-  { week: '2021-09-12', events: 418, goldstein: -7.3, dominant: 'Fight',          level: 3, confidence: 0.75 },
-  { week: '2022-01-30', events: 677, goldstein: -7.8, dominant: 'Assault',        level: 4, confidence: 0.81 },
-  { week: '2022-08-28', events: 305, goldstein: -7.6, dominant: 'Exhibit Force',  level: 3, confidence: 0.69 },
-  { week: '2022-11-06', events: 892, goldstein: -8.6, dominant: 'Unconventional', level: 5, confidence: 0.91 },
-  { week: '2023-02-12', events: 374, goldstein: -6.5, dominant: 'Coerce',         level: 3, confidence: 0.67 },
-  { week: '2023-04-30', events: 241, goldstein: -5.9, dominant: 'Exhibit Force',  level: 2, confidence: 0.60 },
-  { week: '2023-08-27', events: 519, goldstein: -7.4, dominant: 'Fight',          level: 4, confidence: 0.79 },
-  { week: '2024-01-14', events: 183, goldstein: -4.8, dominant: 'Protest',        level: 2, confidence: 0.57 },
-  { week: '2024-06-09', events: 438, goldstein: -6.7, dominant: 'Coerce',         level: 3, confidence: 0.73 },
+  {week:"2015-04-05",events:886,  goldstein:-7.5,dominant:"Coerce",          level:3,confidence:0.68},
+  {week:"2015-08-16",events:882,  goldstein:-8.7,dominant:"Fight",           level:3,confidence:0.68},
+  {week:"2015-08-30",events:1071, goldstein:-8.5,dominant:"Fight",           level:3,confidence:0.68},
+  {week:"2015-09-20",events:681,  goldstein:-7.8,dominant:"Fight",           level:3,confidence:0.68},
+  {week:"2015-10-04",events:506,  goldstein:-7.9,dominant:"Fight",           level:2,confidence:0.68},
+  {week:"2015-12-27",events:572,  goldstein:-6.4,dominant:"Coerce",          level:2,confidence:0.68},
+  {week:"2016-01-10",events:2618, goldstein:-7.7,dominant:"Reduce Military", level:4,confidence:0.68},
+  {week:"2016-07-03",events:733,  goldstein:-8.1,dominant:"Fight",           level:2,confidence:0.68},
+  {week:"2016-09-04",events:1663, goldstein:-8.7,dominant:"Assault",         level:2,confidence:0.68},
+  {week:"2016-09-11",events:4004, goldstein:-8.4,dominant:"Fight",           level:3,confidence:0.68},
+  {week:"2016-11-06",events:660,  goldstein:-7.8,dominant:"Fight",           level:3,confidence:0.68},
+  {week:"2016-12-11",events:699,  goldstein:-7.8,dominant:"Reduce Military", level:3,confidence:0.68},
+  {week:"2016-12-18",events:769,  goldstein:-7.8,dominant:"Reduce Military", level:3,confidence:0.68},
+  {week:"2017-01-15",events:1036, goldstein:-8.0,dominant:"Fight",           level:2,confidence:0.68},
+  {week:"2017-02-12",events:2335, goldstein:-8.7,dominant:"Fight",           level:4,confidence:0.68},
+  {week:"2017-02-19",events:10264,goldstein:-8.5,dominant:"Fight",           level:3,confidence:0.68},
+  {week:"2017-04-30",events:7489, goldstein:-8.0,dominant:"Fight",           level:3,confidence:0.68},
+  {week:"2017-07-30",events:4680, goldstein:-8.5,dominant:"Fight",           level:3,confidence:0.68},
+  {week:"2017-11-12",events:3379, goldstein:-7.8,dominant:"Fight",           level:3,confidence:0.68},
+  {week:"2018-03-11",events:2502, goldstein:-8.0,dominant:"Fight",           level:2,confidence:0.68},
+  {week:"2018-04-08",events:1016, goldstein:-7.8,dominant:"Fight",           level:2,confidence:0.68},
+  {week:"2018-04-29",events:2689, goldstein:-7.6,dominant:"Fight",           level:3,confidence:0.68},
+  {week:"2018-11-25",events:475,  goldstein:-7.9,dominant:"Reduce Military", level:2,confidence:0.68},
+  {week:"2019-01-13",events:475,  goldstein:-7.6,dominant:"Reduce Military", level:3,confidence:0.68},
+  {week:"2019-05-12",events:2241, goldstein:-8.7,dominant:"Fight",           level:3,confidence:0.68},
+  {week:"2019-06-02",events:1528, goldstein:-8.6,dominant:"Assault",         level:3,confidence:0.68},
+  {week:"2019-06-16",events:941,  goldstein:-8.8,dominant:"Fight",           level:2,confidence:0.68},
+  {week:"2019-07-07",events:1425, goldstein:-7.1,dominant:"Coerce",          level:2,confidence:0.68},
+  {week:"2019-08-11",events:2042, goldstein:-8.5,dominant:"Fight",           level:3,confidence:0.68},
+  {week:"2019-09-15",events:956,  goldstein:-8.4,dominant:"Fight",           level:3,confidence:0.68},
+  {week:"2019-12-08",events:833,  goldstein:-7.8,dominant:"Fight",           level:2,confidence:0.52},
+  {week:"2020-04-26",events:623,  goldstein:-8.4,dominant:"Fight",           level:2,confidence:0.52},
+  {week:"2020-07-12",events:449,  goldstein:-7.9,dominant:"Reduce Military", level:2,confidence:0.68},
+  {week:"2020-08-02",events:555,  goldstein:-7.9,dominant:"Fight",           level:4,confidence:0.68},
+  {week:"2020-10-25",events:338,  goldstein:-8.4,dominant:"Fight",           level:3,confidence:0.68},
+  {week:"2020-11-22",events:309,  goldstein:-8.4,dominant:"Fight",           level:2,confidence:0.68},
+  {week:"2021-09-26",events:422,  goldstein:-8.5,dominant:"Fight",           level:3,confidence:0.68},
+  {week:"2021-10-24",events:974,  goldstein:-8.9,dominant:"Fight",           level:3,confidence:0.68},
+  {week:"2021-11-21",events:237,  goldstein:-8.1,dominant:"Fight",           level:3,confidence:0.68},
+  {week:"2022-03-06",events:594,  goldstein:-9.0,dominant:"Fight",           level:3,confidence:0.68},
+  {week:"2022-03-27",events:1114, goldstein:-8.9,dominant:"Fight",           level:3,confidence:0.68},
+  {week:"2022-04-17",events:435,  goldstein:-7.8,dominant:"Fight",           level:3,confidence:0.68},
+  {week:"2022-05-29",events:1129, goldstein:-8.8,dominant:"Fight",           level:3,confidence:0.68},
+  {week:"2022-07-24",events:342,  goldstein:-7.6,dominant:"Fight",           level:3,confidence:0.68},
+  {week:"2022-08-07",events:261,  goldstein:-8.2,dominant:"Fight",           level:3,confidence:0.68},
+  {week:"2023-05-14",events:177,  goldstein:-8.5,dominant:"Fight",           level:2,confidence:0.52},
+  {week:"2023-06-04",events:1085, goldstein:-8.7,dominant:"Fight",           level:3,confidence:0.68},
+  {week:"2023-12-10",events:380,  goldstein:-7.5,dominant:"Fight",           level:2,confidence:0.68},
+  {week:"2024-01-14",events:1138, goldstein:-9.2,dominant:"Fight",           level:3,confidence:0.68},
+  {week:"2024-02-25",events:492,  goldstein:-7.9,dominant:"Fight",           level:3,confidence:0.68},
+  {week:"2025-01-19",events:1878, goldstein:-8.8,dominant:"Fight",           level:4,confidence:0.68},
+  {week:"2025-08-10",events:250,  goldstein:-7.6,dominant:"Fight",           level:3,confidence:0.68},
+  {week:"2025-09-21",events:221,  goldstein:-8.6,dominant:"Fight",           level:3,confidence:0.68},
+  {week:"2025-10-26",events:791,  goldstein:-8.9,dominant:"Fight",           level:4,confidence:0.68},
+  {week:"2025-11-09",events:671,  goldstein:-8.7,dominant:"Fight",           level:4,confidence:0.68},
+  {week:"2025-12-21",events:188,  goldstein:-8.7,dominant:"Fight",           level:3,confidence:0.68},
+  {week:"2026-01-25",events:153,  goldstein:-8.0,dominant:"Fight",           level:3,confidence:0.68},
+  {week:"2026-02-08",events:169,  goldstein:-8.3,dominant:"Fight",           level:4,confidence:0.68},
+  {week:"2026-02-15",events:268,  goldstein:-9.1,dominant:"Fight",           level:4,confidence:0.68},
 ];
 
 // Sample summaries per escalation level
@@ -835,6 +874,7 @@ function goldClass(g) {
 
 // ── Render week table ──────────────────────────────────────────────────────
 function renderTable() {
+  document.getElementById('weekCount').textContent = TEST_WEEKS.length;
   const tbody = document.getElementById('weekTableBody');
   tbody.innerHTML = TEST_WEEKS.map((w, i) => `
     <tr data-idx="${i}" onclick="selectWeek(${i})">
