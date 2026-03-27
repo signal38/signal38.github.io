@@ -314,6 +314,50 @@
       line-height: 1.6;
     }
 
+    /* Escalation legend */
+    .escalation-legend {
+      margin-top: 28px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .legend-label {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--text-3);
+    }
+
+    .legend-items {
+      display: flex;
+      gap: 8px;
+    }
+
+    .legend-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+      font-size: 11px;
+      color: var(--ec);
+    }
+
+    .legend-item span {
+      width: 28px;
+      height: 28px;
+      border-radius: 7px;
+      background: var(--eb);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 600;
+      font-size: 13px;
+      font-family: 'DM Mono', monospace;
+    }
+
     /* Loading state */
     .loading-state {
       display: none;
@@ -651,6 +695,17 @@
         </div>
         <h3>Select a week to run analysis</h3>
         <p>Choose any week from the test set. The model runs entirely in your browser via WebGPU.</p>
+
+        <div class="escalation-legend">
+          <div class="legend-label">Escalation scale</div>
+          <div class="legend-items">
+            <div class="legend-item" style="--ec:#4D7C5E;--eb:#EDF4F0"><span>1</span>Routine</div>
+            <div class="legend-item" style="--ec:#5A8F6A;--eb:#EEF5F0"><span>2</span>Elevated</div>
+            <div class="legend-item" style="--ec:#B5853A;--eb:#FBF4E8"><span>3</span>Significant</div>
+            <div class="legend-item" style="--ec:#C2623A;--eb:#FBF0EB"><span>4</span>High</div>
+            <div class="legend-item" style="--ec:#A84848;--eb:#F9EAEA"><span>5</span>Critical</div>
+          </div>
+        </div>
       </div>
 
       <!-- Loading state -->
