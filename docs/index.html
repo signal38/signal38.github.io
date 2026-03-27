@@ -13,33 +13,47 @@
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
-      --bg:          #F5F6F8;
+      --bg:          #F0F2F5;
       --surface:     #FFFFFF;
-      --panel:       #EDEEF1;
-      --border:      #D8DADF;
-      --border-soft: #E4E5E9;
-      --text:        #111827;
-      --text-2:      #6B7280;
+      --panel:       #E8EAF0;
+      --border:      #CBD0DC;
+      --border-soft: #D8DBE6;
+      --text:        #0D1117;
+      --text-2:      #4B5563;
       --text-3:      #9CA3AF;
-      --accent:      #1E3A5F;
-      --accent-soft: #E6EBF4;
 
-      /* escalation palette */
-      --e1: #2D6A4F;  /* muted green — routine */
-      --e2: #3A7A5C;  /* slightly brighter green — elevated */
-      --e3: #A0650A;  /* amber — significant */
-      --e4: #B84E1A;  /* orange-red — high */
-      --e5: #9B1C1C;  /* deep red — critical */
+      /* sidebar (left panel) — dark navy, Palantir-style */
+      --sidebar-bg:    #0F1C2E;
+      --sidebar-text:  #C9D1E0;
+      --sidebar-text-2:#7A8FA8;
+      --sidebar-border:#1E3048;
+      --sidebar-hover: #162540;
+      --sidebar-sel:   #1E3A5F;
 
-      --e1-bg: #E8F5EE;
-      --e2-bg: #EAF4EE;
-      --e3-bg: #FEF3E2;
-      --e4-bg: #FEF0E7;
-      --e5-bg: #FDE8E8;
+      /* header */
+      --header-bg:   #0D1A2B;
+      --header-text: #E8EDF5;
 
-      --radius: 10px;
-      --radius-sm: 6px;
-      --shadow: 0 1px 3px rgba(0,0,0,.06), 0 4px 16px rgba(0,0,0,.04);
+      --accent:      #2563EB;
+      --accent-soft: #DBEAFE;
+
+      /* escalation — THREATCON-aligned:
+         green → amber → orange → red → maroon */
+      --e1: #166534;  /* NORMAL   — deep green   */
+      --e2: #92400E;  /* ALPHA    — amber        */
+      --e3: #C2410C;  /* BRAVO    — orange       */
+      --e4: #B91C1C;  /* CHARLIE  — red          */
+      --e5: #7F1D1D;  /* DELTA    — deep red/maroon */
+
+      --e1-bg: #DCFCE7;
+      --e2-bg: #FEF3C7;
+      --e3-bg: #FFEDD5;
+      --e4-bg: #FEE2E2;
+      --e5-bg: #FCE7E7;
+
+      --radius: 8px;
+      --radius-sm: 5px;
+      --shadow: 0 1px 3px rgba(0,0,0,.10), 0 4px 16px rgba(0,0,0,.07);
     }
 
     html, body {
@@ -67,9 +81,11 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
-      height: 56px;
+      height: 52px;
       flex-shrink: 0;
-      border-bottom: 1px solid var(--border-soft);
+      background: var(--header-bg);
+      padding: 0 24px;
+      margin: 0 -24px;   /* bleed to shell edges */
     }
 
     .wordmark {
@@ -81,10 +97,10 @@
     }
 
     .wordmark-icon {
-      width: 28px;
-      height: 28px;
-      background: var(--accent);
-      border-radius: 7px;
+      width: 26px;
+      height: 26px;
+      background: #2563EB;
+      border-radius: 5px;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -94,16 +110,16 @@
     .wordmark-icon svg { display: block; }
 
     .wordmark-text {
-      font-size: 15px;
+      font-size: 14px;
       font-weight: 600;
-      letter-spacing: -0.01em;
-      color: var(--text);
+      letter-spacing: 0.02em;
+      color: var(--header-text);
     }
 
     .wordmark-sub {
-      font-size: 12px;
+      font-size: 11px;
       font-weight: 400;
-      color: var(--text-3);
+      color: #5A7A9A;
       margin-left: 2px;
     }
 
@@ -112,21 +128,21 @@
       display: inline-flex;
       align-items: center;
       gap: 6px;
-      padding: 4px 10px 4px 8px;
-      border-radius: 99px;
-      background: var(--panel);
-      border: 1px solid var(--border);
-      font-size: 12px;
+      padding: 3px 10px 3px 8px;
+      border-radius: 4px;
+      background: rgba(255,255,255,0.07);
+      border: 1px solid rgba(255,255,255,0.12);
+      font-size: 11px;
       font-weight: 500;
-      color: var(--text-2);
+      color: #7A9AB8;
       transition: background 0.3s, color 0.3s, border-color 0.3s;
       font-family: 'DM Mono', monospace;
     }
 
     .status-pill.ready {
-      background: #EDF4F0;
-      border-color: #C4DECA;
-      color: #3A7A52;
+      background: rgba(22, 101, 52, 0.25);
+      border-color: rgba(34, 197, 94, 0.3);
+      color: #4ADE80;
     }
 
     .status-dot {
@@ -157,31 +173,33 @@
     main {
       flex: 1;
       display: grid;
-      grid-template-columns: 360px 1fr;
+      grid-template-columns: 300px 1fr;
       grid-template-rows: 1fr;
       gap: 0;
       min-height: 0;
       overflow: hidden;
-      padding: 24px 0;
+      margin: 0 -24px;   /* bleed to shell edges */
     }
 
-    /* ── Left: week selector ── */
+    /* ── Left: week selector (dark sidebar) ── */
     .week-panel {
-      padding-right: 24px;
-      border-right: 1px solid var(--border-soft);
+      background: var(--sidebar-bg);
+      border-right: 1px solid var(--sidebar-border);
       overflow: hidden;
       display: flex;
       flex-direction: column;
       min-height: 0;
+      padding: 20px 0;
     }
 
     .panel-label {
-      font-size: 11px;
+      font-size: 10px;
       font-weight: 600;
-      letter-spacing: 0.06em;
+      letter-spacing: 0.1em;
       text-transform: uppercase;
-      color: var(--text-3);
-      margin-bottom: 12px;
+      color: var(--sidebar-text-2);
+      margin-bottom: 8px;
+      padding: 0 16px;
       flex-shrink: 0;
     }
 
@@ -189,7 +207,7 @@
       flex: 1;
       overflow-y: auto;
       scrollbar-width: thin;
-      scrollbar-color: var(--border) transparent;
+      scrollbar-color: var(--sidebar-border) transparent;
     }
 
     .week-table {
@@ -199,11 +217,11 @@
 
     .week-table thead th {
       text-align: left;
-      font-size: 11px;
+      font-size: 10px;
       font-weight: 500;
-      color: var(--text-3);
-      padding: 0 10px 10px;
-      border-bottom: 1px solid var(--border-soft);
+      color: var(--sidebar-text-2);
+      padding: 0 16px 8px;
+      border-bottom: 1px solid var(--sidebar-border);
       white-space: nowrap;
     }
 
@@ -215,19 +233,21 @@
       border-radius: var(--radius-sm);
     }
 
-    .week-table tbody tr:hover td { background: var(--panel); }
+    .week-table tbody tr:hover td { background: var(--sidebar-hover); }
     .week-table tbody tr:hover td:first-child { border-radius: var(--radius-sm) 0 0 var(--radius-sm); }
     .week-table tbody tr:hover td:last-child  { border-radius: 0 var(--radius-sm) var(--radius-sm) 0; }
 
     .week-table tbody tr.selected td {
-      background: #DDE8E1;
+      background: var(--sidebar-sel);
     }
     .week-table tbody tr.selected td:first-child { border-radius: var(--radius-sm) 0 0 var(--radius-sm); }
     .week-table tbody tr.selected td:last-child  { border-radius: 0 var(--radius-sm) var(--radius-sm) 0; }
 
     .week-table tbody td {
-      padding: 8px 10px;
+      padding: 7px 16px;
       font-size: 13px;
+      color: var(--sidebar-text);
+      border-bottom: 1px solid rgba(255,255,255,0.03);
       transition: background 0.12s;
     }
 
@@ -241,11 +261,11 @@
       font-variant-numeric: tabular-nums;
       font-family: 'DM Mono', monospace;
       font-size: 12px;
-      color: var(--text);
+      color: var(--sidebar-text);
     }
 
     .td-events {
-      color: var(--text-2);
+      color: var(--sidebar-text-2);
       font-family: 'DM Mono', monospace;
       font-size: 12px;
       font-variant-numeric: tabular-nums;
@@ -257,9 +277,9 @@
       font-variant-numeric: tabular-nums;
     }
 
-    .goldstein-neg { color: #A84848; }
-    .goldstein-mid { color: #B5853A; }
-    .goldstein-pos { color: #4D7C5E; }
+    .goldstein-neg { color: #F87171; }
+    .goldstein-mid { color: #FBBF24; }
+    .goldstein-pos { color: #4ADE80; }
 
     .escalation-chip {
       display: inline-flex;
@@ -798,11 +818,11 @@
 <script>
 // ── Escalation config ──────────────────────────────────────────────────────
 const ESCALATION = {
-  1: { label: 'Routine',     color: '#4D7C5E', bg: '#EDF4F0' },
-  2: { label: 'Elevated',    color: '#5A8F6A', bg: '#EEF5F0' },
-  3: { label: 'Significant', color: '#B5853A', bg: '#FBF4E8' },
-  4: { label: 'High',        color: '#C2623A', bg: '#FBF0EB' },
-  5: { label: 'Critical',    color: '#A84848', bg: '#F9EAEA' },
+  1: { label: 'Routine',     color: '#166534', bg: '#DCFCE7' },
+  2: { label: 'Elevated',    color: '#92400E', bg: '#FEF3C7' },
+  3: { label: 'Significant', color: '#C2410C', bg: '#FFEDD5' },
+  4: { label: 'High',        color: '#B91C1C', bg: '#FEE2E2' },
+  5: { label: 'Critical',    color: '#7F1D1D', bg: '#FCE7E7' },
 };
 
 // ── Sample test weeks (representative subset) ──────────────────────────────
