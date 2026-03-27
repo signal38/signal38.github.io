@@ -24,6 +24,9 @@ Thumbs.db
 *.onnx
 *.pt
 
+# LoRA adapter weights are small (~5 MB) — track in repo
+!models/lfm2-nk-risk/lora_adapter/*.safetensors
+
 # Colab sentinels
 /tmp/
 
