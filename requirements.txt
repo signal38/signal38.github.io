@@ -1,0 +1,23 @@
+# Core ML
+unsloth[colab-new]>=2025.3
+trl>=0.15
+peft>=0.14
+transformers>=4.50
+datasets>=3.3
+torch>=2.6
+
+# Classical ML
+xgboost>=2.1
+scikit-learn>=1.6
+numpy>=2.2
+pandas>=2.2
+
+# ONNX export
+optimum[onnxruntime]>=1.19
+onnx>=1.16
+onnxconverter-common>=1.14
+onnxruntime>=1.18
+
+# Data / utils
+python-dotenv>=1.0
+tqdm>=4.67

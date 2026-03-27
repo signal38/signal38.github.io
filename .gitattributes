@@ -1,0 +1,9 @@
+# Normalize line endings
+* text=auto
+
+# Notebook diffs
+*.ipynb diff=jupyternotebook
+
+# LFS — large binary artifacts published by Colab notebooks
+models/**/*.safetensors filter=lfs diff=lfs merge=lfs -text
+data/outputs/*.json filter=lfs diff=lfs merge=lfs -text

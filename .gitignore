@@ -1,0 +1,32 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+dist/
+build/
+
+# Jupyter
+.ipynb_checkpoints/
+
+# Environment
+.env
+*.env
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Large model files (tracked via Git LFS or HF Hub)
+*.bin
+*.safetensors
+*.onnx
+*.pt
+
+# Colab sentinels
+/tmp/
+
+# IDE
+.idea/
+.vscode/
