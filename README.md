@@ -73,11 +73,25 @@ pip install -r requirements.txt
 
 Colab notebooks are self-contained. Open any notebook via the badge above, connect a T4 runtime, and run all cells.
 
+## Colab setup
+
+The notebooks share common setup via `scripts/colab_utils.py`. Notebooks that publish artifacts back to this repo require a `GITHUB_TOKEN` Colab secret. Notebook 00 additionally requires `ACLED_EMAIL` and `ACLED_KEY`.
+
+**Setting up the GitHub token (one-time):**
+
+Create a [fine-grained personal access token](https://github.com/settings/tokens?type=beta) scoped to the `signal38` organization with **Contents: Read and Write** permission. Then add it to Colab: open the key icon in the left sidebar → **Secrets** → **Add new secret**, name it `GITHUB_TOKEN`, paste the token, and enable notebook access.
+
+![Colab Secrets panel showing GITHUB_TOKEN](docs/assets/colab-secrets.png)
+
+For ACLED credentials, register at [acleddata.com](https://acleddata.com/register/) and retrieve your API key from your account page. Add `ACLED_EMAIL` and `ACLED_KEY` as additional Colab secrets.
+
 ## Team
 
 - **Diya Mirji** — [@dvm14](https://github.com/dvm14)
 - **Jonas Neves** — [@jonasneves](https://github.com/jonasneves)
 - **Mike Saju** — [@Michaelsaju1](https://github.com/Michaelsaju1)
+
+Built for **AIPI 540.01 — Deep Learning**, Spring 2026, Duke University AIPI Program.
 
 ## License
 
