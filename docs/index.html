@@ -220,12 +220,13 @@
       font-size: 10px;
       font-weight: 500;
       color: var(--sidebar-text-2);
-      padding: 0 16px 8px;
+      padding: 0 10px 8px;
       border-bottom: 1px solid var(--sidebar-border);
       white-space: nowrap;
     }
 
-    .week-table thead th:last-child { text-align: right; }
+    .week-table thead th:first-child { padding-left: 16px; }
+    .week-table thead th:last-child  { text-align: right; padding-right: 16px; }
 
     .week-table tbody tr {
       cursor: pointer;
@@ -244,31 +245,22 @@
     .week-table tbody tr.selected td:last-child  { border-radius: 0 var(--radius-sm) var(--radius-sm) 0; }
 
     .week-table tbody td {
-      padding: 7px 16px;
-      font-size: 13px;
+      padding: 6px 10px;
+      font-size: 12px;
       color: var(--sidebar-text);
       border-bottom: 1px solid rgba(255,255,255,0.03);
       transition: background 0.12s;
     }
 
-    .week-table tbody td:last-child {
-      text-align: right;
-      font-family: 'DM Mono', monospace;
-      font-size: 12px;
-    }
+    .week-table tbody td:first-child { padding-left: 16px; }
+    .week-table tbody td:last-child  { padding-right: 16px; text-align: right; }
 
     .td-date {
       font-variant-numeric: tabular-nums;
       font-family: 'DM Mono', monospace;
       font-size: 12px;
       color: var(--sidebar-text);
-    }
-
-    .td-events {
-      color: var(--sidebar-text-2);
-      font-family: 'DM Mono', monospace;
-      font-size: 12px;
-      font-variant-numeric: tabular-nums;
+      white-space: nowrap;
     }
 
     .td-goldstein {
@@ -295,7 +287,7 @@
 
     /* ── Right: results panel ── */
     .results-panel {
-      padding-left: 32px;
+      padding: 24px 32px;
       display: flex;
       flex-direction: column;
       min-height: 0;
@@ -612,29 +604,31 @@
 
     /* ── Footer ── */
     footer {
-      height: 40px;
+      height: 36px;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      border-top: 1px solid var(--border-soft);
+      background: var(--header-bg);
+      margin: 0 -24px;
+      padding: 0 24px;
       flex-shrink: 0;
     }
 
     .footer-text {
       font-size: 11px;
-      color: var(--text-3);
+      color: var(--sidebar-text-2);
       font-family: 'DM Mono', monospace;
       letter-spacing: 0.02em;
     }
 
     .footer-link {
       font-size: 11px;
-      color: var(--text-3);
+      color: var(--sidebar-text-2);
       text-decoration: none;
       transition: color 0.15s;
     }
 
-    .footer-link:hover { color: var(--accent); }
+    .footer-link:hover { color: var(--sidebar-text); }
 
     /* Typewriter cursor */
     .cursor {
@@ -693,7 +687,6 @@
           <thead>
             <tr>
               <th>Week</th>
-              <th>Events</th>
               <th>Goldstein</th>
               <th>Level</th>
             </tr>
@@ -723,11 +716,11 @@
         <div class="escalation-legend">
           <div class="legend-label">Escalation scale</div>
           <div class="legend-items">
-            <div class="legend-item" style="--ec:#4D7C5E;--eb:#EDF4F0"><span>1</span>Routine</div>
-            <div class="legend-item" style="--ec:#5A8F6A;--eb:#EEF5F0"><span>2</span>Elevated</div>
-            <div class="legend-item" style="--ec:#B5853A;--eb:#FBF4E8"><span>3</span>Significant</div>
-            <div class="legend-item" style="--ec:#C2623A;--eb:#FBF0EB"><span>4</span>High</div>
-            <div class="legend-item" style="--ec:#A84848;--eb:#F9EAEA"><span>5</span>Critical</div>
+            <div class="legend-item" style="--ec:#166534;--eb:#DCFCE7"><span>1</span>Routine</div>
+            <div class="legend-item" style="--ec:#92400E;--eb:#FEF3C7"><span>2</span>Elevated</div>
+            <div class="legend-item" style="--ec:#C2410C;--eb:#FFEDD5"><span>3</span>Significant</div>
+            <div class="legend-item" style="--ec:#B91C1C;--eb:#FEE2E2"><span>4</span>High</div>
+            <div class="legend-item" style="--ec:#7F1D1D;--eb:#FCE7E7"><span>5</span>Critical</div>
           </div>
         </div>
       </div>
@@ -961,7 +954,6 @@ function renderTable() {
     return `
     <tr data-idx="${origIdx}" onclick="selectWeek(${origIdx})">
       <td class="td-date">${w.week}</td>
-      <td class="td-events">${w.events.toLocaleString()}</td>
       <td class="td-goldstein ${goldClass(w.goldstein)}">${w.goldstein.toFixed(1)}</td>
       <td>
         <span class="escalation-chip" style="${chipStyle(w.level)}">${w.level}</span>
