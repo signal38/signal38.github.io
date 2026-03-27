@@ -159,20 +159,27 @@ def publish_artifacts(
         ["git", "stash", "push", "--include-untracked", "-m", stash_name, "--", *rel_paths],
         check=True, cwd=repo_path, capture_output=True, text=True,
     )
-    stashed = "No local changes to save" not in stash_push.stdout
+    # git stash writes its status message to stderr, not stdout
+    stash_output = stash_push.stdout + stash_push.stderr
+    stashed = "No local changes to save" not in stash_output
 
     try:
         subprocess.run(["git", "pull", "--rebase", "origin", "main"], check=True, cwd=repo_path)
     except subprocess.CalledProcessError as exc:
         if stashed:
-            subprocess.run(["git", "stash", "pop"], check=True, cwd=repo_path)
+            subprocess.run(["git", "stash", "pop"], cwd=repo_path)
         raise RuntimeError(
             "git pull --rebase failed before publishing. "
             "Check for remote conflicts and retry."
         ) from exc
 
     if stashed:
-        subprocess.run(["git", "stash", "pop"], check=True, cwd=repo_path)
+        pop = subprocess.run(["git", "stash", "pop"], cwd=repo_path, capture_output=True, text=True)
+        if pop.returncode != 0:
+            raise RuntimeError(
+                "git stash pop failed after rebase — possible merge conflict.\n"
+                + pop.stderr
+            )
 
     subprocess.run(["git", "add", "--", *rel_paths], check=True, cwd=repo_path)
 
@@ -191,6 +198,15 @@ def publish_artifacts(
         return False
 
     subprocess.run(["git", "commit", "-m", message], check=True, cwd=repo_path)
-    subprocess.run(["git", "push", "origin", "main"], check=True, cwd=repo_path)
+
+    push = subprocess.run(
+        ["git", "push", "origin", "main"],
+        cwd=repo_path, capture_output=True, text=True,
+    )
+    if push.returncode != 0:
+        raise RuntimeError(
+            f"git push failed (exit {push.returncode}):\n"
+            + (push.stderr or push.stdout)
+        )
     print(f"Pushed: {', '.join(rel_paths)}")
     return True
