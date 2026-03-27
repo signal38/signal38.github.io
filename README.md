@@ -75,7 +75,7 @@ Colab notebooks are self-contained. Open any notebook via the badge above, conne
 
 ## Team
 
-- **Diya Mirji** — [@diyamirji](https://github.com/diyamirji)
+- **Diya Mirji** — [@dvm14](https://github.com/dvm14)
 - **Jonas Neves** — [@jonasneves](https://github.com/jonasneves)
 - **Mike Saju** — [@Michaelsaju1](https://github.com/Michaelsaju1)
 
