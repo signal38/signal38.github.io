@@ -37,7 +37,7 @@ GDELT v2 events (11 years, NK military CAMEO codes)
 | XGBoost | GDELT feature vector | TBD | n/a |
 | LFM2-350M (fine-tuned) | QLoRA knowledge distillation | TBD | TBD |
 
-*Results populated by `03_evaluate.ipynb` — see `data/outputs/results.json`.*
+*Results populated by `03_evaluate.ipynb` — see `data/outputs/results.json` and `data/outputs/test_predictions.json`.*
 
 ## Notebooks
 
@@ -64,7 +64,7 @@ signal38.github.io/
 │   ├── labeled/        # Claude-generated risk assessments
 │   ├── training/       # Train / val / test splits
 │   └── outputs/        # Evaluation results (published by notebooks)
-└── models/             # LoRA adapter weights (published by notebook 02)
+└── models/             # LoRA adapter weights and ONNX export (published by notebooks 02, 04)
 ```
 
 ## Setup
