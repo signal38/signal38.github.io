@@ -41,13 +41,15 @@ GDELT v2 events (11 years, NK military CAMEO codes)
 
 ## Notebooks
 
-All notebooks run on a free Colab T4 GPU and publish their artifacts back to this repo automatically.
+Run in order. Notebooks 02–04 require a T4 GPU runtime. All publish their artifacts back to this repo automatically.
 
 | Notebook | What it does | Runtime | |
 |----------|-------------|---------|---|
+| [`00_acled_labels.ipynb`](notebooks/00_acled_labels.ipynb) | ACLED ground truth labels (optional) | CPU, ~2 min | [![Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/signal38/signal38.github.io/blob/main/notebooks/00_acled_labels.ipynb) |
 | [`01_baseline.ipynb`](notebooks/01_baseline.ipynb) | Naive rule + XGBoost baseline | CPU, ~5 min | [![Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/signal38/signal38.github.io/blob/main/notebooks/01_baseline.ipynb) |
 | [`02_finetune.ipynb`](notebooks/02_finetune.ipynb) | LFM2-350M QLoRA fine-tuning | T4 GPU, ~20 min | [![Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/signal38/signal38.github.io/blob/main/notebooks/02_finetune.ipynb) |
 | [`03_evaluate.ipynb`](notebooks/03_evaluate.ipynb) | Three-model evaluation + results export | T4 GPU, ~10 min | [![Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/signal38/signal38.github.io/blob/main/notebooks/03_evaluate.ipynb) |
+| [`04_export_onnx.ipynb`](notebooks/04_export_onnx.ipynb) | Merge adapter → ONNX int4 → HuggingFace Hub | T4 GPU, ~15 min | [![Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/signal38/signal38.github.io/blob/main/notebooks/04_export_onnx.ipynb) |
 
 ## Repo structure
 
@@ -83,7 +85,9 @@ Create a [fine-grained personal access token](https://github.com/settings/tokens
 
 <img src="docs/assets/colab-secrets.png" width="420" alt="Colab Secrets panel showing GITHUB_TOKEN" />
 
-For ACLED credentials, register at [acleddata.com](https://acleddata.com/register/) and retrieve your API key from your account page. Add `ACLED_EMAIL` and `ACLED_KEY` as additional Colab secrets.
+For ACLED credentials (notebook 00), register at [acleddata.com](https://acleddata.com/register/) and add `ACLED_EMAIL` and `ACLED_KEY` as Colab secrets.
+
+For HuggingFace Hub (notebook 04), create a write token at [huggingface.co/settings/tokens](https://huggingface.co/settings/tokens) and add it as `HF_TOKEN`.
 
 ## Team
 
