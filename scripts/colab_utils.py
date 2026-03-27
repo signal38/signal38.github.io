@@ -183,14 +183,15 @@ def publish_artifacts(
 
     subprocess.run(["git", "add", "--", *rel_paths], check=True, cwd=repo_path)
 
-    diff = subprocess.run(
-        ["git", "diff", "--cached", "--quiet", "--", *rel_paths], cwd=repo_path
+    # git diff --cached misses brand-new files with no HEAD entry; use status instead
+    status = subprocess.run(
+        ["git", "status", "--porcelain", "--", *rel_paths],
+        cwd=repo_path, capture_output=True, text=True, check=True,
     )
-    if diff.returncode == 0:
+    staged = [l for l in status.stdout.splitlines() if l and l[0] not in (" ", "?")]
+    if not staged:
         print("No artifact changes to commit.")
         return False
-    if diff.returncode != 1:
-        raise RuntimeError("git diff --cached failed while checking staged artifacts.")
 
     if dry_run:
         print(f"[dry_run] Would commit: {', '.join(rel_paths)}")
