@@ -149,37 +149,21 @@ def publish_artifacts(
         )
 
     repo_url = f"https://x-access-token:{token}@github.com/signal38/signal38.github.io.git"
-    stash_name = "colab-artifacts-publish"
 
     subprocess.run(["git", "config", "user.email", "colab-bot@signal38"], check=True, cwd=repo_path)
     subprocess.run(["git", "config", "user.name", "Colab Bot"], check=True, cwd=repo_path)
     subprocess.run(["git", "remote", "set-url", "origin", repo_url], check=True, cwd=repo_path)
 
-    stash_push = subprocess.run(
-        ["git", "stash", "push", "--include-untracked", "-m", stash_name, "--", *rel_paths],
-        check=True, cwd=repo_path, capture_output=True, text=True,
-    )
-    # git stash writes its status message to stderr, not stdout
-    stash_output = stash_push.stdout + stash_push.stderr
-    stashed = "No local changes to save" not in stash_output
-
+    # Untracked artifact files don't block rebase — no stash needed.
+    # If tracked files in rel_paths have uncommitted edits that conflict,
+    # the rebase will fail with a clear error below.
     try:
         subprocess.run(["git", "pull", "--rebase", "origin", "main"], check=True, cwd=repo_path)
     except subprocess.CalledProcessError as exc:
-        if stashed:
-            subprocess.run(["git", "stash", "pop"], cwd=repo_path)
         raise RuntimeError(
             "git pull --rebase failed before publishing. "
-            "Check for remote conflicts and retry."
+            "Resolve any conflicts in the repo and retry."
         ) from exc
-
-    if stashed:
-        pop = subprocess.run(["git", "stash", "pop"], cwd=repo_path, capture_output=True, text=True)
-        if pop.returncode != 0:
-            raise RuntimeError(
-                "git stash pop failed after rebase — possible merge conflict.\n"
-                + pop.stderr
-            )
 
     subprocess.run(["git", "add", "--", *rel_paths], check=True, cwd=repo_path)
 
