@@ -78,13 +78,13 @@ Colab notebooks are self-contained. Open any notebook via the badge above, conne
 
 ## Colab setup
 
-The notebooks share common setup via `scripts/colab_utils.py`. Notebooks that publish artifacts back to this repo require a `GITHUB_TOKEN` Colab secret. Notebook 00 additionally requires `ACLED_EMAIL` and `ACLED_PASSWORD`.
+The notebooks share common setup via `scripts/colab_utils.py`. Notebooks that publish artifacts back to this repo require a `GITHUB_TOKEN_SIGNAL38` Colab secret. Notebook 00 additionally requires `ACLED_EMAIL` and `ACLED_PASSWORD`.
 
 **Setting up the GitHub token (one-time):**
 
-Create a [fine-grained personal access token](https://github.com/settings/tokens?type=beta) scoped to the `signal38` organization with **Contents: Read and Write** permission. Then add it to Colab: open the key icon in the left sidebar → **Secrets** → **Add new secret**, name it `GITHUB_TOKEN`, paste the token, and enable notebook access.
+Create a [fine-grained personal access token](https://github.com/settings/tokens?type=beta) with **Contents: Read and Write** permission. When creating the token, set **Resource Owner** to `signal38` (the org) — the form defaults to your personal account, which produces a token with the wrong scope. Then add it to Colab: open the key icon in the left sidebar → **Secrets** → **Add new secret**, name it `GITHUB_TOKEN_SIGNAL38`, paste the token, and enable notebook access.
 
-<img src="docs/assets/colab-secrets.png" width="420" alt="Colab Secrets panel showing GITHUB_TOKEN" />
+<img src="docs/assets/colab-secrets.png" width="420" alt="Colab Secrets panel showing GITHUB_TOKEN_SIGNAL38" />
 
 For ACLED credentials (notebook 00), register at [acleddata.com](https://acleddata.com/register/) and add `ACLED_EMAIL` and `ACLED_PASSWORD` as Colab secrets.
 

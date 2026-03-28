@@ -21,7 +21,11 @@ def bootstrap_colab_repo(
     repo_path = Path(repo_dir)
     if not repo_path.exists():
         repo_path.parent.mkdir(parents=True, exist_ok=True)
-        subprocess.run(["git", "clone", repo_url, str(repo_path)], check=True)
+        env = {**os.environ, "GIT_LFS_SKIP_SMUDGE": "1"}
+        subprocess.run(
+            ["git", "clone", "--depth=1", repo_url, str(repo_path)],
+            check=True, env=env,
+        )
 
     if str(repo_path) not in sys.path:
         sys.path.insert(0, str(repo_path))
@@ -58,13 +62,16 @@ def prepare_notebook(
     if pull_latest:
         try:
             from google.colab import userdata
-            token = userdata.get("GITHUB_TOKEN")
+            token = userdata.get("GITHUB_TOKEN_SIGNAL38")
         except Exception:
             token = None
 
         if token:
             authed_url = f"https://x-access-token:{token}@github.com/signal38/signal38.github.io.git"
             subprocess.run(["git", "remote", "set-url", "origin", authed_url], check=True, cwd=repo_path)
+            # Shallow clones can't push; unshallow before any pull that may be followed by push.
+            if (repo_path / ".git" / "shallow").exists():
+                subprocess.run(["git", "fetch", "--unshallow", "origin", "main"], check=True, cwd=repo_path)
 
         try:
             subprocess.run(["git", "pull", "origin", "main"], check=True, cwd=repo_path)
@@ -122,7 +129,7 @@ def publish_artifacts(
 ) -> bool:
     """Commit and push generated artifacts from Colab back to GitHub.
 
-    Requires a Colab secret named ``GITHUB_TOKEN`` with write access to the
+    Requires a Colab secret named ``GITHUB_TOKEN_SIGNAL38`` with write access to the
     signal38 org. Add it via the key icon in the Colab left sidebar.
 
     Returns True when a commit was created and pushed.
@@ -132,10 +139,10 @@ def publish_artifacts(
     except ImportError as exc:
         raise RuntimeError("publish_artifacts only works from Google Colab.") from exc
 
-    token = userdata.get("GITHUB_TOKEN")
+    token = userdata.get("GITHUB_TOKEN_SIGNAL38")
     if not token:
         raise RuntimeError(
-            "Missing Colab secret GITHUB_TOKEN. "
+            "Missing Colab secret GITHUB_TOKEN_SIGNAL38. "
             "Add it via the key icon in the Colab left sidebar."
         )
 
@@ -153,6 +160,10 @@ def publish_artifacts(
     subprocess.run(["git", "config", "user.email", "colab-bot@signal38"], check=True, cwd=repo_path)
     subprocess.run(["git", "config", "user.name", "Colab Bot"], check=True, cwd=repo_path)
     subprocess.run(["git", "remote", "set-url", "origin", repo_url], check=True, cwd=repo_path)
+
+    # Shallow clones can't push; unshallow if needed.
+    if (repo_path / ".git" / "shallow").exists():
+        subprocess.run(["git", "fetch", "--unshallow", "origin", "main"], check=True, cwd=repo_path)
 
     # Untracked artifact files don't block rebase — no stash needed.
     # If tracked files in rel_paths have uncommitted edits that conflict,
