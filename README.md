@@ -1,6 +1,6 @@
 # Signal 38
 
-> **The 38th parallel.** Real-time North Korean military activity risk analysis — fine-tuned LFM2-350M, running entirely in the browser via WebGPU.
+> **The 38th parallel.** North Korean military activity risk analysis — fine-tuned LFM2-350M evaluated against naive and classical ML baselines on 11 years of GDELT data.
 
 [![GitHub Pages](https://img.shields.io/badge/demo-live-brightgreen?logo=github)](https://signal38.github.io)
 [![Python 3.11+](https://img.shields.io/badge/python-3.11+-blue?logo=python)](https://www.python.org)
@@ -14,7 +14,7 @@
 
 Signal 38 ingests weekly clusters of GDELT v2 events involving North Korean military actors and produces structured risk assessments: escalation level (1–5), situation summary, key actors, watch indicators, and projected trajectories.
 
-The model runs fully client-side via WebGPU — no server, no API key, no latency cost.
+The landing page displays pre-computed assessments from the fine-tuned model on the held-out test set. LFM2's hybrid architecture is not yet supported by the ONNX/WebGPU browser stack — live inference is deferred.
 
 ## How it works
 
@@ -26,7 +26,7 @@ GDELT v2 events (11 years, NK military CAMEO codes)
       1. Naive baseline    — Goldstein-scale threshold rule
       2. Classical ML      — XGBoost on GDELT features
       3. LFM2-350M QLoRA  — fine-tuned on 463 labeled examples
-  → LoRA adapter merged → ONNX int4 export → browser inference via WebGPU
+  → LoRA adapter merged → pushed to HuggingFace Hub (signal38/lfm2-nk-risk)
 ```
 
 ## Models
@@ -49,7 +49,7 @@ Run in order. Notebooks 02–04 require a T4 GPU runtime. All publish their arti
 | [`01_baseline.ipynb`](notebooks/01_baseline.ipynb) | Naive rule + XGBoost baseline | CPU, ~5 min | [![Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/signal38/signal38.github.io/blob/main/notebooks/01_baseline.ipynb) |
 | [`02_finetune.ipynb`](notebooks/02_finetune.ipynb) | LFM2-350M QLoRA fine-tuning | T4 GPU, ~20 min | [![Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/signal38/signal38.github.io/blob/main/notebooks/02_finetune.ipynb) |
 | [`03_evaluate.ipynb`](notebooks/03_evaluate.ipynb) | Three-model evaluation + results export | T4 GPU, ~10 min | [![Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/signal38/signal38.github.io/blob/main/notebooks/03_evaluate.ipynb) |
-| [`04_export_onnx.ipynb`](notebooks/04_export_onnx.ipynb) | Merge adapter → ONNX int4 → HuggingFace Hub | T4 GPU, ~15 min | [![Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/signal38/signal38.github.io/blob/main/notebooks/04_export_onnx.ipynb) |
+| [`04_export_onnx.ipynb`](notebooks/04_export_onnx.ipynb) | Merge adapter → HuggingFace Hub | T4 GPU, ~10 min | [![Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/signal38/signal38.github.io/blob/main/notebooks/04_export_onnx.ipynb) |
 
 ## Repo structure
 

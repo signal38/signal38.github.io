@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Signal 38 — NK Military Activity Risk Analyst</title>
-  <meta name="description" content="Real-time North Korean military activity risk analysis powered by LFM2-350M, running in-browser via WebGPU." />
+  <meta name="description" content="North Korean military activity risk analysis — LFM2-350M fine-tuned on GDELT v2 data, evaluated against naive and XGBoost baselines." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet" />
@@ -763,7 +763,7 @@
           </svg>
         </div>
         <h3>Select a week to run analysis</h3>
-        <p>Choose any week from the test set. The model runs entirely in your browser via WebGPU.</p>
+        <p>Choose any week from the test set to load pre-computed LFM2-350M assessments.</p>
 
         <div class="escalation-legend">
           <div class="legend-label">Escalation scale</div>
@@ -873,7 +873,7 @@
 
   <!-- Footer -->
   <footer>
-    <span class="footer-text">LFM2-350M · GDELT v2 · WebGPU · signal38.github.io</span>
+    <span class="footer-text">LFM2-350M · GDELT v2 · QLoRA · signal38.github.io</span>
     <a class="footer-link" href="https://github.com/signal38/signal38.github.io" target="_blank">GitHub ↗</a>
   </footer>
 
