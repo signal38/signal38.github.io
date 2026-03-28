@@ -5,6 +5,7 @@
 [![GitHub Pages](https://img.shields.io/badge/demo-live-brightgreen?logo=github)](https://signal38.github.io)
 [![Python 3.11+](https://img.shields.io/badge/python-3.11+-blue?logo=python)](https://www.python.org)
 [![Model: LFM2-350M](https://img.shields.io/badge/model-LFM2--350M-purple)](https://huggingface.co/LiquidAI/LFM2-350M)
+[![HuggingFace](https://img.shields.io/badge/🤗-signal38-yellow)](https://huggingface.co/signal38)
 [![Data: GDELT](https://img.shields.io/badge/data-GDELT%20v2-orange)](https://www.gdeltproject.org)
 [![License: MIT](https://img.shields.io/badge/license-MIT-green)](LICENSE)
 
