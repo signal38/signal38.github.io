@@ -165,16 +165,29 @@ def publish_artifacts(
     if (repo_path / ".git" / "shallow").exists():
         subprocess.run(["git", "fetch", "--unshallow", "origin", "main"], check=True, cwd=repo_path)
 
-    # Untracked artifact files don't block rebase — no stash needed.
-    # If tracked files in rel_paths have uncommitted edits that conflict,
-    # the rebase will fail with a clear error below.
-    try:
-        subprocess.run(["git", "pull", "--rebase", "origin", "main"], check=True, cwd=repo_path)
-    except subprocess.CalledProcessError as exc:
+    # Abort any rebase left over from a previous crashed session.
+    subprocess.run(["git", "rebase", "--abort"], cwd=repo_path,
+                   capture_output=True)  # ignore exit code — fails cleanly if no rebase in progress
+
+    # Fetch + fast-forward to latest main before committing artifacts.
+    fetch = subprocess.run(
+        ["git", "fetch", "origin", "main"],
+        cwd=repo_path, capture_output=True, text=True,
+    )
+    if fetch.returncode != 0:
         raise RuntimeError(
-            "git pull --rebase failed before publishing. "
-            "Resolve any conflicts in the repo and retry."
-        ) from exc
+            f"git fetch failed (exit {fetch.returncode}):\n{fetch.stderr or fetch.stdout}"
+        )
+    rebase = subprocess.run(
+        ["git", "rebase", "origin/main"],
+        cwd=repo_path, capture_output=True, text=True,
+    )
+    if rebase.returncode != 0:
+        subprocess.run(["git", "rebase", "--abort"], cwd=repo_path, capture_output=True)
+        raise RuntimeError(
+            f"git rebase failed before publishing (exit {rebase.returncode}):\n"
+            + (rebase.stderr or rebase.stdout)
+        )
 
     subprocess.run(["git", "add", "--", *rel_paths], check=True, cwd=repo_path)
 
