@@ -4,9 +4,6 @@
 # Notebook diffs
 *.ipynb diff=jupyternotebook
 
-# LFS — large binary artifacts (full merged models only)
-models/**/*.safetensors filter=lfs diff=lfs merge=lfs -text
-
-# LoRA adapter and outputs are small — track directly in git, not LFS
-models/lfm2-nk-risk/lora_adapter/*.safetensors -filter -diff -merge text
+# No LFS — large models go to HuggingFace Hub, not git.
+# The only binary we commit is the small LoRA adapter (~2 MB).
 data/outputs/*.json -filter -diff -merge
