@@ -179,7 +179,7 @@ def publish_artifacts(
             f"git fetch failed (exit {fetch.returncode}):\n{fetch.stderr or fetch.stdout}"
         )
     rebase = subprocess.run(
-        ["git", "rebase", "origin/main"],
+        ["git", "rebase", "--autostash", "origin/main"],
         cwd=repo_path, capture_output=True, text=True,
     )
     if rebase.returncode != 0:
