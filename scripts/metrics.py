@@ -24,12 +24,29 @@ REQUIRED_FIELDS = [
 
 
 def parse_json_output(text: str) -> dict | None:
-    """Extract and parse JSON from model output. Returns None on failure."""
+    """Extract and parse JSON from model output. Returns None on failure.
+
+    Handles:
+    - Bare JSON objects
+    - Markdown code fences (```json ... ```)
+    - Trailing commas before } or ]
+    """
     text = text.strip()
-    match = re.search(r"\{.*\}", text, re.DOTALL)
-    if match:
+
+    # Try every {...} span from longest to shortest so we get the outermost object.
+    candidates = [m.group() for m in re.finditer(r"\{.*?\}", text, re.DOTALL)]
+    # Also try the greedy full-span match (handles nested braces correctly).
+    greedy = re.search(r"\{.*\}", text, re.DOTALL)
+    if greedy:
+        candidates.insert(0, greedy.group())
+
+    for candidate in candidates:
+        # Strip trailing commas before } or ] — common LLM formatting error.
+        cleaned = re.sub(r",\s*([}\]])", r"\1", candidate)
         try:
-            return json.loads(match.group())
+            result = json.loads(cleaned)
+            if isinstance(result, dict):
+                return result
         except json.JSONDecodeError:
             pass
     return None
