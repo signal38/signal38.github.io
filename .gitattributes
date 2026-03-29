@@ -4,6 +4,9 @@
 # Notebook diffs
 *.ipynb diff=jupyternotebook
 
-# LFS — large binary artifacts published by Colab notebooks
+# LFS — large binary artifacts (full merged models only)
 models/**/*.safetensors filter=lfs diff=lfs merge=lfs -text
-data/outputs/*.json filter=lfs diff=lfs merge=lfs -text
+
+# LoRA adapter and outputs are small — track directly in git, not LFS
+models/lfm2-nk-risk/lora_adapter/*.safetensors -filter -diff -merge text
+data/outputs/*.json -filter -diff -merge
