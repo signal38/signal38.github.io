@@ -12,6 +12,10 @@ REPO_URL = "https://github.com/signal38/signal38.github.io.git"
 DEFAULT_REPO_DIR = Path("/content/signal38.github.io")
 NOTEBOOK_DEPS_SENTINEL_VERSION = "v1"
 
+# Skip LFS smudge on every git operation so binary files committed directly
+# (e.g. the LoRA adapter) are written as-is instead of being filtered.
+_NO_LFS = {**os.environ, "GIT_LFS_SKIP_SMUDGE": "1"}
+
 
 def bootstrap_colab_repo(
     repo_dir: str | Path = DEFAULT_REPO_DIR,
@@ -21,10 +25,9 @@ def bootstrap_colab_repo(
     repo_path = Path(repo_dir)
     if not repo_path.exists():
         repo_path.parent.mkdir(parents=True, exist_ok=True)
-        env = {**os.environ, "GIT_LFS_SKIP_SMUDGE": "1"}
         subprocess.run(
             ["git", "clone", "--depth=1", repo_url, str(repo_path)],
-            check=True, env=env,
+            check=True, env=_NO_LFS,
         )
 
     if str(repo_path) not in sys.path:
@@ -71,10 +74,10 @@ def prepare_notebook(
             subprocess.run(["git", "remote", "set-url", "origin", authed_url], check=True, cwd=repo_path)
             # Shallow clones can't push; unshallow before any pull that may be followed by push.
             if (repo_path / ".git" / "shallow").exists():
-                subprocess.run(["git", "fetch", "--unshallow", "origin", "main"], check=True, cwd=repo_path)
+                subprocess.run(["git", "fetch", "--unshallow", "origin", "main"], check=True, cwd=repo_path, env=_NO_LFS)
 
         try:
-            subprocess.run(["git", "pull", "origin", "main"], check=True, cwd=repo_path)
+            subprocess.run(["git", "pull", "origin", "main"], check=True, cwd=repo_path, env=_NO_LFS)
         except subprocess.CalledProcessError:
             print("Warning: git pull failed — continuing with local repo state.")
 
@@ -163,7 +166,7 @@ def publish_artifacts(
 
     # Shallow clones can't push; unshallow if needed.
     if (repo_path / ".git" / "shallow").exists():
-        subprocess.run(["git", "fetch", "--unshallow", "origin", "main"], check=True, cwd=repo_path)
+        subprocess.run(["git", "fetch", "--unshallow", "origin", "main"], check=True, cwd=repo_path, env=_NO_LFS)
 
     # Abort any rebase left over from a previous crashed session.
     subprocess.run(["git", "rebase", "--abort"], cwd=repo_path,
@@ -172,7 +175,7 @@ def publish_artifacts(
     # Fetch + fast-forward to latest main before committing artifacts.
     fetch = subprocess.run(
         ["git", "fetch", "origin", "main"],
-        cwd=repo_path, capture_output=True, text=True,
+        cwd=repo_path, capture_output=True, text=True, env=_NO_LFS,
     )
     if fetch.returncode != 0:
         raise RuntimeError(
@@ -180,7 +183,7 @@ def publish_artifacts(
         )
     rebase = subprocess.run(
         ["git", "rebase", "--autostash", "origin/main"],
-        cwd=repo_path, capture_output=True, text=True,
+        cwd=repo_path, capture_output=True, text=True, env=_NO_LFS,
     )
     if rebase.returncode != 0:
         subprocess.run(["git", "rebase", "--abort"], cwd=repo_path, capture_output=True)
