@@ -15,7 +15,7 @@
 
 Signal 38 ingests weekly clusters of GDELT v2 events involving North Korean military actors and produces structured risk assessments: escalation level (1–5), situation summary, key actors, watch indicators, and projected trajectories.
 
-The landing page displays pre-computed assessments from the fine-tuned model on the held-out test set. LFM2's hybrid architecture is not yet supported by the ONNX/WebGPU browser stack — live inference is deferred.
+The landing page displays pre-computed assessments from the fine-tuned model on the held-out test set. Live in-browser inference via WebGPU is planned — the merged model will be exported to ONNX and loaded via transformers.js.
 
 ## How it works
 
@@ -50,7 +50,7 @@ Run in order. Notebooks 02–04 require a T4 GPU runtime. All publish their arti
 | [`01_baseline.ipynb`](notebooks/01_baseline.ipynb) | Naive rule + XGBoost baseline | CPU, ~5 min | [![Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/signal38/signal38.github.io/blob/main/notebooks/01_baseline.ipynb) |
 | [`02_finetune.ipynb`](notebooks/02_finetune.ipynb) | LFM2-350M QLoRA fine-tuning | T4 GPU, ~20 min | [![Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/signal38/signal38.github.io/blob/main/notebooks/02_finetune.ipynb) |
 | [`03_evaluate.ipynb`](notebooks/03_evaluate.ipynb) | Three-model evaluation + results export | T4 GPU, ~10 min | [![Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/signal38/signal38.github.io/blob/main/notebooks/03_evaluate.ipynb) |
-| [`04_export_onnx.ipynb`](notebooks/04_export_onnx.ipynb) | Merge adapter → HuggingFace Hub | T4 GPU, ~10 min | [![Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/signal38/signal38.github.io/blob/main/notebooks/04_export_onnx.ipynb) |
+| [`04_export_onnx.ipynb`](notebooks/04_export_onnx.ipynb) | Merge adapter → ONNX export → HuggingFace Hub | T4 GPU, ~10 min | [![Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/signal38/signal38.github.io/blob/main/notebooks/04_export_onnx.ipynb) |
 
 ## Repo structure
 
