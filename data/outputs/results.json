@@ -1,3 +1,18 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:9114ad7cd0eea052a2b74910f04e9612edfa85dbbf90b8e54fb0d19dd7540506
-size 332
+{
+  "test_set_size": 59,
+  "naive_baseline": {
+    "mae": 1.9830508474576272,
+    "accuracy": 0.0
+  },
+  "xgboost": {
+    "mae": 0.6949152542372882,
+    "accuracy": 0.3898305084745763
+  },
+  "lfm2_350m": {
+    "mae": NaN,
+    "accuracy": NaN,
+    "valid_json_rate": 0.0,
+    "field_completeness": 0.0,
+    "parse_failures": 59
+  }
+}

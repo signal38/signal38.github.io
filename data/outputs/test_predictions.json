@@ -1,3 +1,415 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:d4ad9755e17b7fbf914a9c0589e1dc98a5e795c48c4649e03c3bbf796b9aad3d
-size 7141
+[
+  {
+    "week": "2022-05-29",
+    "gold_level": 2,
+    "naive_level": 1,
+    "xgb_level": 3,
+    "lfm2_level": null
+  },
+  {
+    "week": "2018-04-29",
+    "gold_level": 5,
+    "naive_level": 1,
+    "xgb_level": 3,
+    "lfm2_level": null
+  },
+  {
+    "week": "2022-04-17",
+    "gold_level": 2,
+    "naive_level": 1,
+    "xgb_level": 3,
+    "lfm2_level": null
+  },
+  {
+    "week": "2024-01-14",
+    "gold_level": 5,
+    "naive_level": 1,
+    "xgb_level": 3,
+    "lfm2_level": null
+  },
+  {
+    "week": "2025-09-21",
+    "gold_level": 3,
+    "naive_level": 1,
+    "xgb_level": 3,
+    "lfm2_level": null
+  },
+  {
+    "week": "2025-08-10",
+    "gold_level": 3,
+    "naive_level": 1,
+    "xgb_level": 3,
+    "lfm2_level": null
+  },
+  {
+    "week": "2017-02-12",
+    "gold_level": 4,
+    "naive_level": 1,
+    "xgb_level": 3,
+    "lfm2_level": null
+  },
+  {
+    "week": "2025-12-21",
+    "gold_level": 3,
+    "naive_level": 1,
+    "xgb_level": 3,
+    "lfm2_level": null
+  },
+  {
+    "week": "2016-09-11",
+    "gold_level": 3,
+    "naive_level": 1,
+    "xgb_level": 3,
+    "lfm2_level": null
+  },
+  {
+    "week": "2020-10-25",
+    "gold_level": 2,
+    "naive_level": 1,
+    "xgb_level": 3,
+    "lfm2_level": null
+  },
+  {
+    "week": "2019-08-11",
+    "gold_level": 5,
+    "naive_level": 1,
+    "xgb_level": 3,
+    "lfm2_level": null
+  },
+  {
+    "week": "2016-01-10",
+    "gold_level": 4,
+    "naive_level": 1,
+    "xgb_level": 3,
+    "lfm2_level": null
+  },
+  {
+    "week": "2016-07-03",
+    "gold_level": 2,
+    "naive_level": 1,
+    "xgb_level": 3,
+    "lfm2_level": null
+  },
+  {
+    "week": "2018-11-25",
+    "gold_level": 2,
+    "naive_level": 1,
+    "xgb_level": 3,
+    "lfm2_level": null
+  },
+  {
+    "week": "2022-03-27",
+    "gold_level": 4,
+    "naive_level": 1,
+    "xgb_level": 3,
+    "lfm2_level": null
+  },
+  {
+    "week": "2020-11-22",
+    "gold_level": 2,
+    "naive_level": 1,
+    "xgb_level": 3,
+    "lfm2_level": null
+  },
+  {
+    "week": "2016-09-04",
+    "gold_level": 2,
+    "naive_level": 1,
+    "xgb_level": 3,
+    "lfm2_level": null
+  },
+  {
+    "week": "2022-07-24",
+    "gold_level": 2,
+    "naive_level": 1,
+    "xgb_level": 3,
+    "lfm2_level": null
+  },
+  {
+    "week": "2017-07-30",
+    "gold_level": 3,
+    "naive_level": 1,
+    "xgb_level": 3,
+    "lfm2_level": null
+  },
+  {
+    "week": "2024-02-25",
+    "gold_level": 3,
+    "naive_level": 1,
+    "xgb_level": 3,
+    "lfm2_level": null
+  },
+  {
+    "week": "2015-12-27",
+    "gold_level": 2,
+    "naive_level": 1,
+    "xgb_level": 3,
+    "lfm2_level": null
+  },
+  {
+    "week": "2020-04-26",
+    "gold_level": 2,
+    "naive_level": 1,
+    "xgb_level": 3,
+    "lfm2_level": null
+  },
+  {
+    "week": "2021-11-21",
+    "gold_level": 3,
+    "naive_level": 1,
+    "xgb_level": 3,
+    "lfm2_level": null
+  },
+  {
+    "week": "2022-03-06",
+    "gold_level": 3,
+    "naive_level": 1,
+    "xgb_level": 3,
+    "lfm2_level": null
+  },
+  {
+    "week": "2017-01-15",
+    "gold_level": 2,
+    "naive_level": 1,
+    "xgb_level": 3,
+    "lfm2_level": null
+  },
+  {
+    "week": "2022-08-07",
+    "gold_level": 2,
+    "naive_level": 1,
+    "xgb_level": 3,
+    "lfm2_level": null
+  },
+  {
+    "week": "2016-12-11",
+    "gold_level": 3,
+    "naive_level": 1,
+    "xgb_level": 3,
+    "lfm2_level": null
+  },
+  {
+    "week": "2026-02-15",
+    "gold_level": 4,
+    "naive_level": 1,
+    "xgb_level": 3,
+    "lfm2_level": null
+  },
+  {
+    "week": "2021-09-26",
+    "gold_level": 5,
+    "naive_level": 1,
+    "xgb_level": 3,
+    "lfm2_level": null
+  },
+  {
+    "week": "2019-05-12",
+    "gold_level": 3,
+    "naive_level": 1,
+    "xgb_level": 3,
+    "lfm2_level": null
+  },
+  {
+    "week": "2018-03-11",
+    "gold_level": 2,
+    "naive_level": 1,
+    "xgb_level": 3,
+    "lfm2_level": null
+  },
+  {
+    "week": "2025-10-26",
+    "gold_level": 4,
+    "naive_level": 1,
+    "xgb_level": 3,
+    "lfm2_level": null
+  },
+  {
+    "week": "2021-10-24",
+    "gold_level": 3,
+    "naive_level": 1,
+    "xgb_level": 3,
+    "lfm2_level": null
+  },
+  {
+    "week": "2026-01-25",
+    "gold_level": 3,
+    "naive_level": 1,
+    "xgb_level": 3,
+    "lfm2_level": null
+  },
+  {
+    "week": "2018-04-08",
+    "gold_level": 2,
+    "naive_level": 1,
+    "xgb_level": 3,
+    "lfm2_level": null
+  },
+  {
+    "week": "2015-04-05",
+    "gold_level": 3,
+    "naive_level": 1,
+    "xgb_level": 3,
+    "lfm2_level": null
+  },
+  {
+    "week": "2020-08-02",
+    "gold_level": 2,
+    "naive_level": 1,
+    "xgb_level": 3,
+    "lfm2_level": null
+  },
+  {
+    "week": "2023-12-10",
+    "gold_level": 2,
+    "naive_level": 1,
+    "xgb_level": 3,
+    "lfm2_level": null
+  },
+  {
+    "week": "2019-06-16",
+    "gold_level": 2,
+    "naive_level": 1,
+    "xgb_level": 3,
+    "lfm2_level": null
+  },
+  {
+    "week": "2023-05-14",
+    "gold_level": 4,
+    "naive_level": 1,
+    "xgb_level": 3,
+    "lfm2_level": null
+  },
+  {
+    "week": "2026-02-08",
+    "gold_level": 4,
+    "naive_level": 1,
+    "xgb_level": 3,
+    "lfm2_level": null
+  },
+  {
+    "week": "2019-01-13",
+    "gold_level": 4,
+    "naive_level": 1,
+    "xgb_level": 3,
+    "lfm2_level": null
+  },
+  {
+    "week": "2015-08-30",
+    "gold_level": 3,
+    "naive_level": 1,
+    "xgb_level": 3,
+    "lfm2_level": null
+  },
+  {
+    "week": "2025-01-19",
+    "gold_level": 3,
+    "naive_level": 1,
+    "xgb_level": 3,
+    "lfm2_level": null
+  },
+  {
+    "week": "2019-09-15",
+    "gold_level": 2,
+    "naive_level": 1,
+    "xgb_level": 3,
+    "lfm2_level": null
+  },
+  {
+    "week": "2019-06-02",
+    "gold_level": 3,
+    "naive_level": 1,
+    "xgb_level": 3,
+    "lfm2_level": null
+  },
+  {
+    "week": "2016-12-18",
+    "gold_level": 3,
+    "naive_level": 1,
+    "xgb_level": 3,
+    "lfm2_level": null
+  },
+  {
+    "week": "2015-09-20",
+    "gold_level": 3,
+    "naive_level": 1,
+    "xgb_level": 3,
+    "lfm2_level": null
+  },
+  {
+    "week": "2015-10-04",
+    "gold_level": 2,
+    "naive_level": 1,
+    "xgb_level": 3,
+    "lfm2_level": null
+  },
+  {
+    "week": "2023-06-04",
+    "gold_level": 2,
+    "naive_level": 1,
+    "xgb_level": 3,
+    "lfm2_level": null
+  },
+  {
+    "week": "2016-11-06",
+    "gold_level": 3,
+    "naive_level": 1,
+    "xgb_level": 3,
+    "lfm2_level": null
+  },
+  {
+    "week": "2025-11-09",
+    "gold_level": 4,
+    "naive_level": 1,
+    "xgb_level": 3,
+    "lfm2_level": null
+  },
+  {
+    "week": "2017-02-19",
+    "gold_level": 3,
+    "naive_level": 1,
+    "xgb_level": 3,
+    "lfm2_level": null
+  },
+  {
+    "week": "2017-11-12",
+    "gold_level": 3,
+    "naive_level": 1,
+    "xgb_level": 3,
+    "lfm2_level": null
+  },
+  {
+    "week": "2019-07-07",
+    "gold_level": 2,
+    "naive_level": 1,
+    "xgb_level": 3,
+    "lfm2_level": null
+  },
+  {
+    "week": "2019-12-08",
+    "gold_level": 5,
+    "naive_level": 1,
+    "xgb_level": 3,
+    "lfm2_level": null
+  },
+  {
+    "week": "2020-07-12",
+    "gold_level": 4,
+    "naive_level": 1,
+    "xgb_level": 3,
+    "lfm2_level": null
+  },
+  {
+    "week": "2015-08-16",
+    "gold_level": 3,
+    "naive_level": 1,
+    "xgb_level": 3,
+    "lfm2_level": null
+  },
+  {
+    "week": "2017-04-30",
+    "gold_level": 3,
+    "naive_level": 1,
+    "xgb_level": 3,
+    "lfm2_level": null
+  }
+]
