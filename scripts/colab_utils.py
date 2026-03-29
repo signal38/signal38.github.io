@@ -168,33 +168,10 @@ def publish_artifacts(
     if (repo_path / ".git" / "shallow").exists():
         subprocess.run(["git", "fetch", "--unshallow", "origin", "main"], check=True, cwd=repo_path, env=_NO_LFS)
 
-    # Abort any rebase left over from a previous crashed session.
-    subprocess.run(["git", "rebase", "--abort"], cwd=repo_path,
-                   capture_output=True)  # ignore exit code — fails cleanly if no rebase in progress
-
-    # Fetch + fast-forward to latest main before committing artifacts.
-    fetch = subprocess.run(
-        ["git", "fetch", "origin", "main"],
-        cwd=repo_path, capture_output=True, text=True, env=_NO_LFS,
-    )
-    if fetch.returncode != 0:
-        raise RuntimeError(
-            f"git fetch failed (exit {fetch.returncode}):\n{fetch.stderr or fetch.stdout}"
-        )
-    rebase = subprocess.run(
-        ["git", "rebase", "--autostash", "origin/main"],
-        cwd=repo_path, capture_output=True, text=True, env=_NO_LFS,
-    )
-    if rebase.returncode != 0:
-        subprocess.run(["git", "rebase", "--abort"], cwd=repo_path, capture_output=True)
-        raise RuntimeError(
-            f"git rebase failed before publishing (exit {rebase.returncode}):\n"
-            + (rebase.stderr or rebase.stdout)
-        )
-
+    # Stage artifacts now, while they are safely on disk.
     subprocess.run(["git", "add", "--", *rel_paths], check=True, cwd=repo_path)
 
-    # git diff --cached misses brand-new files with no HEAD entry; use status instead
+    # git diff --cached misses brand-new files with no HEAD entry; use status instead.
     status = subprocess.run(
         ["git", "status", "--porcelain", "--", *rel_paths],
         cwd=repo_path, capture_output=True, text=True, check=True,
@@ -209,7 +186,30 @@ def publish_artifacts(
         print(f"[dry_run] Message: {message}")
         return False
 
+    # Commit locally first — artifacts are now safe in git history.
     subprocess.run(["git", "commit", "-m", message], check=True, cwd=repo_path)
+
+    # Rebase onto latest remote. No --autostash needed: nothing is unstaged.
+    # Abort any stuck rebase from a previous crashed session before starting.
+    subprocess.run(["git", "rebase", "--abort"], cwd=repo_path, capture_output=True)
+    fetch = subprocess.run(
+        ["git", "fetch", "origin", "main"],
+        cwd=repo_path, capture_output=True, text=True, env=_NO_LFS,
+    )
+    if fetch.returncode != 0:
+        raise RuntimeError(
+            f"git fetch failed (exit {fetch.returncode}):\n{fetch.stderr or fetch.stdout}"
+        )
+    rebase = subprocess.run(
+        ["git", "rebase", "origin/main"],
+        cwd=repo_path, capture_output=True, text=True, env=_NO_LFS,
+    )
+    if rebase.returncode != 0:
+        subprocess.run(["git", "rebase", "--abort"], cwd=repo_path, capture_output=True)
+        raise RuntimeError(
+            f"git rebase failed (exit {rebase.returncode}):\n"
+            + (rebase.stderr or rebase.stdout)
+        )
 
     push = subprocess.run(
         ["git", "push", "origin", "main"],
