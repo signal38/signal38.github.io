@@ -9,10 +9,10 @@
     "accuracy": 0.3898305084745763
   },
   "lfm2_350m": {
-    "mae": NaN,
-    "accuracy": NaN,
-    "valid_json_rate": 0.0,
-    "field_completeness": 0.0,
-    "parse_failures": 59
+    "mae": 0.6904761904761905,
+    "accuracy": 0.47619047619047616,
+    "valid_json_rate": 0.711864406779661,
+    "field_completeness": 0.6576271186440678,
+    "parse_failures": 17
   }
 }

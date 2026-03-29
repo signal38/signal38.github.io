@@ -4,7 +4,34 @@
     "gold_level": 2,
     "naive_level": 1,
     "xgb_level": 3,
-    "lfm2_level": null
+    "lfm2_level": 3,
+    "lfm2_summary": null,
+    "lfm2_rationale": "The data shows significant military activity with 660 'Fight' events, 212 'Exhibit Force' events, and 85 'Coerce' events, indicating high tension and potential provocative actions. The average Goldstein scale of -8.8 suggests moderate to high levels of military activity. The presence of 'Fight' events at multiple locations (San Francisco, California, United States) and the 'Exhibit Force' event at Pyongyang suggests potential military posturing. However, the low number of 'Reduce Military' events (212) compared to 'Exhibit Force' suggests this wasn't a major escalation. The high number of 'Fight' events (660) indicates ongoing conflict, while the low number of 'Coerce' events suggests this wasn't a coercive action. The global context of US-China tensions and UN Security Council actions further contextualizes this activity.",
+    "lfm2_actors": [
+      {
+        "name": "United States",
+        "role": "Primary military power and US diplomatic actor",
+        "posture": "Highly defensive and provocative"
+      },
+      {
+        "name": "China",
+        "role": "Chinese counterpart to US military actions",
+        "posture": "Potential adversary with military posturing"
+      },
+      {
+        "name": "North Korea",
+        "role": "Primary military actor",
+        "posture": "Potential adversary with military posturing"
+      },
+      {
+        "name": "United States",
+        "role": "US counterpart to North Korean actions",
+        "posture": "Defensive and potentially provocative"
+      }
+    ],
+    "lfm2_indicators": null,
+    "lfm2_trajectories": null,
+    "lfm2_confidence": null
   },
   {
     "week": "2018-04-29",
@@ -18,70 +45,396 @@
     "gold_level": 2,
     "naive_level": 1,
     "xgb_level": 3,
-    "lfm2_level": null
+    "lfm2_level": 3,
+    "lfm2_summary": null,
+    "lfm2_rationale": "The data shows significant military activity with 435 events, primarily focused on 'Exhibit Force' and 'Reduce Military' activities, indicating potential hostile posturing. The high volume of 'Fight' events (133) and 'Exhibit Force' events (99) suggests active military confrontations. However, the low number of 'Coerce' and 'Assault' events (98) suggests this was not a hostile confrontation. The average Goldstein scale of -7.8 indicates generally negative sentiment, but the presence of 'Fight' events suggests some level of tension. The high number of 'Reducing Military' events (63) and 'Exhibit Force' events (99) indicates escalating military posturing rather than aggression.",
+    "lfm2_actors": [
+      {
+        "name": "North Korea",
+        "role": "Primary adversary",
+        "posture": "Highly aggressive, showing 'Exhibit Force' and 'Reduce Military' activities"
+      },
+      {
+        "name": "US",
+        "role": "Foreign power",
+        "posture": "Potential adversary, showing 'Exhibit Force' and 'Reduce Military' activities"
+      },
+      {
+        "name": "NORTH KOREA",
+        "role": "Target",
+        "posture": "Defensive, showing 'Exhibit Force' and 'Reduce Military' activities"
+      },
+      {
+        "name": "NORTH KOREA COUNTER",
+        "role": "Responding actor",
+        "posture": "Defensive, showing 'Exhibit Force' and 'Reduce Military' activities"
+      }
+    ],
+    "lfm2_indicators": [
+      "Further escalation of 'Exhibit Force' and 'Reduce Military' activities by North Korea",
+      "Changes in the frequency or intensity of 'Fight' events",
+      "Changes in the number of 'Exhibit Force' events compared to 'Reduce Military' events",
+      "Changes in the number of 'Fight' events compared to 'Exhibit Force' events",
+      "Changes in the context of 'Exhibit Force' activities (e.g., from military to diplomatic or economic activities)",
+      "Changes in the number of 'Reducing Military' activities by North Korea"
+    ],
+    "lfm2_trajectories": null,
+    "lfm2_confidence": "medium"
   },
   {
     "week": "2024-01-14",
     "gold_level": 5,
     "naive_level": 1,
     "xgb_level": 3,
-    "lfm2_level": null
+    "lfm2_level": 3,
+    "lfm2_summary": null,
+    "lfm2_rationale": "The data shows significant military activity with 865 events classified as 'Fight' and 87 'Exhibit Force', indicating high levels of military posturing. The average Goldstein scale of -9.2 suggests tense but not overtly aggressive tensions. The presence of 'Fight' events with 80% at the highest level (nan) and 'Coerce' events with 55% at the lowest level (nan) indicates escalating military posturing rather than outright conflict. The high volume of 'Fight' events (865) and 'Exhibit Force' events (87) suggests a significant military buildup. However, the low number of 'Reduce Military' events (85) and 'Assault' events (36) suggests limited military escalation beyond defensive posturing. The low number of 'Protest' events (6) indicates minimal public military demonstrations. The geopolitical context suggests this activity may be related to North Korea's diplomatic efforts or sanctions-related activities rather than direct military confrontation. The location data points to potential military exercises or demonstrations in the Korean Peninsula, though specifics are not provided. The overall pattern of high-volume 'Fight' events with low 'Reduce Military' and 'Assault' events suggests a strategic rather than direct military confrontation, with potential diplomatic or economic motivations behind the high level of activity.",
+    "lfm2_actors": [
+      "North Korea",
+      "United States",
+      "United States"
+    ],
+    "lfm2_indicators": null,
+    "lfm2_trajectories": null,
+    "lfm2_confidence": "medium"
   },
   {
     "week": "2025-09-21",
     "gold_level": 3,
     "naive_level": 1,
     "xgb_level": 3,
-    "lfm2_level": null
+    "lfm2_level": 3,
+    "lfm2_summary": "The GDELT data reveals a highly militarized and provocative week with 221 events totaling 248 incidents. The event breakdown shows 105 'Fight' events, 50 'Assault' events, and 26 'Coerce' events, indicating active military confrontations. The high volume of 'Reduce Military' events suggests potential diplomatic tensions. The presence of North Korean 'Fight' events at Moscow suggests potential provocative actions, while the low number of 'Coerce' events indicates a generally tense rather than escalated situation. The location data points to North Korean military activities in Pyongyang and Kursk, with significant military presence in Moscow. The overall pattern suggests a period of heightened military tension with potential diplomatic implications.",
+    "lfm2_rationale": "The data shows significant military activity with 221 events totaling 248 incidents, primarily focused on combat and coercive actions. The average Goldstein scale of -8.6 indicates severe tensions, while the high number of 'Fight' events suggests active military confrontations. The presence of 'Coerce' and 'Assault' events, along with the 'Fight' event at Moscow, suggests potential provocative actions. However, the low number of 'Reduce Military' events and the absence of major military actions indicate a generally tense rather than escalated situation.",
+    "lfm2_actors": [
+      {
+        "name": "North Korea",
+        "role": "Primary military actor",
+        "posture": "Highly militarized and provocative"
+      },
+      {
+        "name": "China",
+        "role": "Regional power and diplomatic actor",
+        "posture": "Balanced in military activities"
+      },
+      {
+        "name": "Moscow",
+        "role": "Diplomatic and military hub",
+        "posture": "Potential diplomatic hub"
+      },
+      {
+        "name": "United States",
+        "role": "Diplomatic and military power",
+        "posture": "Potential diplomatic and military power"
+      }
+    ],
+    "lfm2_indicators": null,
+    "lfm2_trajectories": null,
+    "lfm2_confidence": "medium"
   },
   {
     "week": "2025-08-10",
     "gold_level": 3,
     "naive_level": 1,
     "xgb_level": 3,
-    "lfm2_level": null
+    "lfm2_level": 3,
+    "lfm2_summary": null,
+    "lfm2_rationale": "The data shows significant military activity with 78 'Fight' events, 66 'Coerce' events, and 19 'Reduce Military' events, indicating escalatory tendencies. The average Goldstein scale of -7.6 suggests moderate to high tensions. The high volume of events (250 total) and specific locations (P'yongyang, North Korea) point to organized military activity. However, the limited number of notable events and specific actors (ADMINISTRATION, AIR FORCE, ARIZONA) suggests this may not represent a major conflict. The presence of North Korean actors in multiple locations (P'yongyang, North Korea) indicates potential regime-level tensions rather than isolated military actions.",
+    "lfm2_actors": [
+      {
+        "name": "North Korea",
+        "role": "Primary military actor",
+        "posture": "Highly aggressive and provocative"
+      },
+      {
+        "name": "ADMINISTRATION",
+        "role": "Government entity",
+        "posture": "Potentially defensive or neutral"
+      },
+      {
+        "name": "AIR FORCE",
+        "role": "Military component",
+        "posture": "Active in military operations"
+      },
+      {
+        "name": "NORTH KOREA",
+        "role": "Coordinate actor",
+        "posture": "Coordinating with North Korean actions"
+      },
+      {
+        "name": "PYONGYANG",
+        "role": "Coordinate actor",
+        "posture": "Coordinating with North Korean actions"
+      }
+    ],
+    "lfm2_indicators": [
+      "Further North Korean coercive actions against South Korea",
+      "North Korean military exercises in South Korea",
+      "South Korean military responses to Pyongyang's coercive actions",
+      "International diplomatic responses to North Korean provocations",
+      "North Korean military capabilities and intentions"
+    ],
+    "lfm2_trajectories": [
+      "Escalation to full-scale conflict if North Korea responds with military actions",
+      "Diplomatic resolution through international mediation",
+      "Continued military posturing with limited escalation",
+      "Increased regional tensions without immediate military confrontation"
+    ],
+    "lfm2_confidence": "medium"
   },
   {
     "week": "2017-02-12",
     "gold_level": 4,
     "naive_level": 1,
     "xgb_level": 3,
-    "lfm2_level": null
+    "lfm2_level": 3,
+    "lfm2_summary": "This week shows intense military activity with 1,738 'Exhibit Force' events, 414 'Fight' events, and 237 'Coerce' events recorded across multiple locations. The average Goldstein scale of -8.7 indicates significant military posturing, while the presence of North Korean 'Fight' events suggests ongoing conflict or heightened tensions in the region. The data shows a mix of international and domestic involvement, with China and Japan also participating in the events. The high volume of events (2335 total) and the presence of multiple locations (North Korea, Iran, China) suggest a large-scale military confrontation or diplomatic standoff.",
+    "lfm2_rationale": "The data shows significant military activity with 1,738 'Exhibit Force' events, 414 'Fight' events, and 237 'Coerce' events, indicating high levels of military posturing. The average Goldstein scale of -8.7 suggests tense but not overtly aggressive tensions. The presence of North Korean 'Fight' events at multiple locations (Musudan, Hamgyong-bukto, P'yongyang-si) suggests ongoing conflict or heightened tensions in the region.",
+    "lfm2_actors": [
+      {
+        "name": "North Korea",
+        "role": "Primary military actor",
+        "posture": "Highly militarized with 'Exhibit Force' events and 'Fight' activities"
+      },
+      {
+        "name": "China",
+        "role": "Regional power",
+        "posture": "Coerce activity with 'Fight' events"
+      },
+      {
+        "name": "United States",
+        "role": "Foreign power",
+        "posture": "Coerce activity with 'Fight' events"
+      },
+      {
+        "name": "China",
+        "role": "Regional power",
+        "posture": "Coerce activity with 'Fight' events"
+      }
+    ],
+    "lfm2_indicators": [
+      "Further North Korean military posturing or provocations",
+      "China's response to North Korean 'Fight' activities",
+      "International diplomatic efforts to de-escalate tensions",
+      "China's involvement in regional conflicts or diplomatic negotiations"
+    ],
+    "lfm2_trajectories": [
+      "Escalation to military conflict if North Korea responds with 'Fight' activities",
+      "Diplomatic resolution through international mediation",
+      "Continued regional tensions with limited military posturing",
+      "Potential for diplomatic engagement if tensions subside"
+    ],
+    "lfm2_confidence": "medium"
   },
   {
     "week": "2025-12-21",
     "gold_level": 3,
     "naive_level": 1,
     "xgb_level": 3,
-    "lfm2_level": null
+    "lfm2_level": 3,
+    "lfm2_summary": "The GDELT data reveals significant North Korean military activity during the period of 2025-12-21 to 2025-12-27, with 188 events recorded. The event breakdown shows 118 'Fight' events, predominantly in North Korea's Kursk region, suggesting potential military mobilization rather than direct conflict. The high volume of 'Assault' events (11) and 'Protest' events (7) indicates heightened tensions. The presence of 'Exhibit Force' events (7) suggests potential military readiness rather than overt aggression. The geopolitical context of North Korea's activities aligns with typical responses to international pressure or sanctions, though the low average Goldstein scale and negative tone suggest this was not a major conflict.",
+    "lfm2_rationale": "The data shows significant military activity with 118 'Fight' events, predominantly in North Korea's Kursk region, indicating potential hostile posturing. The high volume of 'Assault' events (11) and 'Protest' events (7) suggests heightened tensions. However, the low average Goldstein scale (-8.7) and negative tone (-3.3) indicate generally hostile sentiment rather than overt aggression. The presence of 'Exhibit Force' events suggests potential military mobilization rather than direct conflict. The geopolitical context of North Korea's activities aligns with North Korea's typical use of military force in response to international pressure or sanctions.",
+    "lfm2_actors": [
+      {
+        "name": "North Korea",
+        "role": "Primary actor",
+        "posture": "Potential aggressor or provocateur",
+        "posture_details": "Highly militarized and defensive, with significant 'Exhibit Force' events indicating potential military mobilization."
+      },
+      {
+        "name": "South Korea",
+        "role": "Target or responder",
+        "posture": "Potential ally or target",
+        "posture_details": "Not explicitly stated, but likely involved in diplomatic or economic negotiations."
+      },
+      {
+        "name": "United States",
+        "role": "Foreign power",
+        "posture": "Diplomatic or observer",
+        "posture_details": "Not directly involved in military activities but may be involved in diplomatic negotiations."
+      }
+    ],
+    "lfm2_indicators": [
+      "Further military mobilization or deployment in the region",
+      "Changes in North Korean diplomatic or economic negotiations",
+      "International sanctions or pressure responses",
+      "Military exercises or drills in the area",
+      "Changes in US or other US foreign policy responses"
+    ],
+    "lfm2_trajectories": [
+      "Continued military mobilization and deployment in the region",
+      "Diplomatic negotiations or economic sanctions responses",
+      "Increased international sanctions or pressure",
+      "Military exercises or drills in the area",
+      "Potential escalation to direct conflict if tensions persist"
+    ],
+    "lfm2_confidence": "medium"
   },
   {
     "week": "2016-09-11",
     "gold_level": 3,
     "naive_level": 1,
     "xgb_level": 3,
-    "lfm2_level": null
+    "lfm2_level": 3,
+    "lfm2_summary": "This week shows significant military activity with 4004 events, primarily focused on North Korea's military actions. The data indicates coordinated military responses with 'Fight' events directed at North Korean military infrastructure, suggesting heightened tensions. The presence of 'Coerce' events with negative Goldstein scores suggests diplomatic pressure rather than direct military confrontation. The geopolitical context involves North Korea's interactions with Japan and South Korea, as well as the involvement of the United States, indicating a complex diplomatic scenario. The high volume of 'Fight' events with negative Goldstein scores suggests escalation but not outright war-like aggression. The data provides insight into North Korea's military posture and diplomatic interactions during this period.",
+    "lfm2_rationale": "The data shows significant military activity with 2097 'Fight' events, predominantly directed at North Korea, indicating heightened tensions. The high volume of 'Fight' events (2097) and the specific targeting of North Korean military infrastructure suggest coordinated military actions. However, the low volume of 'Coerce' and 'Exhibit Force' events indicates limited coercive actions beyond diplomatic pressure. The presence of 'Fight' events with negative Goldstein scores (-10.0) suggests escalation but not outright war-like aggression. The geopolitical context of North Korea's interactions with Japan and South Korea, as well as the involvement of the United States, suggests a complex diplomatic scenario rather than direct military confrontation.",
+    "lfm2_actors": [
+      {
+        "name": "North Korea",
+        "role": "Primary military actor",
+        "posture": "Highly militarized and defensive"
+      },
+      {
+        "name": "Japan",
+        "role": "Diplomatic and military partner",
+        "posture": "Supporting North Korea's military actions"
+      },
+      {
+        "name": "United States",
+        "role": "Diplomatic and military partner",
+        "posture": "Supporting North Korea's military actions"
+      }
+    ],
+    "lfm2_indicators": [
+      "Further military actions by North Korea",
+      "Diplomatic negotiations or concessions",
+      "Changes in US military posture or deployment",
+      "International responses to North Korean military actions",
+      "North Korea's military posture and readiness"
+    ],
+    "lfm2_trajectories": [
+      "Continued military buildup and increased 'Fight' events with negative Goldstein scores",
+      "Diplomatic efforts to de-escalate tensions through negotiations",
+      "Increased military exercises or deployments by North Korea",
+      "Shift in US military posture or deployment to support South Korea",
+      "Economic or diplomatic measures to address North Korean provocations"
+    ],
+    "lfm2_confidence": "medium"
   },
   {
     "week": "2020-10-25",
     "gold_level": 2,
     "naive_level": 1,
     "xgb_level": 3,
-    "lfm2_level": null
+    "lfm2_level": 3,
+    "lfm2_summary": null,
+    "lfm2_rationale": "The data shows significant military activity with 138 'Fight' events, 81 'Assault' events, and 52 'Reduce Military' events, indicating high levels of tension and potential conflict. The average Goldstein scale of -8.4 suggests moderate to severe military tensions. The high volume of 'Exhibit Force' events (18) and 'Reduce Military' events (52) further supports a high-risk scenario. The presence of 'nan' events (13) and 'Exhibit Force' events (36) suggests coordinated military actions rather than isolated incidents. The global context of North Korea's military activities and international tensions aligns with the observed patterns. The structured data includes key actors, locations, and event details that provide a comprehensive view of the situation.",
+    "lfm2_actors": [
+      {
+        "name": "North Korea",
+        "role": "Primary military actor",
+        "posture": "Highly aggressive and provocative"
+      },
+      {
+        "name": "China",
+        "role": "Regional power and diplomatic actor",
+        "posture": "Balanced in military activities with diplomatic engagement"
+      },
+      {
+        "name": "United Kingdom",
+        "role": "International ally and observer",
+        "posture": "Monitoring and observer"
+      },
+      {
+        "name": "Israel",
+        "role": "Defensive state",
+        "posture": "Responding to North Korean provocations"
+      }
+    ],
+    "lfm2_indicators": [
+      "Further military demonstrations or provocative actions by North Korean forces",
+      "International diplomatic responses or sanctions implementation",
+      "Changes in UN Security Council resolutions or UN Security Council action",
+      "Military readiness or deployment of forces in response to North Korean provocations",
+      "Diplomatic engagement or overtures from other countries"
+    ],
+    "lfm2_trajectories": null,
+    "lfm2_confidence": "medium"
   },
   {
     "week": "2019-08-11",
     "gold_level": 5,
     "naive_level": 1,
     "xgb_level": 3,
-    "lfm2_level": null
+    "lfm2_level": 3,
+    "lfm2_summary": null,
+    "lfm2_rationale": "The data shows significant military activity with 1086 'Fight' events, 195 'Exhibit Force' events, and 195 'Reduce Military' events, indicating escalatory behavior. The high volume of 'Fight' events (1086) and 'Exhibit Force' events (195) compared to the low volume of 'Reduce Military' events (195) suggests heightened tensions. The presence of 'Fight' events at multiple locations (North Korea, Pyongyang, South Korea) indicates coordinated military actions. The average Goldstein scale of -8.5 suggests moderate to high tensions, with the average 'Fight' scale of -10.0 indicating significant military posturing.",
+    "lfm2_actors": [
+      {
+        "name": "North Korea",
+        "role": "Primary military actor",
+        "posture": "Highly aggressive and provocative"
+      },
+      {
+        "name": "United States",
+        "role": "Co-actor",
+        "posture": "Monitoring and responding to North Korean actions"
+      },
+      {
+        "name": "South Korea",
+        "role": "Target country",
+        "posture": "Responding to North Korean provocations"
+      }
+    ],
+    "lfm2_indicators": [
+      "Further North Korean military actions or provocations",
+      "US military response or intervention",
+      "South Korean diplomatic efforts or negotiations",
+      "Changes in GDELT event patterns or event volume",
+      "International diplomatic context or summit discussions"
+    ],
+    "lfm2_trajectories": null,
+    "lfm2_confidence": "medium"
   },
   {
     "week": "2016-01-10",
     "gold_level": 4,
     "naive_level": 1,
     "xgb_level": 3,
-    "lfm2_level": null
+    "lfm2_level": 3,
+    "lfm2_summary": "This week shows a highly militarized environment with 2618 events recorded. The data indicates a significant reduction in military activity (700 events) with a negative Goldstein scale of -7.7 and a negative tone of -2.8, suggesting hostile posturing. The presence of 'Fight' and 'Coerce' events, particularly in Pyongyang, suggests potential military confrontations. The low number of 'Exhibit Force' events (367) and the presence of 'Fight' events with negative Goldstein values (700) indicate a hostile environment rather than overt military conflict. The overall pattern suggests a tense but non-confrontational period with ongoing military activity.",
+    "lfm2_rationale": "The data shows significant military reduction events (700 events) with a negative Goldstein scale of -7.7 and a negative tone of -2.8, indicating hostile posturing. The presence of 'Fight' and 'Coerce' events suggests potential military confrontations, while the 'Reduce Military' event suggests diplomatic efforts. However, the low number of 'Exhibit Force' events (367) and the presence of 'Fight' events with negative Goldstein values (700) indicate a hostile environment rather than overt military conflict.",
+    "lfm2_actors": [
+      {
+        "name": "United Nations",
+        "role": "Diplomatic mediator",
+        "posture": "Negative"
+      },
+      {
+        "name": "North Korea",
+        "role": "Primary military actor",
+        "posture": "Hostile"
+      },
+      {
+        "name": "United States",
+        "role": "Foreign power",
+        "posture": "Defensive"
+      },
+      {
+        "name": "NORTH KOREA",
+        "role": "Primary military actor",
+        "posture": "Hostile"
+      },
+      {
+        "name": "NORTH KOREA",
+        "role": "Secondary military actor",
+        "posture": "Neutral"
+      }
+    ],
+    "lfm2_indicators": [
+      "Further military reduction events with negative Goldstein values",
+      "Changes in US or UN diplomatic posturing",
+      "Military activity in Pyongyang",
+      "NORTH KOREA's military posture",
+      "US or UN diplomatic engagement"
+    ],
+    "lfm2_trajectories": [
+      "Continued hostile posturing with military reduction events",
+      "Diplomatic engagement with military reduction events",
+      "Military conflict escalation with reduced reduction events",
+      "Stabilization phase with continued military activity"
+    ],
+    "lfm2_confidence": "medium"
   },
   {
     "week": "2016-07-03",
@@ -102,7 +455,38 @@
     "gold_level": 4,
     "naive_level": 1,
     "xgb_level": 3,
-    "lfm2_level": null
+    "lfm2_level": 4,
+    "lfm2_summary": "The week of March 27-2, 2022, shows intense military activity in North Korea with 1114 events. The data indicates a high level of conflict, with 180 'Fight' events and 80 'Exhibit Force' events. The presence of 'Assault' and 'Coerce' events suggests provocative actions by North Korean forces. The geographic distribution of events (North Korea, Yongsan, Hamgyong-bukto, South Korea) aligns with typical military posturing patterns. The high volume of 'Fight' events (108) and 'Exhibit Force' events (40) suggests a significant military buildup rather than routine diplomatic engagement.",
+    "lfm2_rationale": "The data shows significant military activity with 1114 total events, primarily focused on combat and coercive actions. The average Goldstein scale of -8.9 indicates severe tensions, while the high number of 'Fight' events (677) suggests active military confrontations. The presence of 'Exhibit Force' and 'Assault' events further confirms hostile posturing. The high number of 'Coerce' events (63) suggests attempts to pressure North Korea through military force.",
+    "lfm2_actors": [
+      {
+        "name": "North Korea",
+        "role": "Primary military actor",
+        "posture": "Highly aggressive and provocative"
+      },
+      {
+        "name": "South Korea",
+        "role": "Target of North Korean military actions",
+        "posture": "Potential victim of North Korean provocations"
+      },
+      {
+        "name": "United States",
+        "role": "Supporting ally",
+        "posture": "Potential ally of North Korea"
+      }
+    ],
+    "lfm2_indicators": [
+      "Further North Korean military actions or provocations",
+      "US military response or diplomatic engagement",
+      "Changes in South Korean military posture or actions",
+      "International diplomatic efforts or negotiations"
+    ],
+    "lfm2_trajectories": [
+      "Escalation to full-scale conflict if North Korea responds with military action",
+      "Diplomatic engagement or ceasefire negotiations",
+      "Continued military buildup with potential for further escalation"
+    ],
+    "lfm2_confidence": "medium"
   },
   {
     "week": "2020-11-22",
@@ -116,7 +500,45 @@
     "gold_level": 2,
     "naive_level": 1,
     "xgb_level": 3,
-    "lfm2_level": null
+    "lfm2_level": 4,
+    "lfm2_summary": "The week of September 4-10, 2016, shows a high level of military activity with 1,668 total events. The data indicates a mix of combat and defensive actions, with significant assault events (1,267) and fight events (523) compared to 523 fight events. The average Goldstein scale of -8.7 suggests generally tense but not hostile conditions. The presence of North Korean actors and their locations (Pyongyang, South Korea) points to potential military posturing. The low number of coercion events (223) compared to assault events (124) suggests a more controlled military environment rather than aggressive confrontation.",
+    "lfm2_rationale": "The data shows significant military activity with 1,267 assault events and 523 fight events, indicating high tension and potential provocative actions. The high volume of assault events (1,267) compared to fight events (523) suggests escalating tensions. However, the low number of coercion events (223) and reduced military events (96) suggests a more controlled level of military posturing rather than aggressive confrontation.",
+    "lfm2_actors": [
+      {
+        "name": "North Korea",
+        "role": "Primary military actor",
+        "posture": "Highly militarized with significant combat and defensive actions"
+      },
+      {
+        "name": "United States",
+        "role": "Foreign power with military presence",
+        "posture": "Potential adversary with military posturing"
+      },
+      {
+        "name": "North Korea",
+        "role": "Primary military actor",
+        "posture": "Highly militarized with significant combat and defensive actions"
+      },
+      {
+        "name": "United States",
+        "role": "Foreign power with military presence",
+        "posture": "Potential adversary with military posturing"
+      }
+    ],
+    "lfm2_indicators": [
+      "Further military posturing by North Korea or the US",
+      "Changes in the number of assault events compared to fight events",
+      "New military activities or deployments",
+      "Diplomatic efforts to de-escalate tensions",
+      "Changes in the tone of GDELT data (e.g., shift from negative to neutral tone)"
+    ],
+    "lfm2_trajectories": [
+      "Continued military posturing with potential escalation if tensions remain high",
+      "Diplomatic efforts to de-escalate tensions if military posturing is reduced",
+      "Increased military activity if provocative actions are detected",
+      "Potential for diplomatic resolution if military posturing is reduced and tensions are de-escalated"
+    ],
+    "lfm2_confidence": "medium"
   },
   {
     "week": "2022-07-24",
@@ -130,35 +552,232 @@
     "gold_level": 3,
     "naive_level": 1,
     "xgb_level": 3,
-    "lfm2_level": null
+    "lfm2_level": 3,
+    "lfm2_summary": "This week shows intense military activity with 3,168 total events, primarily focused on combat and coercive actions against North Korea. The high volume of 'Fight' events (2024) and 'Exhibit Force' activities suggests active military confrontations. The presence of 'Coerce' events indicates diplomatic pressure efforts, but the low number of 'Assault' events suggests minimal coercive pressure. The geopolitical context involves tensions between North Korea and the United States/Japan, with potential diplomatic efforts being at odds with military confrontations. The data indicates a high level of military tension with significant diplomatic pressure being applied.",
+    "lfm2_rationale": "The data shows significant military activity with 3,168 total events, predominantly focused on combat and coercive actions against North Korea. The average Goldstein scale of -8.5 indicates severe tensions, while the high number of 'Fight' events (2024) suggests active military confrontations. The presence of 'Exhibit Force' and 'Coerce' events suggests diplomatic pressure efforts. However, the low number of 'Assault' events (166) and 'Protest' events (113) suggests the level of coercive pressure was minimal. The high number of 'Fight' events (1364) indicates ongoing military confrontations rather than diplomatic pressure.",
+    "lfm2_actors": [
+      {
+        "name": "North Korea",
+        "role": "Primary military actor",
+        "posture": "Highly aggressive and coercive"
+      },
+      {
+        "name": "United States",
+        "role": "Foreign power",
+        "posture": "Diplomatic pressure"
+      },
+      {
+        "name": "Japan",
+        "role": "Diplomatic power",
+        "posture": "Diplomatic pressure"
+      },
+      {
+        "name": "United States",
+        "role": "Foreign power",
+        "posture": "Diplomatic pressure"
+      }
+    ],
+    "lfm2_indicators": [
+      "Further military confrontations or coercive actions by North Korea",
+      "Changes in US-Japan diplomatic pressure",
+      "Evolution of US military posture in response to North Korean provocations",
+      "Potential shifts in US-Japan alliance dynamics"
+    ],
+    "lfm2_trajectories": null,
+    "lfm2_confidence": "medium"
   },
   {
     "week": "2024-02-25",
     "gold_level": 3,
     "naive_level": 1,
     "xgb_level": 3,
-    "lfm2_level": null
+    "lfm2_level": 3,
+    "lfm2_summary": null,
+    "lfm2_rationale": "The data shows significant military activity with 492 total events, primarily focused on coercive actions against North Korea. The high volume of 'Fight' events (210) and 'Coerce' events (148) indicates aggressive military posturing. However, the low number of 'Reduce Military' events (64) suggests limited escalation beyond coercion. The presence of 'Assault' events (32) and 'Exhibit Force' events (31) indicates potential military demonstrations rather than actual combat. The global location of events (Seoul, South Korea) suggests international military tensions. The high volume of 'Fight' events (20) compared to 'Coerce' events (20) indicates a significant military confrontation rather than diplomatic engagement. The presence of 'NORTH KOREA' in multiple locations (Seoul, P'yongyang-si, North Korea) suggests coordinated military actions across multiple regions. The average Goldstein scale of -7.9 and average tone of -3.2 indicate generally tense but not hostile conditions. The structured data provides a clear picture of military tensions, with international involvement and regional coordination evident in the event patterns.",
+    "lfm2_actors": [
+      {
+        "name": "North Korea",
+        "role": "Primary military actor",
+        "posture": "Highly aggressive and coercive"
+      },
+      {
+        "name": "UKRAINE",
+        "role": "Coercive actor",
+        "posture": "Coercive"
+      },
+      {
+        "name": "NORTH KOREAN",
+        "role": "Targeted actor",
+        "posture": "Coercive"
+      },
+      {
+        "name": "NORTH KOREA",
+        "role": "Targeted actor",
+        "posture": "Coercive"
+      }
+    ],
+    "lfm2_indicators": [
+      "Further escalation of 'Fight' and 'Coerce' events with increased military demonstrations",
+      "International military coordination or proxy conflict escalation",
+      "Changes in UKRAINE's role or actions in relation to North Korean provocations",
+      "UKRAINE's response to North Korean actions",
+      "China's role in regional military coordination",
+      "Russia's military posture and potential response to North Korean provocations"
+    ],
+    "lfm2_trajectories": null,
+    "lfm2_confidence": "medium"
   },
   {
     "week": "2015-12-27",
     "gold_level": 2,
     "naive_level": 1,
     "xgb_level": 3,
-    "lfm2_level": null
+    "lfm2_level": 2,
+    "lfm2_summary": "This week (2015-12-27 to 2016-01-02) shows a high volume of North Korean military-related events with a predominantly coercive and confrontational tone. The data indicates 572 total events including 325 Coerce, 124 Fight, 64 Reduction Military, 30 Assault, 16 Protest, and 13 Exhibit Force events. The presence of North Korean actors and international sources suggests potential military tensions or diplomatic confrontations. The average Goldstein score of -6.4 indicates significant but not extreme military activity.",
+    "lfm2_rationale": "The data shows significant coercive and confrontational events with high average Goldstein scores (-6.4) and negative tone (-3.8) but also some confrontational and confrontational events (64) and aggressive actions (30). The presence of multiple North Korean actors and international sources suggests potential military tensions. However, the overall context of North Korea's diplomatic and cultural activities in the region provides context for the events observed.",
+    "lfm2_actors": [
+      {
+        "name": "North Korea",
+        "role": "Primary actor",
+        "posture": "Coercive and confrontational"
+      },
+      {
+        "name": "ADMINISTRATION",
+        "role": "Government entity",
+        "posture": "Coercive and confrontational"
+      },
+      {
+        "name": "Canada",
+        "role": "International partner",
+        "posture": "Coercive and confrontational"
+      },
+      {
+        "name": "NORTH KOREAN",
+        "role": "Target",
+        "posture": "Coercive"
+      },
+      {
+        "name": "NORTH KOREAN CULTURAL ACTIVITY",
+        "role": "Target",
+        "posture": "Coercive"
+      }
+    ],
+    "lfm2_indicators": [
+      "Further North Korean coercive actions or cultural exchanges",
+      "Changes in international diplomatic tone or actions",
+      "North Korean cultural activities or performances",
+      "Changes in international diplomatic or cultural activities",
+      "North Korean military activities or exercises"
+    ],
+    "lfm2_trajectories": [
+      "Continued military tensions or diplomatic confrontations",
+      "Diplomatic engagement or cultural exchanges",
+      "Increased international sanctions or diplomatic pressure",
+      "North Korean cultural activities or performances"
+    ],
+    "lfm2_confidence": "medium"
   },
   {
     "week": "2020-04-26",
     "gold_level": 2,
     "naive_level": 1,
     "xgb_level": 3,
-    "lfm2_level": null
+    "lfm2_level": 2,
+    "lfm2_summary": "The week of April 26-2, 2020, shows intense military activity centered around North Korea's conflict with China, particularly in the Wonsan region. The high volume of 'Fight' events (623) and 'Assault' events (80) indicates ongoing military confrontations, while the low volume of 'Reduce Military' events suggests limited escalation beyond confrontation. The geopolitical context includes North Korea's involvement in Wonsan conflicts and potential border clashes with China. The data suggests a high-risk environment with potential for escalation if tensions remain unresolved.",
+    "lfm2_rationale": "The data shows significant military activity with 623 events categorized as 'Fight' and 'Coerce' at the highest level, followed by 'Assault' and 'Reduce Military' at lower levels. The average Goldstein scale of -8.4 suggests moderate to high tensions, with 80% of events classified as 'Fight' or 'Coerce'. The high volume of 'Fight' events (321) and 'Assault' events (80) indicates active military confrontations. However, the low volume of 'Reduce Military' events suggests limited escalation beyond confrontation.",
+    "lfm2_actors": [
+      {
+        "name": "North Korea",
+        "role": "Primary military actor",
+        "posture": "Highly militarized and confrontational"
+      },
+      {
+        "name": "China",
+        "role": "Border security and border control",
+        "posture": "Monitoring and potential border clashes"
+      },
+      {
+        "name": "China",
+        "role": "Border security and border control",
+        "posture": "Monitoring North Korean border activities"
+      },
+      {
+        "name": "China",
+        "role": "Border security and border control",
+        "posture": "Monitoring North Korean border activities"
+      },
+      {
+        "name": "United States",
+        "role": "Foreign policy actor",
+        "posture": "Monitoring North Korean border activities"
+      },
+      {
+        "name": "North Korea",
+        "role": "Potential adversary",
+        "posture": "Active in Wonsan conflicts"
+      }
+    ],
+    "lfm2_indicators": [
+      "Further military confrontations between China and North Korea",
+      "China's border security measures in response to North Korean border activities",
+      "North Korean border control activities and their potential impact on border security",
+      "US military presence in the Korean Peninsula",
+      "China's border security measures in response to North Korean border activities",
+      "International diplomatic efforts to manage border security tensions"
+    ],
+    "lfm2_trajectories": [
+      "Escalation to full-scale military conflict if tensions remain unresolved",
+      "Diplomatic efforts to manage border security tensions",
+      "Increased military presence in the Korean Peninsula",
+      "Economic sanctions or diplomatic measures to manage border security tensions",
+      "Continued border control activities with China"
+    ],
+    "lfm2_confidence": "medium"
   },
   {
     "week": "2021-11-21",
     "gold_level": 3,
     "naive_level": 1,
     "xgb_level": 3,
-    "lfm2_level": null
+    "lfm2_level": 2,
+    "lfm2_summary": "The week of November 21-27, 2021, shows intense military activity in North Korea with 237 events totaling 80.4% of the week's total events. The data indicates significant military posturing across multiple locations, including Japan, Hwanghae, Hwanghae-namdo, and multiple locations in China. The high volume of 'Fight' events (40) and 'Assault' events (73) suggests ongoing conflict or heightened tensions. The presence of 'Reduce Military' events (46) and 'Coerce' events (41) indicates diplomatic efforts rather than direct military action. The global nature of the events, with participants from multiple countries and locations, suggests international coordination or proxy conflicts. The strong negative tone of the Goldstein scale (-8.1) and the high volume of mentions (1,237) indicate a highly volatile and potentially hostile situation.",
+    "lfm2_rationale": "The data shows significant military activity with 237 events totaling 80.4% of the week's total events. The average Goldstein scale of -8.1 indicates a highly negative sentiment, while the total number of mentions (1,237) suggests widespread international attention. The key actors include the United States, China, and North Korea, with significant military posturing in multiple locations. The presence of 'Fight' events in multiple locations (Japan, Hwanghae, Hwanghae-namdo) suggests ongoing conflict or heightened tensions.",
+    "lfm2_actors": [
+      {
+        "name": "United States",
+        "role": "Primary military power and diplomatic actor",
+        "posture": "Highly aggressive and defensive"
+      },
+      {
+        "name": "China",
+        "role": "Major military power and regional actor",
+        "posture": "Maintaining military readiness and regional influence"
+      },
+      {
+        "name": "North Korea",
+        "role": "Primary military power",
+        "posture": "Maintaining military readiness and regional influence"
+      },
+      {
+        "name": "Japan",
+        "role": "Diplomatic and regional actor",
+        "posture": "Maintaining diplomatic engagement and regional influence"
+      },
+      {
+        "name": "United States",
+        "role": "Diplomatic and international actor",
+        "posture": "Diplomatic engagement and international influence"
+      }
+    ],
+    "lfm2_indicators": [
+      "Continued military exercises or demonstrations",
+      "Diplomatic negotiations or talks",
+      "Nuclear test or missile development activities",
+      "International sanctions or diplomatic pressure",
+      "Changes in regional military posture or deployment"
+    ],
+    "lfm2_trajectories": null,
+    "lfm2_confidence": null
   },
   {
     "week": "2022-03-06",
@@ -172,14 +791,84 @@
     "gold_level": 2,
     "naive_level": 1,
     "xgb_level": 3,
-    "lfm2_level": null
+    "lfm2_level": 3,
+    "lfm2_summary": "This week shows a high level of military coercion and reduction of force activity in North Korea, with 435 events classified as 'Fight' and 251 as 'Coerce'. The data indicates a targeted military campaign with significant US involvement, particularly in Kaduna, Nigeria. The presence of multiple high-level actors (US, UN, ADMINISTRATION) and specific locations (North Korea, United States) suggests a strategic military operation rather than a large-scale conflict. The average Goldstein scale of -8.0 and negative tone indicate a hostile or aggressive environment, but the low number of events suggests the situation is not escalating beyond routine military exercises.",
+    "lfm2_rationale": "The data shows significant military coercion and reduction of force events with a negative Goldstein scale of -8.0 and a negative tone of -2.8, indicating aggressive posturing with minimal escalation. The presence of multiple high-level actors (US, UN, ADMINISTRATION) and specific locations (North Korea, United States) suggests a targeted military campaign. However, the low number of events (1036) and the absence of major conflicts suggest the situation is not escalating beyond routine military exercises.",
+    "lfm2_actors": [
+      {
+        "name": "United States",
+        "role": "Primary military power and target",
+        "posture": "Coercive and reduction of force"
+      },
+      {
+        "name": "North Korea",
+        "role": "Target of coercion",
+        "posture": "Aggressive and coercive"
+      },
+      {
+        "name": "Kaduna, Nigeria",
+        "role": "Target location",
+        "posture": "Target location"
+      },
+      {
+        "name": "United States",
+        "role": "Supporting power",
+        "posture": "Coercive and reduction of force"
+      },
+      {
+        "name": "UN",
+        "role": "International organization",
+        "posture": "Coercive and reduction of force"
+      }
+    ],
+    "lfm2_indicators": null,
+    "lfm2_trajectories": null,
+    "lfm2_confidence": "medium"
   },
   {
     "week": "2022-08-07",
     "gold_level": 2,
     "naive_level": 1,
     "xgb_level": 3,
-    "lfm2_level": null
+    "lfm2_level": 3,
+    "lfm2_summary": "This week shows significant military activity with 261 events totaling 1,512 mentions across 272 sources. The data indicates escalatory patterns with 134 'Fight' events, 46 'Coerce' events, and 27 'Reduce Military' events, suggesting potential military confrontations. The high volume of 'Fight' events and the presence of 'Assault' events with high tone suggest this was part of a military operation rather than a direct confrontation. The geopolitical context of North Korea's interactions with China and South Korea indicates this was part of a broader regional military strategy rather than a direct military conflict.",
+    "lfm2_rationale": "The data shows significant military activity with 134 'Fight' events, 46 'Coerce' events, and 27 'Reduce Military' events, indicating escalatory tendencies. The high volume of 'Fight' events (134) and 'Assault' events (18) suggests potential military confrontations. However, the low volume of 'Exhibit Force' and 'Protest' events suggests this wasn't a major confrontation. The presence of 'Fight' events with high tone (-3.4) indicates tense military posturing rather than direct conflict. The geopolitical context of North Korea's activities, including interactions with China and South Korea, suggests this was part of a broader regional military strategy rather than a direct confrontation.",
+    "lfm2_actors": [
+      {
+        "name": "North Korea",
+        "role": "Primary military actor",
+        "posture": "Escalatory"
+      },
+      {
+        "name": "China",
+        "role": "Regional power",
+        "posture": "Supporting North Korea"
+      },
+      {
+        "name": "South Korea",
+        "role": "Foreign ally",
+        "posture": "Supporting North Korea"
+      },
+      {
+        "name": "United States",
+        "role": "Foreign ally",
+        "posture": "Supporting North Korea"
+      },
+      {
+        "name": "China",
+        "role": "Regional power",
+        "posture": "Supporting North Korea"
+      }
+    ],
+    "lfm2_indicators": [
+      "Further military exercises by North Korea",
+      "China's military response to North Korean provocations",
+      "South Korea's military readiness",
+      "US military posture in the region",
+      "China's diplomatic efforts to de-escalate tensions"
+    ],
+    "lfm2_trajectories": null,
+    "lfm2_confidence": "medium"
   },
   {
     "week": "2016-12-11",
@@ -200,21 +889,107 @@
     "gold_level": 5,
     "naive_level": 1,
     "xgb_level": 3,
-    "lfm2_level": null
+    "lfm2_level": 3,
+    "lfm2_summary": "The week shows intense military activity with 422 events, primarily categorized as 'Fight' and 'Reduce Military' with 218 and 48 events respectively. The high volume of 'Fight' events (218) and 'Reduce Military' events (48) indicates active military posturing, while the presence of 'Fight' events at Pyongyang suggests potential Pyongyang's involvement in North Korean military activities. The overall pattern of high event volume and specific event categorization suggests a high-risk scenario with potential for military conflict.",
+    "lfm2_rationale": "The data shows significant military activity with 422 events categorized as 'Fight' (218 events) and 'Reduce Military' (48 events), indicating heightened tensions. The average Goldstein scale of -8.5 suggests moderate to severe escalation, with 2.3 standard deviations of mentions. The high volume of 'Fight' events (218) and 'Reduce Military' events (48) aligns with military posturing. The presence of 'Fight' events at Pyongyang suggests potential Pyongyang's involvement in North Korean military activities.",
+    "lfm2_actors": [
+      {
+        "name": "North Korea",
+        "role": "Primary actor",
+        "posture": "Highly militaristic with significant 'Reduce Military' events"
+      },
+      {
+        "name": "Pyongyang",
+        "role": "Potential Pyongyang actor",
+        "posture": "Active in 'Fight' events"
+      },
+      {
+        "name": "North Korea",
+        "role": "Secondary actor",
+        "posture": "Active in 'Reduce Military' events"
+      },
+      {
+        "name": "United States",
+        "role": "Third party observer",
+        "posture": "Monitoring activities"
+      }
+    ],
+    "lfm2_indicators": [
+      "Further North Korean military posturing or provocations",
+      "Changes in US military posture or deployment",
+      "North Korean military exercises or demonstrations",
+      "International diplomatic responses to North Korean military activities",
+      "Changes in 'Reduce Military' event patterns or volumes"
+    ],
+    "lfm2_trajectories": [
+      "Escalation to military conflict if North Korea responds with 'Reduce Military' events",
+      "Diplomatic resolution through international mediation",
+      "Continued military posturing with 'Reduce Military' events",
+      "Increased military exercises with 'Reduce Military' events"
+    ],
+    "lfm2_confidence": "medium"
   },
   {
     "week": "2019-05-12",
     "gold_level": 3,
     "naive_level": 1,
     "xgb_level": 3,
-    "lfm2_level": null
+    "lfm2_level": 3,
+    "lfm2_summary": null,
+    "lfm2_rationale": "The data shows significant military activity with 1295 events classified as 'Fight' and 280 'Reduce Military' events, indicating escalatory behavior. The average Goldstein scale of -8.7 suggests moderate to high tensions, with 2.9 standard deviations of events indicating substantial conflict. The high volume of 'Exhibit Force' events (158) and 'Fight' events (1295) further supports a high-risk scenario. The presence of 'Fight' events at multiple locations (Iran, Washington, Switzerland) suggests coordinated military actions. However, the low number of 'Assault' events (99) and 'Coerce' events (280) indicates limited overt military posturing. The presence of 'Fight' events at multiple locations (P'yongyang-si, North Korea) suggests potential for broader regional conflict. The geopolitical context of North Korea's involvement in the Korean Peninsula and US-UK-USA tensions provides context for the high-level activity. The data does not show clear signs of diplomatic overtures or non-military posturing, which would typically be associated with lower escalation levels. The presence of 'Fight' events at multiple locations suggests a coordinated military response rather than isolated incidents. Overall, the data indicates a high-risk scenario with significant military posturing and potential for escalation.",
+    "lfm2_actors": [
+      "North Korea",
+      "United States",
+      "United States Administration",
+      "NORTH KOREA",
+      "NORTH KOREA",
+      "NORTH KOREA",
+      "US"
+    ],
+    "lfm2_indicators": null,
+    "lfm2_trajectories": null,
+    "lfm2_confidence": null
   },
   {
     "week": "2018-03-11",
     "gold_level": 2,
     "naive_level": 1,
     "xgb_level": 3,
-    "lfm2_level": null
+    "lfm2_level": 3,
+    "lfm2_summary": "This week shows intense military activity with 2,502 total events, primarily focused on North Korea's 'Fight' and 'Reduce Military' activities. The high volume of 'Fight' events (780) and 'Assault' events (379) indicates aggressive posturing, while the presence of 'Reduce Military' events (741) suggests diplomatic efforts. The geopolitical context includes North Korea's 'Fight' activities and potential diplomatic efforts, with the United States' 'Fight' events suggesting ongoing tensions. The South Korean 'Reduce Military' activities appear to be part of a broader diplomatic strategy rather than direct military confrontation.",
+    "lfm2_rationale": "The data shows significant military activity with 780 'Fight' events, 741 'Reduce Military' events, and 379 'Assault' events, indicating high tension and potential provocative actions. The high volume of 'Fight' events (780) and 'Assault' events (379) suggests aggressive posturing, while the presence of 'Reduce Military' events (741) indicates diplomatic efforts. The low average Goldstein scale (-8.0) suggests generally neutral or neutral tensions rather than escalation.",
+    "lfm2_actors": [
+      {
+        "name": "North Korea",
+        "role": "Primary actor",
+        "posture": "Aggressive and provocative, with 'Fight' and 'Reduce Military' activities"
+      },
+      {
+        "name": "United States",
+        "role": "Foreign power",
+        "posture": "Diplomatic and diplomatic, with 'Fight' and 'Reduce Military' activities"
+      },
+      {
+        "name": "South Korea",
+        "role": "Co-actor",
+        "posture": "Diplomatic and defensive, with 'Reduce Military' activities"
+      }
+    ],
+    "lfm2_indicators": [
+      "Further North Korean military posturing or provocative actions",
+      "US diplomatic efforts or counter-mobilization",
+      "South Korean diplomatic or defensive actions",
+      "International diplomatic or diplomatic efforts",
+      "Changes in 'Reduce Military' event volume or content",
+      "Changes in 'Fight' or 'Assault' event volume or content"
+    ],
+    "lfm2_trajectories": [
+      "Continued military posturing with diplomatic efforts to de-escalate tensions",
+      "Escalation to military confrontation if diplomatic channels fail",
+      "Diplomatic engagement with North Korea to manage tensions",
+      "Increased diplomatic engagement with South Korea to manage regional tensions"
+    ],
+    "lfm2_confidence": "medium"
   },
   {
     "week": "2025-10-26",
@@ -228,28 +1003,175 @@
     "gold_level": 3,
     "naive_level": 1,
     "xgb_level": 3,
-    "lfm2_level": null
+    "lfm2_level": 3,
+    "lfm2_summary": "This week shows intense military activity with 974 events totaling 5,455 mentions across multiple sources. The data indicates ongoing conflict between North Korea and the United States, with significant fighting events occurring in Pyongyang, Gaza, and Gaza-Hanoi. The high volume of 'Fight' events suggests a high level of tension, while the presence of 'Coerce' and 'Reduce Military' events points to potential diplomatic confrontations. The global location of events (from North Korea to Gaza) suggests international involvement or proxy conflicts.",
+    "lfm2_rationale": "The data shows significant military activity with 974 events totaling 5,455 mentions across 1,037 sources. The average Goldstein scale of -8.9 indicates highly negative sentiment, while the total number of events (974) suggests substantial activity. However, the presence of 'Fight' events with 659 total indicates ongoing military confrontations rather than typical diplomatic interactions.",
+    "lfm2_actors": [
+      {
+        "name": "North Korea",
+        "role": "Primary military actor",
+        "posture": "Highly aggressive and confrontational"
+      },
+      {
+        "name": "United States",
+        "role": "Diplomatic and military ally",
+        "posture": "Balanced approach with diplomatic engagement"
+      },
+      {
+        "name": "United States",
+        "role": "Coastal power",
+        "posture": "Potential target of North Korean aggression"
+      },
+      {
+        "name": "United States",
+        "role": "Diplomatic partner",
+        "posture": "Engaged in diplomatic negotiations"
+      },
+      {
+        "name": "South Korea",
+        "role": "Coastal power",
+        "posture": "Potential target of North Korean aggression"
+      },
+      {
+        "name": "Gaza",
+        "role": "Proxy conflict area",
+        "posture": "Potential flashpoint for military confrontation"
+      }
+    ],
+    "lfm2_indicators": [
+      "Further North Korean military provocations or nuclear test activities",
+      "Unexpected diplomatic engagement or ceasefire negotiations",
+      "Changes in US military posture or deployment in the region",
+      "International response to North Korean provocations",
+      "Gaza's role in regional conflict dynamics"
+    ],
+    "lfm2_trajectories": null,
+    "lfm2_confidence": "medium"
   },
   {
     "week": "2026-01-25",
     "gold_level": 3,
     "naive_level": 1,
     "xgb_level": 3,
-    "lfm2_level": null
+    "lfm2_level": 3,
+    "lfm2_summary": null,
+    "lfm2_rationale": "The data shows significant military activity with 56 'Fight' events, 30 'Coerce' events, and 24 'Assault' events, indicating high tension and potential provocative actions. The average Goldstein scale of -8.0 suggests moderate to high levels of military activity, with 22% of events classified as 'Reduce Military'. The high volume of 'Fight' events (20) and 'Coerce' events (30) suggests escalating tensions between North Korea and potentially other regional actors.",
+    "lfm2_actors": [
+      {
+        "name": "North Korea",
+        "role": "Primary provocator",
+        "posture": "Highly aggressive and threatening"
+      },
+      {
+        "name": "South Korea",
+        "role": "Target of North Korean aggression",
+        "posture": "Defensive and reactive"
+      },
+      {
+        "name": "United States",
+        "role": "Regional actor",
+        "posture": "Monitoring and diplomatic"
+      },
+      {
+        "name": "China",
+        "role": "Regional actor",
+        "posture": "Neutral observer"
+      }
+    ],
+    "lfm2_indicators": [
+      "Further escalation of 'Fight' events or 'Reduce Military' events",
+      "Changes in North Korean military posture or deployment",
+      "South Korean military response or deployment",
+      "China's diplomatic overtures or negotiations",
+      "US military posture or deployment",
+      "International diplomatic efforts or talks"
+    ],
+    "lfm2_trajectories": null,
+    "lfm2_confidence": "medium"
   },
   {
     "week": "2018-04-08",
     "gold_level": 2,
     "naive_level": 1,
     "xgb_level": 3,
-    "lfm2_level": null
+    "lfm2_level": 3,
+    "lfm2_summary": "This week shows a high level of military coercion activity with 1016 total events. The data indicates a mix of aggressive posturing (Fight) and diplomatic pressure (Reduce Military) events. The average Goldstein scale of -7.8 suggests significant military activity, while the high volume of 'Fight' events (350) and 'Reduce Military' mentions (265) points to potential diplomatic tensions rather than outright conflict. The presence of 'nan' (nan) events suggests limited escalation but not immediate military readiness. The geopolitical context includes Pyongyang's actions in Pyongyang and North Korea's response, with Washington and Seoul as key observers. The data does not provide specific military capabilities or historical precedents, but the overall pattern suggests a high-risk environment with potential for escalation if tensions remain elevated.",
+    "lfm2_rationale": "The data shows significant military coercion events (350) with a negative Goldstein scale of -7.8 and a negative tone of -3.0, indicating aggressive posturing. However, the presence of 'Fight' events and 'Reduce Military' mentions suggests potential diplomatic or diplomatic pressure rather than outright conflict. The high volume of 'Fight' events (150) combined with 'Reduce Military' mentions (265) suggests escalation but not outright war readiness.",
+    "lfm2_actors": [
+      {
+        "name": "North Korea",
+        "role": "Primary adversary",
+        "posture": "Coercive and diplomatic"
+      },
+      {
+        "name": "South Korea",
+        "role": "Target country",
+        "posture": "Defensive"
+      },
+      {
+        "name": "United States",
+        "role": "Key observer",
+        "posture": "Diplomatic"
+      },
+      {
+        "name": "China",
+        "role": "Regional power",
+        "posture": "Balanced"
+      }
+    ],
+    "lfm2_indicators": [
+      "Further military coercion events by North Korea",
+      "Diplomatic efforts or crises",
+      "Changes in US or Chinese policy towards Pyongyang",
+      "Public statements or media coverage of North Korean actions",
+      "Military readiness indicators (e.g., increased troop deployments, missile tests)"
+    ],
+    "lfm2_trajectories": null,
+    "lfm2_confidence": "medium"
   },
   {
     "week": "2015-04-05",
     "gold_level": 3,
     "naive_level": 1,
     "xgb_level": 3,
-    "lfm2_level": null
+    "lfm2_level": 3,
+    "lfm2_summary": "This week shows intense North Korean coercive and confrontational behavior with high Goldstein scores (-7.5) and negative tone (-4.4) across multiple locations. The presence of 'Fight' events with high 'Exhibit Force' activity suggests heightened military readiness, while the combination of 'Coerce' and 'Fight' events indicates aggressive intent. The high volume of 'Exhibit Force' events (62) and 'Fight' events (50) suggests escalating tensions rather than routine military activity. The geopolitical context points to potential military tensions or provocations from North Korea.",
+    "lfm2_rationale": "The data shows significant coercive and aggressive actions (e.g., 'Exhibit Force' and 'Fight') with high Goldstein scores (-7.5) and negative tone (-4.4) indicating hostile intent. However, the context suggests these events are not overtly aggressive but rather coercive and confrontational. The presence of 'Fight' events with high Goldstein scores (-10.0) and negative tone (-4.4) aligns with North Korea's typical coercive behavior. The high volume of 'Exhibit Force' events (244) and 'Fight' events (214) suggests escalating tensions rather than routine military activity.",
+    "lfm2_actors": [
+      {
+        "name": "North Korea",
+        "role": "Primary aggressor",
+        "posture": "Coercive and confrontational"
+      },
+      {
+        "name": "United States",
+        "role": "Target of coercive actions",
+        "posture": "Potential adversary"
+      },
+      {
+        "name": "China",
+        "role": "Regional actor",
+        "posture": "Potential mediator or observer"
+      },
+      {
+        "name": "Japan",
+        "role": "Western ally",
+        "posture": "Potential ally or observer"
+      }
+    ],
+    "lfm2_indicators": [
+      "Further 'Exhibit Force' or 'Fight' events with specific targets or locations",
+      "Changes in US military posture or deployment",
+      "North Korea's response to US actions or diplomatic efforts",
+      "International responses or sanctions reactions",
+      "Domestic political responses in North Korea"
+    ],
+    "lfm2_trajectories": [
+      "Escalation to military conflict if coercive actions are met with strong retaliation",
+      "Diplomatic engagement or de-escalation if US and other actors respond constructively",
+      "Continued military readiness without overt escalation if tensions are managed through dialogue"
+    ],
+    "lfm2_confidence": "medium"
   },
   {
     "week": "2020-08-02",
@@ -263,14 +1185,92 @@
     "gold_level": 2,
     "naive_level": 1,
     "xgb_level": 3,
-    "lfm2_level": null
+    "lfm2_level": 3,
+    "lfm2_summary": "This week shows escalating military tensions between North Korea and South Korea through Fight events, with significant Coerce and Reduction Military activities. The high volume of Fight events (160) and Coerce events (115) indicates active military confrontations, while the presence of North Korean Coerce activities suggests diplomatic friction. The South Korean and Chinese involvement in the events suggests broader regional tensions. The South Korean data shows a significant reduction in military activity compared to the previous week, indicating a cooling of tensions.",
+    "lfm2_rationale": "The data shows significant military activity with 380 events totaling 160 Fight events, 115 Coerce events, and 70 Assault events. The average Goldstein scale of -7.5 indicates severe military tensions, while the high number of Fight events (160) suggests active military confrontations. The presence of Coerce and Reduction Military events suggests diplomatic tensions rather than outright conflict.",
+    "lfm2_actors": [
+      {
+        "name": "North Korea",
+        "role": "Primary military actor",
+        "posture": "Highly aggressive and provocative"
+      },
+      {
+        "name": "South Korea",
+        "role": "Defensive actor",
+        "posture": "Maintaining military readiness"
+      },
+      {
+        "name": "China",
+        "role": "Regional power",
+        "posture": "Supporting South Korea's military posture"
+      },
+      {
+        "name": "United States",
+        "role": "Foreign policy actor",
+        "posture": "Monitoring regional tensions"
+      }
+    ],
+    "lfm2_indicators": [
+      "Further North Korean military provocations and South Korean defensive actions",
+      "China's response to North Korean military activities",
+      "US diplomatic engagement with North Korea",
+      "South Korean military readiness and readiness",
+      "China's role in regional tensions",
+      "International diplomatic engagement with North Korea"
+    ],
+    "lfm2_trajectories": [
+      "Continued military tensions with increased North Korean provocations and South Korean defensive actions",
+      "Diplomatic engagement with North Korea and China as a means of de-escalation",
+      "Escalation to military confrontation if North Korean provocations continue without diplomatic resolution",
+      "Regional stability maintained through diplomatic engagement and military readiness"
+    ],
+    "lfm2_confidence": "medium"
   },
   {
     "week": "2019-06-16",
     "gold_level": 2,
     "naive_level": 1,
     "xgb_level": 3,
-    "lfm2_level": null
+    "lfm2_level": 3,
+    "lfm2_summary": "This week shows intense military activity with 941 events totaling 4,241 mentions across 1,000 sources. The data indicates a high level of tension with multiple 'Fight' events at multiple locations, suggesting ongoing military confrontations. The presence of 'Assault' and 'Reduce Military' events at Pyongyang and P'yongyang-si suggests potential provocative actions. The high volume of 'Fight' events (30) compared to other activities (20 'Assault' and 26 'Reduce Military') indicates escalating tensions rather than routine military exercises.",
+    "lfm2_rationale": "The data shows significant military activity with 420 'Assault' events, 209 'Reduce Military' events, and 147 'Fight' events, indicating high levels of tension and potential provocative actions. The presence of 'Fight' events at multiple locations (Pyongyang, P'yongyang-si, North Korea) suggests ongoing military confrontations. The high volume of 'Fight' events (30) compared to other activities (20 'Assault' and 26 'Reduce Military') suggests escalating tensions rather than routine military exercises.",
+    "lfm2_actors": [
+      {
+        "name": "North Korea",
+        "role": "Primary military actor",
+        "posture": "Highly confrontational with multiple 'Fight' events at multiple locations"
+      },
+      {
+        "name": "Pyongyang",
+        "role": "Key location",
+        "posture": "Potential provocative actor with multiple 'Fight' events"
+      },
+      {
+        "name": "China",
+        "role": "Regional power",
+        "posture": "Monitoring activities and potential provocative actions"
+      },
+      {
+        "name": "United States",
+        "role": "Foreign power",
+        "posture": "Monitoring activities and potential provocative actions"
+      }
+    ],
+    "lfm2_indicators": [
+      "Further military exercises or deployments",
+      "Changes in specific 'Fight' events at multiple locations",
+      "Changes in North Korean military posture or actions",
+      "Changes in Chinese military posture or actions",
+      "Changes in US military posture or actions",
+      "Changes in regional tensions or diplomatic developments"
+    ],
+    "lfm2_trajectories": [
+      "Escalation to full-scale conflict if tensions reach a critical point",
+      "Diplomatic resolution through negotiations",
+      "Continued regional tensions with limited military posturing",
+      "Increased military exercises or deployments"
+    ],
+    "lfm2_confidence": "medium"
   },
   {
     "week": "2023-05-14",
@@ -291,7 +1291,45 @@
     "gold_level": 4,
     "naive_level": 1,
     "xgb_level": 3,
-    "lfm2_level": null
+    "lfm2_level": 2,
+    "lfm2_summary": "This week shows intense military activity with 475 events classified as 'Reduce Military' (fighting) and 'Fight' (combined) activity. The high volume of 'Reduce Military' events (193) and the presence of 'Fight' events (124) indicate a significant military buildup, possibly related to North Korea's response to international pressure. The low number of 'Assault' events (73) suggests this was not a major conflict phase. The location distribution (mostly in South Korea and North Korea) aligns with typical military activity patterns. The presence of 'Fight' events in multiple locations (North Korea, South Korea, and China) suggests a coordinated military response. The negative tone of the data (average Goldstein score of -7.6) indicates a highly confrontational situation rather than a peaceful engagement.",
+    "lfm2_rationale": "The data shows significant military activity with 193 events classified as 'Reduce Military' (fighting) and 124 events as 'Fight' (combined). The average Goldstein scale of -7.6 indicates a highly negative sentiment, while the total number of events (475) suggests substantial activity. However, the low number of 'Fight' events (124) compared to 'Reduce Military' events (193) suggests this was not a major conflict event.",
+    "lfm2_actors": [
+      {
+        "name": "North Korea",
+        "role": "Primary military actor",
+        "posture": "Highly confrontational, responding to international pressure"
+      },
+      {
+        "name": "China",
+        "role": "Regional power",
+        "posture": "Coordinated military response"
+      },
+      {
+        "name": "South Korea",
+        "role": "Defensive state",
+        "posture": "Maintaining military readiness"
+      },
+      {
+        "name": "United States",
+        "role": "Diplomatic and military ally",
+        "posture": "Supporting North Korea's military actions"
+      }
+    ],
+    "lfm2_indicators": [
+      "Further military buildup or deployment of forces",
+      "Changes in diplomatic pressure or sanctions",
+      "Military exercises or demonstrations",
+      "International responses or counter-military actions",
+      "Changes in North Korea's military posture or actions"
+    ],
+    "lfm2_trajectories": [
+      "Continued military buildup with potential escalation to armed conflict",
+      "Diplomatic negotiations or sanctions relief",
+      "Military exercises or demonstrations",
+      "Increased regional cooperation or military cooperation"
+    ],
+    "lfm2_confidence": "medium"
   },
   {
     "week": "2015-08-30",
@@ -305,7 +1343,39 @@
     "gold_level": 3,
     "naive_level": 1,
     "xgb_level": 3,
-    "lfm2_level": null
+    "lfm2_level": 3,
+    "lfm2_summary": "The GDELT data indicates significant military activity in North Korea with 1878 total events, primarily focused on combat and coercive actions. The high volume (1878 events) and content (1079 'Fight' events) suggest potential military confrontations. However, the low number of 'Reduce Military' events and the presence of 'Fight' events with high content (300) indicate this was not a major escalation. The geopolitical context suggests this activity aligns with North Korea's typical military posturing during periods of heightened tensions.",
+    "lfm2_rationale": "The data shows significant military activity with high volume (1878 events) and low-to-moderate intensity (average Goldstein score -8.8) with predominantly hostile and coercive events. The presence of 'Fight' events with high content (1079) and 'Assault' events (297) indicates potential military confrontations. However, the low number of 'Reduce Military' events suggests this was not a major escalation. The high number of 'Fight' events with low content (300) indicates ongoing but not severe military confrontations. The geopolitical context of North Korea's actions aligns with typical Pyongyang-related military posturing.",
+    "lfm2_actors": [
+      {
+        "name": "North Korea",
+        "role": "Primary military actor",
+        "posture": "Highly aggressive and coercive"
+      },
+      {
+        "name": "South Korea",
+        "role": "Target of North Korean military actions",
+        "posture": "Potential target of North Korean military actions"
+      },
+      {
+        "name": "United States",
+        "role": "Cooperation partner",
+        "posture": "Potential ally or partner in military actions"
+      }
+    ],
+    "lfm2_indicators": [
+      "Further military actions by North Korea",
+      "Changes in US-South Korea military cooperation",
+      "International diplomatic responses to North Korean provocations",
+      "Changes in US military posture in response to North Korean provocations"
+    ],
+    "lfm2_trajectories": [
+      "Continued military confrontation with increased US military presence",
+      "Diplomatic negotiations to de-escalate tensions",
+      "Escalation to full-scale military conflict",
+      "Increased regional military exercises and joint operations"
+    ],
+    "lfm2_confidence": "medium"
   },
   {
     "week": "2019-09-15",
@@ -319,21 +1389,125 @@
     "gold_level": 3,
     "naive_level": 1,
     "xgb_level": 3,
-    "lfm2_level": null
+    "lfm2_level": 4,
+    "lfm2_summary": "This week shows intense military activity with 1528 total events, primarily focused on force mobilization and coercive actions. The high volume of 'Exhibit Force' events and 'Coerce' events suggests potential diplomatic pressure or provocative actions. The presence of 'Goldstein' scale (-8.6) and 'Mentions' (6,498) indicates significant international attention, possibly related to North Korea's military posture or diplomatic tensions. The location pattern suggests military activity in North Korea's border areas.",
+    "lfm2_rationale": "The data shows significant military activity with 624 assault events, 379 fight events, and 240 coercive events, indicating high tension and potential provocative actions. The presence of 'Exhibit Force' events suggests military mobilization, while the 'Coerce' event at Pyongyang suggests diplomatic pressure. The high volume of 'Goldstein' scale (-8.6) and 'Mentions' (6,498) indicates widespread international attention.",
+    "lfm2_actors": [
+      {
+        "name": "North Korea",
+        "role": "Primary military actor",
+        "posture": "Coercive and forceful"
+      },
+      {
+        "name": "United States",
+        "role": "Diplomatic and military ally",
+        "posture": "Supporting military actions"
+      },
+      {
+        "name": "China",
+        "role": "Regional power",
+        "posture": "Potential mediator or observer"
+      },
+      {
+        "name": "Japan",
+        "role": "Diplomatic ally",
+        "posture": "Supporting North Korea's military actions"
+      }
+    ],
+    "lfm2_indicators": [
+      "Further military actions or demonstrations by North Korea",
+      "Changes in US or Chinese diplomatic responses",
+      "International media coverage of the event",
+      "Military readiness or demonstration of power by China",
+      "Diplomatic negotiations or talks"
+    ],
+    "lfm2_trajectories": [
+      "Military escalation with increased force mobilization and coercive actions",
+      "Diplomatic negotiations or talks to de-escalate tensions",
+      "Increased international monitoring or sanctions",
+      "Shift in regional power dynamics or diplomatic engagement"
+    ],
+    "lfm2_confidence": "medium"
   },
   {
     "week": "2016-12-18",
     "gold_level": 3,
     "naive_level": 1,
     "xgb_level": 3,
-    "lfm2_level": null
+    "lfm2_level": 3,
+    "lfm2_summary": "This week shows a high volume of military-related events (769 total events) with a predominantly 'Reduce Military' focus. The presence of 'Fight' events and 'Assault' events indicates potential military confrontations, while 'Exhibit Force' events suggest diplomatic tensions. The high volume of 'Reduce Military' events suggests escalating tensions rather than de-escalation. The location pattern (Pyongyang, Hamgyong-bukto, North Korea) aligns with North Korean military activities. The geopolitical context includes potential tensions between North Korea and the United States/China, as evidenced by the 'Reduce Military' events.",
+    "lfm2_rationale": "The data shows significant military-related events with high volume (769 total events) and low-to-moderate intensity (average Goldstein score -7.8). The presence of 'Fight' events and 'Assault' events indicates potential military confrontations, while 'Exhibit Force' events suggest diplomatic tensions. The high volume of 'Reduce Military' events suggests escalating tensions rather than de-escalation. The presence of North Korean 'Fight' events at Pyongyang suggests ongoing military confrontations.",
+    "lfm2_actors": [
+      {
+        "name": "North Korea",
+        "role": "Primary military actor",
+        "posture": "Highly militarized and confrontational"
+      },
+      {
+        "name": "United States",
+        "role": "Foreign power",
+        "posture": "Potential mediator or adversary"
+      },
+      {
+        "name": "United States",
+        "role": "Coordinating power",
+        "posture": "Maintaining diplomatic tone"
+      },
+      {
+        "name": "China",
+        "role": "Regional power",
+        "posture": "Potential ally or adversary"
+      }
+    ],
+    "lfm2_indicators": [
+      "Further military posturing by North Korea or China",
+      "Changes in US diplomatic tone or actions",
+      "Military exercises or deployments",
+      "Diplomatic overtures or engagements",
+      "Changes in 'Reduce Military' event frequency or intensity",
+      "International responses to North Korean military activities"
+    ],
+    "lfm2_trajectories": [
+      "Escalation to military conflict if tensions remain unresolved",
+      "Diplomatic engagement if tensions are managed through dialogue",
+      "Stabilization if military confrontations are de-escalated through diplomatic channels"
+    ],
+    "lfm2_confidence": "medium"
   },
   {
     "week": "2015-09-20",
     "gold_level": 3,
     "naive_level": 1,
     "xgb_level": 3,
-    "lfm2_level": null
+    "lfm2_level": 3,
+    "lfm2_summary": null,
+    "lfm2_rationale": "The data shows significant military activity with 290 'Fight' events, 179 'Coerce' events, and 94 'Reduce Military' events, indicating escalatory tendencies. The average Goldstein scale of -7.8 suggests moderate to high tensions, while the high volume of events (3,985 total) points to active military engagement. The presence of 'Fight' events at Pyongyang suggests potential conflict escalation. However, the limited number of 'Coerce' events (179) and the absence of 'Assault' or 'Exhibit Force' events suggest the situation remains relatively contained compared to more aggressive scenarios. The geopolitical context of North Korea's involvement in the Korean Peninsula remains ambiguous, with potential for diplomatic or non-military escalation depending on the specific events and context.",
+    "lfm2_actors": [
+      {
+        "name": "North Korea",
+        "role": "Primary military actor",
+        "posture": "Highly militarized and provocative"
+      },
+      {
+        "name": "China",
+        "role": "Diplomatic and economic actor",
+        "posture": "Mediator and potential mediator"
+      },
+      {
+        "name": "United States",
+        "role": "Diplomatic and military ally",
+        "posture": "Potential ally or mediator"
+      }
+    ],
+    "lfm2_indicators": [
+      "Further North Korean military actions or demonstrations",
+      "China's response to North Korean provocations",
+      "US military posture or deployment in the region",
+      "China's diplomatic or economic engagement with North Korea",
+      "South Korea's military readiness or exercises"
+    ],
+    "lfm2_trajectories": null,
+    "lfm2_confidence": "medium"
   },
   {
     "week": "2015-10-04",
@@ -347,28 +1521,163 @@
     "gold_level": 2,
     "naive_level": 1,
     "xgb_level": 3,
-    "lfm2_level": null
+    "lfm2_level": 4,
+    "lfm2_summary": "The week of June 4-10 shows intense military activity with 1085 total events, predominantly focused on 'Fight' and 'Coerce' activities. The high volume of 'Reduce Military' events (127) and 'Exhibit Force' activities (75) indicates diplomatic efforts rather than direct conflict. The presence of 'Fight' and 'Reduce Military' events suggests a tense but not immediate escalation phase. The global location of events (China, Japan, Oceans) and North Korea's involvement (Pyongyang) suggests international coordination or proxy conflicts. The average Goldstein scale of -8.7 indicates a highly volatile situation with significant military tensions.",
+    "lfm2_rationale": "The data shows significant military activity with 1085 total events, primarily focused on 'Fight' and 'Coerce' activities, indicating heightened tensions. The average Goldstein scale of -8.7 suggests moderate to severe escalation, with 75% of events classified as 'Fight' or 'Coerce'. The presence of 'Reduce Military' events (127) and 'Exhibit Force' activities (75) suggests diplomatic efforts rather than direct conflict.",
+    "lfm2_actors": [
+      {
+        "name": "North Korea",
+        "role": "Primary military actor",
+        "posture": "Highly aggressive and defensive"
+      },
+      {
+        "name": "China",
+        "role": "Global power",
+        "posture": "Coordinating efforts"
+      },
+      {
+        "name": "Japan",
+        "role": "Diplomatic actor",
+        "posture": "Supporting North Korea's military actions"
+      },
+      {
+        "name": "United States",
+        "role": "Diplomatic actor",
+        "posture": "Supporting North Korea's military actions"
+      }
+    ],
+    "lfm2_indicators": [
+      "Further military posturing by North Korea or China",
+      "Changes in US diplomatic or economic responses",
+      "International diplomatic efforts to de-escalate tensions",
+      "Military exercises or deployments by North Korea or China",
+      "Changes in US-Japan-South Korea military cooperation"
+    ],
+    "lfm2_trajectories": [
+      "Continued escalation with potential military buildup",
+      "Diplomatic efforts to de-escalate tensions",
+      "Increased regional military exercises or joint military drills",
+      "Economic or diplomatic sanctions imposed on North Korea"
+    ],
+    "lfm2_confidence": "medium"
   },
   {
     "week": "2016-11-06",
     "gold_level": 3,
     "naive_level": 1,
     "xgb_level": 3,
-    "lfm2_level": null
+    "lfm2_level": 3,
+    "lfm2_summary": "This week shows escalatory activity with 660 total events, predominantly 'Fight' and 'Coerce' events, indicating heightened military tensions. The high volume of 'Reduce Military' events suggests potential de-escalation efforts. The presence of 'Exhibit Force' events suggests military exercises or demonstrations. The geopolitical context includes potential military exercises or demonstrations in Pyongyang, North Korea, and Washington's involvement in North Korean affairs. The high number of 'Fight' events suggests ongoing military confrontations or demonstrations.",
+    "lfm2_rationale": "The data shows significant military activity with 223 'Fight' events, 157 'Coerce' events, and 104 'Reduce Military' events, indicating escalatory tendencies. The average Goldstein scale of -7.8 suggests moderate to high tensions, while the high volume of events (660 total) points to active military engagement. The presence of 'Exhibit Force' events suggests potential military exercises or demonstrations.",
+    "lfm2_actors": [
+      {
+        "name": "North Korea",
+        "role": "Primary military actor",
+        "posture": "Highly militarized and provocative"
+      },
+      {
+        "name": "United States",
+        "role": "Foreign power with military involvement",
+        "posture": "Potential military exercise or demonstration"
+      },
+      {
+        "name": "Japan",
+        "role": "Coercive power",
+        "posture": "Potential provocative power"
+      },
+      {
+        "name": "South Korea",
+        "role": "Coercive power",
+        "posture": "Potential provocative power"
+      }
+    ],
+    "lfm2_indicators": [
+      "Further military exercises or demonstrations in Pyongyang, North Korea, or Washington's military activities.",
+      "Changes in the frequency or intensity of 'Fight' and 'Coerce' events.",
+      "Changes in the tone of the Goldstein scale (e.g., from -3.4 to -7.8).",
+      "Changes in the number of 'Reduce Military' events."
+    ],
+    "lfm2_trajectories": null,
+    "lfm2_confidence": "medium"
   },
   {
     "week": "2025-11-09",
     "gold_level": 4,
     "naive_level": 1,
     "xgb_level": 3,
-    "lfm2_level": null
+    "lfm2_level": 3,
+    "lfm2_summary": "The week of November 9-15, 2025, shows heightened military tensions in North Korea with 671 events totaling 259 combat-related and 259 non-combat events. The data indicates active military confrontations between North Korean forces and South Korean forces, with significant 'Fight' events. The presence of 'Coerce' and 'Assault' events suggests coercive tactics were used in some cases, while the overall pattern of 'Fight' events suggests ongoing military confrontations. The high number of 'Fight' events (391) indicates active military engagements, and the presence of 'Fight' events in both North and South Korean forces suggests a broader regional military conflict.",
+    "lfm2_rationale": "The data shows significant military activity with 671 events totaling 259 combat-related and 1,278 non-combat events. The average Goldstein scale of -8.7 indicates severe tensions, while the high number of 'Fight' events (391) suggests active military confrontations. The presence of 'Coerce' and 'Assault' events suggests coercive tactics were used in some cases.",
+    "lfm2_actors": [
+      {
+        "name": "North Korea",
+        "role": "Primary military actor",
+        "posture": "Highly aggressive and confrontational"
+      },
+      {
+        "name": "South Korea",
+        "role": "South Korean military partner",
+        "posture": "Defensive and non-aggressive"
+      },
+      {
+        "name": "United States",
+        "role": "Foreign ally and potential ally",
+        "posture": "Monitoring and potential ally"
+      },
+      {
+        "name": "China",
+        "role": "Regional power",
+        "posture": "Supporting North Korean military actions"
+      }
+    ],
+    "lfm2_indicators": [
+      "Further North Korean military actions or provocations",
+      "South Korean military responses or defensive actions",
+      "China's military actions or responses",
+      "US military responses or diplomatic efforts",
+      "International diplomatic efforts or sanctions"
+    ],
+    "lfm2_trajectories": [
+      "Escalation to full-scale conflict with increased military exercises and provocative actions",
+      "Diplomatic resolution through international mediation or sanctions",
+      "Continued military tension with potential escalation to full-scale war",
+      "Increased regional military cooperation or joint exercises"
+    ],
+    "lfm2_confidence": "medium"
   },
   {
     "week": "2017-02-19",
     "gold_level": 3,
     "naive_level": 1,
     "xgb_level": 3,
-    "lfm2_level": null
+    "lfm2_level": 3,
+    "lfm2_summary": null,
+    "lfm2_rationale": "The data shows significant military activity with 4700 events of 'Fight' and 2202 of 'Assault' categorized as 'Fight' with an average Goldstein scale of -8.5. The presence of 'Fight' events with high mentions (211) and 'Assault' events with high mentions (138) indicates a high level of tension and potential conflict. The combination of 'Fight' and 'Coerce' events suggests a provocative or aggressive posture. The presence of 'Reduce Military' events with high mentions (80) further supports a hostile intent. The geopolitical context of North Korea's activities in the region, particularly in relation to the Syrian conflict, is critical for understanding this pattern.",
+    "lfm2_actors": [
+      {
+        "name": "North Korea",
+        "role": "Primary actor",
+        "posture": "Highly aggressive and provocative"
+      },
+      {
+        "name": "Japan",
+        "role": "Western ally",
+        "posture": "Supporting North Korea's military actions"
+      },
+      {
+        "name": "United States",
+        "role": "Western ally",
+        "posture": "Monitoring and potentially intervening"
+      },
+      {
+        "name": "China",
+        "role": "Regional power",
+        "posture": "Potential mediator or observer"
+      }
+    ],
+    "lfm2_indicators": null,
+    "lfm2_trajectories": null,
+    "lfm2_confidence": null
   },
   {
     "week": "2017-11-12",
@@ -382,14 +1691,79 @@
     "gold_level": 2,
     "naive_level": 1,
     "xgb_level": 3,
-    "lfm2_level": null
+    "lfm2_level": 3,
+    "lfm2_summary": "This week shows a high level of military tension with 1425 total events, predominantly focused on coercive actions (596 'Reduce Military' events) and aggressive confrontations (461 'Coerce' events). The presence of multiple high-level actors across multiple locations suggests a potential military confrontation. The average Goldstein score of -7.1 indicates a generally hostile or tense environment with significant military activity.",
+    "lfm2_rationale": "The data shows significant coercive and aggressive events with high average Goldstein scores (-7.1) and negative tone (-1.6) but also some neutral or defensive actions (41 events). The presence of multiple high-level actors (US, UN, UNITED STATES) and specific locations (Pyongyang, Washington, District of Columbia) suggests a high-level military confrontation. The combination of 'Reduce Military' and 'Coerce' events with multiple high-level actors indicates a potential escalation toward military confrontation.",
+    "lfm2_actors": [
+      {
+        "name": "United States",
+        "role": "Primary military power and US ally",
+        "posture": "Coercive actions and military readiness"
+      },
+      {
+        "name": "United Nations",
+        "role": "International body with diplomatic involvement",
+        "posture": "Mediating or observer role"
+      },
+      {
+        "name": "United States",
+        "role": "Leading military power",
+        "posture": "Coercive actions and military readiness"
+      },
+      {
+        "name": "North Korea",
+        "role": "Primary target",
+        "posture": "Potential adversary with aggressive actions"
+      }
+    ],
+    "lfm2_indicators": [
+      "Further military exercises or deployments by US or UN forces",
+      "Changes in US or UN diplomatic statements or actions",
+      "Increased military presence or deployment in North Korea",
+      "North Korea's response to US or UN actions",
+      "International diplomatic efforts to de-escalate tensions"
+    ],
+    "lfm2_trajectories": null,
+    "lfm2_confidence": "medium"
   },
   {
     "week": "2019-12-08",
     "gold_level": 5,
     "naive_level": 1,
     "xgb_level": 3,
-    "lfm2_level": null
+    "lfm2_level": 3,
+    "lfm2_summary": "This week shows intense military activity with 833 total events, primarily focused on North Korea's 'Fight' phase. The high volume of 'Exhibit Force' events and 'Reduce Military' activities suggests heightened tensions on the Korean Peninsula. The presence of 'nan' events indicates potential diplomatic or coercive actions rather than direct military confrontation. The geographic spread of events (Seoul, South Korea, North Korea) suggests a regional focus on military posturing.",
+    "lfm2_rationale": "The data shows significant military activity with 302 'Fight' events, 240 'Reduce Military' events, and 40 'Exhibit Force' events, indicating a high level of military posturing. The average Goldstein scale of -7.8 suggests tense but not overtly aggressive tensions. The presence of 'nan' events (coerce) suggests potential diplomatic or coercive actions rather than direct military confrontation.",
+    "lfm2_actors": [
+      {
+        "name": "North Korea",
+        "role": "Primary military actor",
+        "posture": "Highly aggressive, with significant 'Fight' and 'Exhibit Force' events"
+      },
+      {
+        "name": "United States",
+        "role": "Foreign power",
+        "posture": "Monitoring and potentially responding to North Korean military actions"
+      },
+      {
+        "name": "South Korea",
+        "role": "Cooperative partner",
+        "posture": "Potentially involved in diplomatic or coercive actions"
+      }
+    ],
+    "lfm2_indicators": [
+      "Further 'Fight' events or 'Exhibit Force' events to confirm the intensity of military posturing",
+      "Changes in US or South Korean military posture or actions",
+      "International diplomatic or diplomatic responses to North Korean military actions",
+      "Geopolitical context or regional tensions affecting the situation"
+    ],
+    "lfm2_trajectories": [
+      "Continued military posturing with potential diplomatic engagement",
+      "Diplomatic crisis with military posturing followed by diplomatic resolution",
+      "Military confrontation with diplomatic resolution",
+      "No military action with diplomatic engagement"
+    ],
+    "lfm2_confidence": "medium"
   },
   {
     "week": "2020-07-12",
@@ -403,13 +1777,79 @@
     "gold_level": 3,
     "naive_level": 1,
     "xgb_level": 3,
-    "lfm2_level": null
+    "lfm2_level": 3,
+    "lfm2_summary": null,
+    "lfm2_rationale": "The data shows significant military activity with 882 events totaling 448 fighting events, predominantly in Seoul, South Korea. The high volume of 'Fight' events (442) and the presence of 'Exhibit Force' events (78) indicate potential military posturing. However, the low volume of 'Assault' events (162) and 'Reduce Military' events (76) suggests this was not a major escalation. The presence of 'Exhibit Force' events in multiple locations (Seoul, South Korea) suggests diplomatic engagement rather than aggressive posturing. The average Goldstein scale of -8.7 indicates a generally negative sentiment, but the presence of negative tone (-4.2) is not consistent with military activity. The low number of 'Fight' events (40) compared to 'Exhibit Force' events (78) suggests this was not a major military demonstration. The geopolitical context of Pyongyang's diplomatic engagement with Washington suggests this was part of a broader diplomatic effort rather than a military confrontation.",
+    "lfm2_actors": [
+      {
+        "name": "North Korea",
+        "role": "Primary military actor",
+        "posture": "Highly defensive and diplomatic"
+      },
+      {
+        "name": "South Korea",
+        "role": "Defensive state",
+        "posture": "Diplomatic engagement"
+      },
+      {
+        "name": "United States",
+        "role": "Diplomatic actor",
+        "posture": "Supporting diplomatic efforts"
+      },
+      {
+        "name": "Ministry of Foreign Affairs",
+        "role": "Diplomatic authority",
+        "posture": "Supporting diplomatic efforts"
+      }
+    ],
+    "lfm2_indicators": [
+      "Further military posturing by North Korea",
+      "Changes in diplomatic engagement levels",
+      "Increased military activity in Seoul",
+      "Changes in US diplomatic posturing"
+    ],
+    "lfm2_trajectories": null,
+    "lfm2_confidence": "medium"
   },
   {
     "week": "2017-04-30",
     "gold_level": 3,
     "naive_level": 1,
     "xgb_level": 3,
-    "lfm2_level": null
+    "lfm2_level": 3,
+    "lfm2_summary": "This week shows a high volume of military-related events with a predominantly 'Exhibit Force' activity targeting North Korean military installations in Pyongyang. The presence of 'Fight' events at multiple locations suggests ongoing military confrontations rather than routine exercises. The average Goldstein scale of -8.0 indicates a very aggressive level of military activity. The high volume of events (7489 total) combined with the presence of multiple locations suggests a significant military buildup or escalation. The geopolitical context includes North Korea's military activities in response to U.S. provocations and potential diplomatic tensions.",
+    "lfm2_rationale": "The data shows significant military activity with 7489 total events, predominantly 'Exhibit Force' events targeting North Korean military installations in Pyongyang. The average Goldstein scale of -8.0 and tone of -3.5 indicate a highly aggressive and provocative level of military activity. The presence of 'Fight' events at multiple locations suggests ongoing military confrontations rather than routine exercises.",
+    "lfm2_actors": [
+      {
+        "name": "North Korea",
+        "role": "Primary military actor",
+        "posture": "Highly aggressive and provocative"
+      },
+      {
+        "name": "United States",
+        "role": "Foreign power",
+        "posture": "Potential adversary"
+      },
+      {
+        "name": "Japan",
+        "role": "Potential ally or observer",
+        "posture": "Monitoring activity"
+      }
+    ],
+    "lfm2_indicators": [
+      "Further military exercises targeting North Korean military installations",
+      "Unexplained military provocations from North Korea",
+      "Changes in North Korean diplomatic or economic actions",
+      "Changes in U.S. military posture or actions in response to North Korean activities",
+      "International responses to North Korean military activities"
+    ],
+    "lfm2_trajectories": [
+      "Continued military buildup and provocations from North Korea",
+      "Diplomatic negotiations or arms control talks",
+      "Increased military exercises or deployments",
+      "Economic sanctions or diplomatic measures",
+      "Potential escalation to armed conflict"
+    ],
+    "lfm2_confidence": "medium"
   }
 ]
