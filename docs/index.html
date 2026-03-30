@@ -1286,6 +1286,15 @@ loadPrecomputedData();
 import { pipeline, TextStreamer } from 'https://cdn.jsdelivr.net/npm/@huggingface/transformers@3';
 
 const SYSTEM = 'You are a geopolitical risk analyst specializing in North Korean military activity. Analyze GDELT event data and produce structured risk assessments in JSON format.';
+
+const GREETINGS = [
+  'HALT. Signal 38 perimeter secured.\nSelect a week. I\'ll run the briefing.',
+  'At ease, analyst.\nPick a week from the sidebar — I\'ll handle the rest.',
+  'Eyes on the peninsula.\nSelect a week for your intel summary.',
+  'Nothing moves on the 38th parallel without us knowing.\nChoose a week.',
+  'Perimeter clear. Model loaded.\nSelect a week and press ↵.',
+];
+const greet = () => GREETINGS[Math.floor(Math.random() * GREETINGS.length)];
 const MODEL  = 'signal38/lfm2-nk-risk';
 
 const widget   = document.getElementById('soldier-widget');
@@ -1369,8 +1378,10 @@ widget.addEventListener('mouseenter', async () => {
   inputEl.style.display = 'block';
 
   if (state === 'idle') {
+    respEl.textContent = greet();
     await loadModel();
-  } else {
+  } else if (state === 'ready') {
+    if (!respEl.textContent) respEl.textContent = greet();
     setIdleStatus();
   }
 
