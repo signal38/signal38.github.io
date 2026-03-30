@@ -1332,9 +1332,8 @@ async function loadModel() {
   statusEl.textContent = 'loading model…';
   respEl.textContent   = '';
   try {
-    const device = navigator.gpu ? 'webgpu' : 'wasm';
     pipe = await pipeline('text-generation', MODEL, {
-      device,
+      device: 'auto',
       dtype: 'fp16',
       progress_callback: (p) => {
         if (p.status === 'progress' && p.progress != null)
@@ -1367,7 +1366,7 @@ widget.addEventListener('mouseenter', async () => {
   body.removeAttribute('transform');
 
   bubble.style.display = 'block';
-  inputEl.style.display = '';
+  inputEl.style.display = 'block';
 
   if (state === 'idle') {
     await loadModel();
