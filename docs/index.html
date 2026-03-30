@@ -1335,7 +1335,6 @@ async function loadModel() {
     const device = navigator.gpu ? 'webgpu' : 'wasm';
     pipe = await pipeline('text-generation', MODEL, {
       device,
-      model_file_name: 'model_fp16',
       dtype: 'fp16',
       progress_callback: (p) => {
         if (p.status === 'progress' && p.progress != null)
