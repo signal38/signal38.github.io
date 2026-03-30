@@ -1335,7 +1335,7 @@ async function loadModel() {
     const device = navigator.gpu ? 'webgpu' : 'wasm';
     pipe = await pipeline('text-generation', MODEL, {
       device,
-      dtype: 'q4',
+      dtype: 'q8',
       progress_callback: (p) => {
         if (p.status === 'progress' && p.progress != null)
           statusEl.textContent = `loading · ${Math.round(p.progress)}%`;
