@@ -1,3 +1,15 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:22a87f80720f3a31af1069af19f35a21ab72aa639e5ee5e318096811ca51306e
-size 343
+{
+  "naive_baseline": {
+    "val_mae": 2.3333333333333335,
+    "val_accuracy": 0.0,
+    "test_mae": 1.9830508474576272,
+    "test_accuracy": 0.0
+  },
+  "xgboost": {
+    "val_mae": 0.7894736842105263,
+    "val_accuracy": 0.38596491228070173,
+    "test_mae": 0.6949152542372882,
+    "test_accuracy": 0.3898305084745763,
+    "best_round": 2
+  }
+}
