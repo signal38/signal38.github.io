@@ -1,18 +1,18 @@
 {
   "test_set_size": 59,
   "naive_baseline": {
-    "mae": 1.9830508474576272,
-    "accuracy": 0.0
+    "mae": 1.6779661016949152,
+    "accuracy": 0.1016949152542373
   },
   "xgboost": {
     "mae": 0.6949152542372882,
     "accuracy": 0.3898305084745763
   },
   "lfm2_350m": {
-    "mae": 0.7027027027027027,
-    "accuracy": 0.40540540540540543,
-    "valid_json_rate": 0.8813559322033898,
-    "field_completeness": 0.5864406779661017,
-    "parse_failures": 22
+    "mae": 0.7209302325581395,
+    "accuracy": 0.3953488372093023,
+    "valid_json_rate": 0.8983050847457628,
+    "field_completeness": 0.6779661016949152,
+    "parse_failures": 16
   }
 }
