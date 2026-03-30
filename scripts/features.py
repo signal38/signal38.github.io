@@ -23,18 +23,16 @@ def cluster_to_features(cluster: dict) -> np.ndarray:
       1   avg_tone            mean AvgTone
       2   total_events        total event count
       3   total_mentions      total NumMentions
-      4   total_sources       total NumSources
+      4   total_sources       number of unique source URLs
       5   log_events          log1p(total_events)
       6   log_mentions        log1p(total_mentions)
       7-13  cameo_frac_*      fraction of events per CAMEO root code
     """
-    stats = cluster.get("stats", {})
-
-    total_events = stats.get("total_events", 0) or 0
-    total_mentions = stats.get("total_mentions", 0) or 0
-    total_sources = stats.get("total_sources", 0) or 0
-    avg_goldstein = stats.get("avg_goldstein", 0.0) or 0.0
-    avg_tone = stats.get("avg_tone", 0.0) or 0.0
+    total_events = cluster.get("num_events", 0) or 0
+    total_mentions = cluster.get("total_mentions", 0) or 0
+    total_sources = len(cluster.get("source_urls", []))
+    avg_goldstein = cluster.get("avg_goldstein", 0.0) or 0.0
+    avg_tone = cluster.get("avg_tone", 0.0) or 0.0
 
     breakdown = cluster.get("event_breakdown", {})
     cameo_fracs = []

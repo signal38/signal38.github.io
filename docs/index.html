@@ -889,118 +889,8 @@ const ESCALATION = {
   5: { label: 'Critical',    color: '#7F1D1D', bg: '#FCE7E7' },
 };
 
-// ── Sample test weeks (representative subset) ──────────────────────────────
-// In production this loads from data/outputs/results.json
-// Real test set — 59 weeks extracted from data/training/test.jsonl
-const TEST_WEEKS = [
-  {week:"2015-04-05",events:886,  goldstein:-7.5,dominant:"Coerce",          level:3,confidence:0.68},
-  {week:"2015-08-16",events:882,  goldstein:-8.7,dominant:"Fight",           level:3,confidence:0.68},
-  {week:"2015-08-30",events:1071, goldstein:-8.5,dominant:"Fight",           level:3,confidence:0.68},
-  {week:"2015-09-20",events:681,  goldstein:-7.8,dominant:"Fight",           level:3,confidence:0.68},
-  {week:"2015-10-04",events:506,  goldstein:-7.9,dominant:"Fight",           level:2,confidence:0.68},
-  {week:"2015-12-27",events:572,  goldstein:-6.4,dominant:"Coerce",          level:2,confidence:0.68},
-  {week:"2016-01-10",events:2618, goldstein:-7.7,dominant:"Reduce Military", level:4,confidence:0.68},
-  {week:"2016-07-03",events:733,  goldstein:-8.1,dominant:"Fight",           level:2,confidence:0.68},
-  {week:"2016-09-04",events:1663, goldstein:-8.7,dominant:"Assault",         level:2,confidence:0.68},
-  {week:"2016-09-11",events:4004, goldstein:-8.4,dominant:"Fight",           level:3,confidence:0.68},
-  {week:"2016-11-06",events:660,  goldstein:-7.8,dominant:"Fight",           level:3,confidence:0.68},
-  {week:"2016-12-11",events:699,  goldstein:-7.8,dominant:"Reduce Military", level:3,confidence:0.68},
-  {week:"2016-12-18",events:769,  goldstein:-7.8,dominant:"Reduce Military", level:3,confidence:0.68},
-  {week:"2017-01-15",events:1036, goldstein:-8.0,dominant:"Fight",           level:2,confidence:0.68},
-  {week:"2017-02-12",events:2335, goldstein:-8.7,dominant:"Fight",           level:4,confidence:0.68},
-  {week:"2017-02-19",events:10264,goldstein:-8.5,dominant:"Fight",           level:3,confidence:0.68},
-  {week:"2017-04-30",events:7489, goldstein:-8.0,dominant:"Fight",           level:3,confidence:0.68},
-  {week:"2017-07-30",events:4680, goldstein:-8.5,dominant:"Fight",           level:3,confidence:0.68},
-  {week:"2017-11-12",events:3379, goldstein:-7.8,dominant:"Fight",           level:3,confidence:0.68},
-  {week:"2018-03-11",events:2502, goldstein:-8.0,dominant:"Fight",           level:2,confidence:0.68},
-  {week:"2018-04-08",events:1016, goldstein:-7.8,dominant:"Fight",           level:2,confidence:0.68},
-  {week:"2018-04-29",events:2689, goldstein:-7.6,dominant:"Fight",           level:3,confidence:0.68},
-  {week:"2018-11-25",events:475,  goldstein:-7.9,dominant:"Reduce Military", level:2,confidence:0.68},
-  {week:"2019-01-13",events:475,  goldstein:-7.6,dominant:"Reduce Military", level:3,confidence:0.68},
-  {week:"2019-05-12",events:2241, goldstein:-8.7,dominant:"Fight",           level:3,confidence:0.68},
-  {week:"2019-06-02",events:1528, goldstein:-8.6,dominant:"Assault",         level:3,confidence:0.68},
-  {week:"2019-06-16",events:941,  goldstein:-8.8,dominant:"Fight",           level:2,confidence:0.68},
-  {week:"2019-07-07",events:1425, goldstein:-7.1,dominant:"Coerce",          level:2,confidence:0.68},
-  {week:"2019-08-11",events:2042, goldstein:-8.5,dominant:"Fight",           level:3,confidence:0.68},
-  {week:"2019-09-15",events:956,  goldstein:-8.4,dominant:"Fight",           level:3,confidence:0.68},
-  {week:"2019-12-08",events:833,  goldstein:-7.8,dominant:"Fight",           level:2,confidence:0.52},
-  {week:"2020-04-26",events:623,  goldstein:-8.4,dominant:"Fight",           level:2,confidence:0.52},
-  {week:"2020-07-12",events:449,  goldstein:-7.9,dominant:"Reduce Military", level:2,confidence:0.68},
-  {week:"2020-08-02",events:555,  goldstein:-7.9,dominant:"Fight",           level:4,confidence:0.68},
-  {week:"2020-10-25",events:338,  goldstein:-8.4,dominant:"Fight",           level:3,confidence:0.68},
-  {week:"2020-11-22",events:309,  goldstein:-8.4,dominant:"Fight",           level:2,confidence:0.68},
-  {week:"2021-09-26",events:422,  goldstein:-8.5,dominant:"Fight",           level:3,confidence:0.68},
-  {week:"2021-10-24",events:974,  goldstein:-8.9,dominant:"Fight",           level:3,confidence:0.68},
-  {week:"2021-11-21",events:237,  goldstein:-8.1,dominant:"Fight",           level:3,confidence:0.68},
-  {week:"2022-03-06",events:594,  goldstein:-9.0,dominant:"Fight",           level:3,confidence:0.68},
-  {week:"2022-03-27",events:1114, goldstein:-8.9,dominant:"Fight",           level:3,confidence:0.68},
-  {week:"2022-04-17",events:435,  goldstein:-7.8,dominant:"Fight",           level:3,confidence:0.68},
-  {week:"2022-05-29",events:1129, goldstein:-8.8,dominant:"Fight",           level:3,confidence:0.68},
-  {week:"2022-07-24",events:342,  goldstein:-7.6,dominant:"Fight",           level:3,confidence:0.68},
-  {week:"2022-08-07",events:261,  goldstein:-8.2,dominant:"Fight",           level:3,confidence:0.68},
-  {week:"2023-05-14",events:177,  goldstein:-8.5,dominant:"Fight",           level:2,confidence:0.52},
-  {week:"2023-06-04",events:1085, goldstein:-8.7,dominant:"Fight",           level:3,confidence:0.68},
-  {week:"2023-12-10",events:380,  goldstein:-7.5,dominant:"Fight",           level:2,confidence:0.68},
-  {week:"2024-01-14",events:1138, goldstein:-9.2,dominant:"Fight",           level:3,confidence:0.68},
-  {week:"2024-02-25",events:492,  goldstein:-7.9,dominant:"Fight",           level:3,confidence:0.68},
-  {week:"2025-01-19",events:1878, goldstein:-8.8,dominant:"Fight",           level:4,confidence:0.68},
-  {week:"2025-08-10",events:250,  goldstein:-7.6,dominant:"Fight",           level:3,confidence:0.68},
-  {week:"2025-09-21",events:221,  goldstein:-8.6,dominant:"Fight",           level:3,confidence:0.68},
-  {week:"2025-10-26",events:791,  goldstein:-8.9,dominant:"Fight",           level:4,confidence:0.68},
-  {week:"2025-11-09",events:671,  goldstein:-8.7,dominant:"Fight",           level:4,confidence:0.68},
-  {week:"2025-12-21",events:188,  goldstein:-8.7,dominant:"Fight",           level:3,confidence:0.68},
-  {week:"2026-01-25",events:153,  goldstein:-8.0,dominant:"Fight",           level:3,confidence:0.68},
-  {week:"2026-02-08",events:169,  goldstein:-8.3,dominant:"Fight",           level:4,confidence:0.68},
-  {week:"2026-02-15",events:268,  goldstein:-9.1,dominant:"Fight",           level:4,confidence:0.68},
-];
-
-// Sample summaries per escalation level
-const SUMMARIES = {
-  1: "North Korean military activity this week remains within baseline parameters. Monitoring sources indicate routine force maintenance activities and no unusual mobilization patterns. Media coverage is limited, with the predominant reporting focused on diplomatic statements rather than operational military movements. The low event volume and mildly negative Goldstein indicators are consistent with periods of relative inter-Korean stability.",
-  2: "Elevated but contained activity characterizes this period. GDELT coding reflects moderate coercive signaling, primarily through state media channels and limited military exhibitions. While Goldstein scores indicate negative posturing, the magnitude and source diversity remain within ranges typically associated with routine deterrence rather than imminent escalation.",
-  3: "This week exhibits significant North Korean military posturing with an elevated event count and negative sentiment indicators. The dominant event coding reflects active force exhibitions and coercive diplomacy directed toward multiple regional actors. Media attention is substantial, and the geographic distribution of coded events suggests broader operational signaling rather than localized exercises.",
-  4: "High-intensity activity detected across multiple GDELT dimensions. Assault and fight-coded events account for a disproportionate share of the weekly cluster, alongside heightened source diversity and mention counts. The negative Goldstein average indicates conditions consistent with active provocation. Regional actors including US and South Korean military assets appear in coded event records, suggesting responsive posturing.",
-  5: "Critical escalation indicators present. The weekly cluster reflects the highest observed event density, with unconventional violence and assault codes dominating alongside extreme negative Goldstein scores. Source diversity and mention counts are at statistical outliers relative to the full dataset. Historical precedent for this pattern includes nuclear test announcements and ICBM launches. Immediate monitoring of watch indicators is warranted.",
-};
-
-const ACTORS_BY_LEVEL = {
-  1: [
-    { name: 'North Korea (DPRK)', desc: 'Routine internal activities; no unusual external posturing detected.' },
-    { name: 'South Korea (ROK)', desc: 'Nominal monitoring posture; no elevated response indicators.' },
-  ],
-  2: [
-    { name: 'North Korea (DPRK)', desc: 'Moderate coercive signaling through state media and limited military exhibitions.' },
-    { name: 'United States', desc: 'Standard deterrence posture; no reported changes to force levels.' },
-    { name: 'China', desc: 'Limited engagement; no unusual diplomatic activity.' },
-  ],
-  3: [
-    { name: 'North Korea (DPRK)', desc: 'Active force exhibitions and multi-directional coercive diplomacy.' },
-    { name: 'United States', desc: 'Military assets present in regional coding; alliance coordination indicated.' },
-    { name: 'South Korea (ROK)', desc: 'Responsive posturing; ROK-US coordination signals active.' },
-    { name: 'Japan', desc: 'Heightened monitoring; appears in action geo coding.' },
-  ],
-  4: [
-    { name: 'North Korea (DPRK)', desc: 'Aggressive posture; assault-coded events with high mention density.' },
-    { name: 'United States', desc: 'Elevated response; carrier strike group presence in regional reports.' },
-    { name: 'South Korea (ROK)', desc: 'Active counter-posturing; joint exercise indicators present.' },
-    { name: 'United Nations', desc: 'Appears as target in DPRK-coded events; Security Council signals active.' },
-  ],
-  5: [
-    { name: 'North Korea (DPRK)', desc: 'Maximum provocation mode; unconventional violence codes at statistical peak.' },
-    { name: 'United States', desc: 'High-readiness posture; USFK and INDOPACOM coordination indicated.' },
-    { name: 'South Korea (ROK)', desc: 'Crisis-level alerts; civilian advisory systems potentially activated.' },
-    { name: 'China', desc: 'Diplomatic activity spiking; dual pressure and mediation signals.' },
-    { name: 'Russia', desc: 'Observed in actor coding; regional positioning noted.' },
-  ],
-};
-
-const INDICATORS = {
-  1: ['Continued low event volumes in subsequent weeks', 'Absence of new weapons test announcements', 'Stable bilateral communications between ROK and DPRK'],
-  2: ['Escalation to force exhibition events in Pyongyang', 'Changes in US-ROK joint exercise scheduling', 'Chinese diplomatic engagement frequency'],
-  3: ['Expansion of event types into assault or unconventional violence coding', 'US carrier strike group positioning in the region', 'UN Security Council meeting requests or emergency sessions', 'South Korean civilian alert system activations'],
-  4: ['Transition to unconventional violence or WMD-adjacent event codes', 'Satellite imagery of missile launch preparation sites', 'Emergency US-ROK-Japan trilateral consultations', 'NORAD and USFK readiness level changes'],
-  5: ['International condemnation and emergency UNSC sessions', 'US and allied military repositioning', 'Chinese emergency diplomatic missions to Pyongyang', 'South Korean civilian shelter and evacuation readiness signals'],
-};
+// Week list built from loaded test_predictions.json
+let weekList = [];
 
 // ── Chip color ─────────────────────────────────────────────────────────────
 function chipStyle(level) {
@@ -1017,17 +907,23 @@ function goldClass(g) {
 
 // ── Render week table ──────────────────────────────────────────────────────
 function renderTable() {
-  document.getElementById('weekCount').textContent = TEST_WEEKS.length;
+  document.getElementById('weekCount').textContent = weekList.length;
   const tbody = document.getElementById('weekTableBody');
-  const display = [...TEST_WEEKS].reverse(); // most recent first
+  if (weekList.length === 0) {
+    tbody.innerHTML = '<tr><td colspan="3" class="metrics-loading">Run notebook 03 to populate test predictions.</td></tr>';
+    return;
+  }
+  const display = [...weekList].reverse(); // most recent first
   tbody.innerHTML = display.map((w, i) => {
-    const origIdx = TEST_WEEKS.length - 1 - i;
+    const origIdx = weekList.length - 1 - i;
+    const level = w.lfm2_level ?? w.gold_level;
+    const g = w.cluster_goldstein ?? 0;
     return `
     <tr data-idx="${origIdx}" onclick="selectWeek(${origIdx})">
       <td class="td-date">${w.week}</td>
-      <td class="td-goldstein ${goldClass(w.goldstein)}">${w.goldstein.toFixed(1)}</td>
+      <td class="td-goldstein ${goldClass(g)}">${g.toFixed(1)}</td>
       <td>
-        <span class="escalation-chip" style="${chipStyle(w.level)}">${w.level}</span>
+        <span class="escalation-chip" style="${chipStyle(level)}">${level}</span>
       </td>
     </tr>`;
   }).join('');
@@ -1086,22 +982,41 @@ function setConfidence(val) {
 }
 
 // ── Render actors ──────────────────────────────────────────────────────────
-function renderActors(level, actors) {
-  actors = actors ?? ACTORS_BY_LEVEL[level];
+function renderActors(actors) {
   const el = document.getElementById('sectionActors');
-  el.innerHTML = actors.map(a => `
+  if (!actors || actors.length === 0) {
+    el.innerHTML = '<div class="actor-item"><div class="actor-desc">No actor data available.</div></div>';
+    return;
+  }
+  el.innerHTML = actors.map(a => {
+    const detail = [a.role, a.posture].filter(Boolean).join(' · ');
+    return `
     <div class="actor-item">
       <div class="actor-name">${a.name}</div>
-      <div class="actor-desc">${a.desc}</div>
-    </div>
-  `).join('');
+      ${detail ? `<div class="actor-desc">${detail}</div>` : ''}
+    </div>`;
+  }).join('');
 }
 
 // ── Render indicators ──────────────────────────────────────────────────────
-function renderIndicators(level, indicators) {
-  indicators = indicators ?? INDICATORS[level];
+function renderIndicators(indicators) {
   const el = document.getElementById('sectionIndicators');
+  if (!indicators || indicators.length === 0) {
+    el.innerHTML = '<li>No watch indicators available.</li>';
+    return;
+  }
   el.innerHTML = indicators.map(ind => `<li>${ind}</li>`).join('');
+}
+
+// ── Confidence string → fraction ───────────────────────────────────────────
+function confidenceFromString(s) {
+  if (!s) return null;
+  switch (s.toLowerCase()) {
+    case 'high':                   return 0.85;
+    case 'moderate': case 'medium':return 0.60;
+    case 'low':                    return 0.35;
+    default:                       return 0.50;
+  }
 }
 
 // ── Select week ────────────────────────────────────────────────────────────
@@ -1117,15 +1032,14 @@ async function selectWeek(idx) {
   document.querySelector(`[data-idx="${idx}"]`).classList.add('selected');
   activeIdx = idx;
 
-  const w = TEST_WEEKS[idx];
+  const w = weekList[idx];
 
   // Show loading
   document.getElementById('emptyState').style.display = 'none';
   document.getElementById('resultsContent').style.display = 'none';
   document.getElementById('loadingState').style.display = 'flex';
 
-  // Brief pause for UX
-  await new Promise(r => setTimeout(r, predsByWeek ? 400 : 1800));
+  await new Promise(r => setTimeout(r, 400));
 
   // Hide loading, show results
   document.getElementById('loadingState').style.display = 'none';
@@ -1134,31 +1048,32 @@ async function selectWeek(idx) {
   void document.getElementById('resultsContent').offsetWidth;
   document.getElementById('resultsContent').style.animation = 'fade-up 0.3s ease';
 
-  // Resolve prediction — prefer real LFM2 output, fall back to gold label
-  const pred = predsByWeek ? predsByWeek[w.week] : null;
-  const level = (pred?.lfm2_level) ?? w.level;
-  const confidence = pred ? 0.82 : w.confidence;   // placeholder until calibration
+  const level = w.lfm2_level ?? w.gold_level;
+  const confidence = confidenceFromString(w.lfm2_confidence);
 
   // Populate meta
   document.getElementById('metaWeek').textContent = w.week;
-  document.getElementById('metaEvents').textContent = w.events.toLocaleString() + ' events';
-  document.getElementById('metaGoldstein').textContent = w.goldstein.toFixed(1);
-  document.getElementById('metaType').textContent = w.dominant;
+  document.getElementById('metaEvents').textContent = w.cluster_events != null
+    ? w.cluster_events.toLocaleString() + ' events' : '—';
+  document.getElementById('metaGoldstein').textContent = w.cluster_goldstein != null
+    ? w.cluster_goldstein.toFixed(1) : '—';
+  document.getElementById('metaType').textContent = w.cluster_dominant ?? '—';
 
   // Escalation
   setEscalation(level);
-  setConfidence(confidence);
+  if (confidence != null) setConfidence(confidence);
 
   // Actors + indicators
-  const actors = pred?.lfm2_actors ?? ACTORS_BY_LEVEL[level];
-  const indicators = pred?.lfm2_indicators ?? INDICATORS[level];
-  renderActors(level, actors);
-  renderIndicators(level, indicators);
+  renderActors(w.lfm2_actors ?? null);
+  renderIndicators(w.lfm2_indicators ?? null);
 
   // Typewrite summary
   const summaryEl = document.getElementById('sectionSummary');
-  const summary = pred?.lfm2_summary ?? SUMMARIES[level];
-  await typewrite(summaryEl, summary, pred ? 6 : 10);
+  if (w.lfm2_summary) {
+    await typewrite(summaryEl, w.lfm2_summary, 6);
+  } else {
+    summaryEl.textContent = 'No summary available.';
+  }
 
   inferring = false;
 }
@@ -1178,19 +1093,17 @@ async function loadPrecomputedData() {
       const list = await predsRes.json();
       predsByWeek = {};
       for (const p of list) predsByWeek[p.week] = p;
+      weekList = list; // chronological order from notebook
     }
     if (metricsRes.ok) {
       modelMetrics = await metricsRes.json();
     }
   } catch (e) {
-    // Results not yet published — demo mode
+    // Results not yet published — no data to show
   }
+  renderTable();
   renderMetrics();
-  if (predsByWeek && modelMetrics) {
-    updateStatusReady('LFM2-350M · pre-computed');
-  } else {
-    updateStatusReady('Demo mode');
-  }
+  updateStatusReady(predsByWeek ? 'LFM2-350M · pre-computed' : 'No data');
 }
 
 function renderMetrics() {
@@ -1235,7 +1148,6 @@ function updateStatusReady(label) {
 }
 
 // ── Init ───────────────────────────────────────────────────────────────────
-renderTable();
 loadPrecomputedData();
 </script>
 
