@@ -1334,7 +1334,7 @@ async function loadModel() {
   try {
     pipe = await pipeline('text-generation', MODEL, {
       device: 'auto',
-      dtype: 'fp16',
+      dtype: 'q8',
       progress_callback: (p) => {
         if (p.status === 'progress' && p.progress != null)
           statusEl.textContent = `loading · ${Math.round(p.progress)}%`;
