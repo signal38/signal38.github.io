@@ -1293,28 +1293,32 @@ const bubble   = document.getElementById('soldier-bubble');
 const statusEl = document.getElementById('soldier-status');
 const respEl   = document.getElementById('soldier-resp');
 const inputEl  = document.getElementById('soldier-input');
-const armL     = document.getElementById('sl-arm-l');
-const flag     = document.getElementById('sl-flag');
-const llU      = document.getElementById('sl-ll-upper');
-const lrU      = document.getElementById('sl-lr-upper');
+const armL  = document.getElementById('sl-arm-l');
+const flag  = document.getElementById('sl-flag');
+const legL  = document.getElementById('sl-leg-l');
+const legR  = document.getElementById('sl-leg-r');
+const body  = document.getElementById('sl-body');
 
 // ── Patrol ────────────────────────────────────────────────────────────────
 let x = -64, dir = 1, patrolling = true, phase = 0;
 
 (function tick() {
   if (patrolling) {
-    x += dir * 0.5;
+    x += dir * 1.5;
     const W = window.innerWidth;
     if (x > W + 10) { x = W + 10; dir = -1; widget.style.transform = 'scaleX(-1)'; }
     if (x < -64)    { x = -64;    dir =  1; widget.style.transform = 'scaleX(1)'; }
     widget.style.left = x + 'px';
 
-    phase = (phase + 0.07) % (Math.PI * 2);
-    const s = Math.round(Math.sin(phase) * 5);
-    llU.setAttribute('y', 44 + s);
-    lrU.setAttribute('y', 44 - s);
-    armL.setAttribute('transform', `translate(0,${-s})`);
-    flag.setAttribute('transform', `translate(0,${s})`);
+    phase = (phase + 0.19) % (Math.PI * 2);
+    const leg = Math.sin(phase) * 30;
+    const arm = Math.sin(phase) * 25;
+    const bob = Math.abs(Math.sin(phase)) * 2;
+    legL.setAttribute('transform', `rotate(${leg},  20.5, 44)`);
+    legR.setAttribute('transform', `rotate(${-leg}, 27.5, 44)`);
+    armL.setAttribute('transform', `rotate(${-arm}, 13, 26)`);
+    flag.setAttribute('transform', `rotate(${arm},  35, 26)`);
+    body.setAttribute('transform', `translate(0, ${bob})`);
   }
   requestAnimationFrame(tick);
 })();
@@ -1358,8 +1362,9 @@ widget.addEventListener('mouseenter', async () => {
   patrolling = false;
   widget.style.transform = 'scaleX(1)';
   // reset limb positions
-  llU.setAttribute('y', 44); lrU.setAttribute('y', 44);
+  legL.removeAttribute('transform'); legR.removeAttribute('transform');
   armL.removeAttribute('transform'); flag.removeAttribute('transform');
+  body.removeAttribute('transform');
 
   bubble.style.display = 'block';
   inputEl.style.display = '';
