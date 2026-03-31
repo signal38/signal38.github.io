@@ -748,6 +748,15 @@
         <rect x="18" y="12" width="12" height="11" rx="3" fill="#c8a882"/>
         <circle cx="21" cy="16" r="1.2" fill="#2a1a0a"/>
         <circle cx="27" cy="16" r="1.2" fill="#2a1a0a"/>
+        <!-- Binoculars — shown when mic is active -->
+        <g id="sl-binoculars" style="display:none">
+          <rect x="16" y="13" width="14" height="6" rx="2" fill="#2a2a2a"/>
+          <circle cx="19.5" cy="16" r="2.2" fill="#111" stroke="#444" stroke-width=".5"/>
+          <circle cx="26.5" cy="16" r="2.2" fill="#111" stroke="#444" stroke-width=".5"/>
+          <circle cx="19" cy="15.5" r=".8" fill="rgba(120,180,255,0.5)"/>
+          <circle cx="26" cy="15.5" r=".8" fill="rgba(120,180,255,0.5)"/>
+          <rect x="21.5" y="15" width="3" height="2" rx=".5" fill="#3a3a3a"/>
+        </g>
         <rect x="21" y="20" width="6" height="1.5" rx=".7" fill="#a07050"/>
         <rect x="22" y="23" width="4" height="3" fill="#c8a882"/>
         <rect x="16" y="26" width="16" height="16" rx="2" fill="#4a5240"/>
@@ -796,6 +805,18 @@
   </div>
 </div>
 
+<!-- Scan overlay -->
+<svg id="scan-overlay" style="position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:9990;overflow:visible">
+  <defs>
+    <linearGradient id="beam-grad" x1="0%" y1="100%" x2="0%" y2="0%" gradientUnits="userSpaceOnUse">
+      <stop offset="0%"   stop-color="rgba(251,191,36,0.32)"/>
+      <stop offset="100%" stop-color="rgba(251,191,36,0)"/>
+    </linearGradient>
+  </defs>
+  <polygon id="scan-cone"   fill="url(#beam-grad)" style="display:none"/>
+  <rect    id="scan-target" fill="rgba(251,191,36,0.08)" stroke="#FBBF24" stroke-width="1.5" rx="3" style="display:none"/>
+</svg>
+
 <script>
 // ── Escalation ──────────────────────────────────────────────────────────────
 const ESCALATION = {
@@ -809,6 +830,7 @@ const ESCALATION = {
 window.weekList  = [];
 window.activeIdx = null;
 let inferring    = false;
+let wakeActive   = false; // hoisted — referenced by selectWeek and mic handler
 
 function chipStyle(level) {
   const e = ESCALATION[level];
@@ -917,6 +939,7 @@ async function selectWeek(idx) {
   document.querySelectorAll('#weekTableBody tr').forEach(r => r.classList.remove('selected'));
   document.querySelector(`[data-idx="${idx}"]`).classList.add('selected');
   window.activeIdx = idx;
+  if (wakeActive) updateScanCone();
 
   const w = weekList[idx];
   document.getElementById('emptyState').style.display     = 'none';
@@ -1072,6 +1095,64 @@ let x          = -64;
 let dir        = 1;
 let patrolling = true;
 let phase      = 0;
+let scanPhase  = 0;
+
+const binoculars = document.getElementById('sl-binoculars');
+const scanCone   = document.getElementById('scan-cone');
+const scanTarget = document.getElementById('scan-target');
+
+function updateScanCone() {
+  // Soldier's binocular eye position in viewport coords
+  // widget is 56px wide, eye is ~24px from left, ~16px from top of 80px SVG
+  const rect = widget.getBoundingClientRect();
+  const eyeX = rect.left + (dir === 1 ? 24 : 32);
+  const eyeY = rect.top  + 16;
+
+  const selectedRow = window.activeIdx != null
+    ? document.querySelector(`[data-idx="${window.activeIdx}"]`)
+    : null;
+
+  if (selectedRow && !patrolling) {
+    // Lock-on: narrow cone pointing at selected row
+    const r = selectedRow.getBoundingClientRect();
+    const cx = r.left + r.width / 2;
+    const halfW = r.width / 2 + 6;
+    scanCone.setAttribute('points',
+      `${eyeX},${eyeY} ${cx - halfW},${r.top - 2} ${cx + halfW},${r.bottom + 2}`);
+    scanCone.style.display = '';
+    scanTarget.setAttribute('x',      r.left   - 3);
+    scanTarget.setAttribute('y',      r.top    - 3);
+    scanTarget.setAttribute('width',  r.width  + 6);
+    scanTarget.setAttribute('height', r.height + 6);
+    scanTarget.style.display = '';
+  } else if (patrolling) {
+    // Sweep: cone fans out in walking direction with slow oscillation
+    scanPhase += 0.008;
+    const sweep    = Math.sin(scanPhase) * 0.18;
+    const baseAng  = dir === 1 ? -1.1 : -2.05; // radians — forward-up
+    const ang      = baseAng + sweep;
+    const halfAng  = 0.22;
+    const dist     = Math.hypot(window.innerWidth, window.innerHeight);
+    const lx = eyeX + Math.cos(ang - halfAng) * dist;
+    const ly = eyeY + Math.sin(ang - halfAng) * dist;
+    const rx = eyeX + Math.cos(ang + halfAng) * dist;
+    const ry = eyeY + Math.sin(ang + halfAng) * dist;
+    scanCone.setAttribute('points', `${eyeX},${eyeY} ${lx},${ly} ${rx},${ry}`);
+    scanCone.style.display = '';
+    scanTarget.style.display = 'none';
+  } else {
+    scanCone.style.display   = 'none';
+    scanTarget.style.display = 'none';
+  }
+}
+
+function setScanActive(on) {
+  binoculars.style.display = on ? '' : 'none';
+  if (!on) {
+    scanCone.style.display   = 'none';
+    scanTarget.style.display = 'none';
+  }
+}
 
 (function tick() {
   if (patrolling) {
@@ -1094,6 +1175,7 @@ let phase      = 0;
     // Only the leading arm (flag side) fades as it swings behind the body
     armR.style.opacity = 0.6 + 0.4 * Math.max(0, -s);
   }
+  if (wakeActive) updateScanCone();
   requestAnimationFrame(tick);
 })();
 
@@ -1298,10 +1380,9 @@ const DISMISS_WORDS = ['stand down', 'at ease', 'dismissed', 'stop soldier', 'ha
 
 // listenMode: 'wake' → watching for wake/dismiss words
 //             'capture' → capturing the user's question, auto-submits on final result
-let listenMode    = 'wake';
-let captureReady  = false; // true only after the new capture session's onstart fires
-let recognition   = null;
-let wakeActive    = false;
+let listenMode   = 'wake';
+let captureReady = false; // true only after the new capture session's onstart fires
+let recognition  = null;
 
 function resumeCapture() {
   if (!wakeActive) return;
@@ -1384,6 +1465,7 @@ if (SR) {
       wakeActive = true;
       listenMode = 'wake';
       micBtn.classList.add('active');
+      setScanActive(true);
       startRecognition();
     } else {
       wakeActive = false;
@@ -1391,6 +1473,7 @@ if (SR) {
       micBtn.classList.remove('active');
       speechSynthesis.cancel();
       recognition?.stop();
+      setScanActive(false);
     }
   });
 } else {
