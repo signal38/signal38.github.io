@@ -567,28 +567,28 @@
           <div class="score-cards">
             <div class="score-card">
               <div class="score-label">Base LFM2-350M</div>
-              <div class="score-value muted">0%</div>
+              <div class="score-value muted" id="scoreBaseJson">—</div>
               <div class="score-desc">valid JSON output</div>
             </div>
             <div class="score-arrow">→</div>
             <div class="score-card">
               <div class="score-label">Fine-tuned</div>
-              <div class="score-value green">89.8%</div>
+              <div class="score-value green" id="scoreFinetunedJson">—</div>
               <div class="score-desc">valid JSON output</div>
             </div>
             <div class="score-card" style="margin-left:.4rem;">
               <div class="score-label">Accuracy</div>
-              <div class="score-value accent">39.5%</div>
+              <div class="score-value accent" id="scoreAccuracy">—</div>
               <div class="score-desc">exact level match</div>
             </div>
             <div class="score-card">
               <div class="score-label">MAE</div>
-              <div class="score-value accent">0.72</div>
+              <div class="score-value accent" id="scoreMae">—</div>
               <div class="score-desc">on 1–5 scale</div>
             </div>
             <div class="score-card">
               <div class="score-label">Test set</div>
-              <div class="score-value muted">59</div>
+              <div class="score-value muted" id="scoreTestSet">—</div>
               <div class="score-desc">weekly samples</div>
             </div>
           </div>
@@ -954,10 +954,23 @@ async function selectWeek(idx) {
 
 const RAW = 'https://raw.githubusercontent.com/signal38/signal38.github.io/main';
 
+function pct(v) { return v != null ? (v * 100).toFixed(1) + '%' : '—'; }
+
 async function loadData() {
   try {
-    const res = await fetch(`${RAW}/data/outputs/test_predictions.json`);
-    if (res.ok) window.weekList = await res.json();
+    const [predsRes, metricsRes] = await Promise.all([
+      fetch(`${RAW}/data/outputs/test_predictions.json`),
+      fetch(`${RAW}/data/outputs/results.json`),
+    ]);
+    if (predsRes.ok) window.weekList = await predsRes.json();
+    if (metricsRes.ok) {
+      const m = await metricsRes.json();
+      document.getElementById('scoreBaseJson').textContent      = pct(m.base_lfm2_350m?.valid_json_rate);
+      document.getElementById('scoreFinetunedJson').textContent = pct(m.lfm2_350m?.valid_json_rate);
+      document.getElementById('scoreAccuracy').textContent      = pct(m.lfm2_350m?.accuracy);
+      document.getElementById('scoreMae').textContent           = m.lfm2_350m?.mae != null ? m.lfm2_350m.mae.toFixed(2) : '—';
+      document.getElementById('scoreTestSet').textContent       = m.test_set_size ?? '—';
+    }
   } catch (_) {}
   renderTable();
 }
