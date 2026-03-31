@@ -50,7 +50,8 @@ Run in order. Notebooks 02–04 require a T4 GPU runtime. All publish their arti
 | [`01_baseline.ipynb`](notebooks/01_baseline.ipynb) | Naive rule + XGBoost baseline | CPU, ~5 min | [![Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/signal38/signal38.github.io/blob/main/notebooks/01_baseline.ipynb) |
 | [`02_finetune.ipynb`](notebooks/02_finetune.ipynb) | LFM2-350M QLoRA fine-tuning | T4 GPU, ~20 min | [![Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/signal38/signal38.github.io/blob/main/notebooks/02_finetune.ipynb) |
 | [`03_evaluate.ipynb`](notebooks/03_evaluate.ipynb) | Three-model evaluation + results export | T4 GPU, ~10 min | [![Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/signal38/signal38.github.io/blob/main/notebooks/03_evaluate.ipynb) |
-| [`04_export_onnx.ipynb`](notebooks/04_export_onnx.ipynb) | Merge adapter → ONNX export → HuggingFace Hub | T4 GPU, ~10 min | [![Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/signal38/signal38.github.io/blob/main/notebooks/04_export_onnx.ipynb) |
+| [`04_export_onnx.ipynb`](notebooks/04_export_onnx.ipynb) | Merge adapter → fp16 PyTorch → HuggingFace Hub | T4 GPU, ~5 min | [![Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/signal38/signal38.github.io/blob/main/notebooks/04_export_onnx.ipynb) |
+| [`05_export_gguf.ipynb`](notebooks/05_export_gguf.ipynb) | Merge adapter → GGUF (Q4_K_M) → HuggingFace Hub | T4 GPU, ~5 min | [![Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/signal38/signal38.github.io/blob/main/notebooks/05_export_gguf.ipynb) |
 
 ## Repo structure
 
@@ -88,7 +89,7 @@ Create a [fine-grained personal access token](https://github.com/settings/tokens
 
 For ACLED credentials (notebook 00), register at [acleddata.com](https://acleddata.com/register/) and add `ACLED_EMAIL` and `ACLED_PASSWORD` as Colab secrets.
 
-For HuggingFace Hub (notebook 04), create a write token at [huggingface.co/settings/tokens](https://huggingface.co/settings/tokens) and add it as `HF_TOKEN`.
+For HuggingFace Hub (notebooks 04 and 05), create a write token at [huggingface.co/settings/tokens](https://huggingface.co/settings/tokens) and add it as `HF_TOKEN`.
 
 ## Team
 
