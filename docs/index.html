@@ -1225,8 +1225,7 @@ function resumeCapture() {
   listenMode = 'capture';
   statusEl.textContent = MODEL_DEFS[selectedKey].label + ' · listening…';
   inputEl.value = '';
-  // restart recognition — onend handler will pick up the new mode
-  recognition?.stop();
+  recognition?.stop(); // onend restarts in capture mode after 800ms pause
 }
 
 if (SR) {
@@ -1253,13 +1252,10 @@ if (SR) {
           if (WAKE_WORDS.some(w => tLower.includes(w))) {
             micBtn.classList.add('heard');
             setTimeout(() => micBtn.classList.remove('heard'), 600);
-            const week = window.weekList?.[window.activeIdx];
-            const greeting = week
-              ? `Week ${week.week} — Level ${week.lfm2_level ?? week.gold_level} · ${ESCALATION[week.lfm2_level ?? week.gold_level]?.label ?? '—'}`
-              : GREETINGS[Math.floor(Math.random() * GREETINGS.length)];
-            activateSoldier(greeting);
+            activateSoldier();
+            // Stop current recognition — onend will restart in capture mode after a pause
             listenMode = 'capture';
-            recognition.continuous = false; // switch to single-shot
+            recognition.stop();
           }
         } else {
           // capture mode — show live transcript, submit on final
@@ -1279,8 +1275,9 @@ if (SR) {
 
     recognition.onend = () => {
       if (!wakeActive) return;
-      // restart: wake mode is continuous, capture mode is single-shot (restarts after each utterance)
-      startRecognition();
+      // After wake word, pause 800ms before capture so the utterance tail isn't auto-submitted
+      const delay = listenMode === 'capture' ? 800 : 0;
+      setTimeout(startRecognition, delay);
     };
     recognition.onerror = (ev) => {
       if (ev.error === 'not-allowed') {
