@@ -1136,7 +1136,7 @@ async function loadBrowserPipe(key) {
 }
 
 // ── Inference ─────────────────────────────────────────────────────────────
-const SYSTEM = 'You are a geopolitical risk analyst specializing in North Korean military activity. Analyze GDELT event data and produce structured risk assessments in JSON format.';
+const SYSTEM = 'You are a geopolitical risk analyst specializing in North Korean military activity. Answer questions clearly and concisely in plain English. No JSON, no bullet lists — just direct, expert analysis.';
 let inferState = 'idle'; // idle | generating
 
 inputEl.addEventListener('keydown', async (e) => {
