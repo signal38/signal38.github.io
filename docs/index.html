@@ -1184,12 +1184,28 @@ inputEl.addEventListener('keydown', async (e) => {
     }
   }
 
+  const responseText = respEl.textContent;
   statusEl.textContent = MODEL_DEFS[selectedKey].label + (usedTunnel ? ' · server' : ' · browser') + ' · done';
   inferState       = 'idle';
   inputEl.disabled = false;
-  inputEl.focus();
   patrolling = false;
+
+  // Speak the response, then resume question capture
+  if (responseText) await speakText(responseText);
+  resumeCapture();
 });
+
+// ── TTS ───────────────────────────────────────────────────────────────────
+function speakText(text) {
+  return new Promise(resolve => {
+    speechSynthesis.cancel();
+    const utt = new SpeechSynthesisUtterance(text);
+    utt.rate  = 1.1;
+    utt.pitch = 0.9;
+    utt.onend = utt.onerror = resolve;
+    speechSynthesis.speak(utt);
+  });
+}
 
 // ── Voice commands ──────────────────────────────────────────────────────────
 const micBtn = document.getElementById('mic-btn');
@@ -1198,40 +1214,74 @@ const SR     = window.SpeechRecognition || window.webkitSpeechRecognition;
 const WAKE_WORDS    = ['hey soldier', 'hey, soldier'];
 const DISMISS_WORDS = ['stand down', 'at ease', 'dismissed', 'stop soldier', 'halt'];
 
-if (SR) {
-  let recognition = null;
-  let wakeActive  = false;
+// listenMode: 'wake' → watching for wake/dismiss words
+//             'capture' → capturing the user's question, auto-submits on final result
+let listenMode = 'wake';
+let recognition = null;
+let wakeActive  = false;
 
-  function startListening() {
+function resumeCapture() {
+  if (!wakeActive) return;
+  listenMode = 'capture';
+  statusEl.textContent = MODEL_DEFS[selectedKey].label + ' · listening…';
+  inputEl.value = '';
+  // restart recognition — onend handler will pick up the new mode
+  recognition?.stop();
+}
+
+if (SR) {
+  function startRecognition() {
     recognition = new SR();
-    recognition.continuous     = true;
+    recognition.continuous     = listenMode === 'wake';
     recognition.interimResults = true;
     recognition.lang           = 'en-US';
 
     recognition.onresult = (ev) => {
       for (let i = ev.resultIndex; i < ev.results.length; i++) {
-        const t = ev.results[i][0].transcript.toLowerCase().trim();
+        const t        = ev.results[i][0].transcript;
+        const tLower   = t.toLowerCase().trim();
+        const isFinal  = ev.results[i].isFinal;
 
-        if (DISMISS_WORDS.some(w => t.includes(w))) {
-          micBtn.classList.add('heard');
-          setTimeout(() => micBtn.classList.remove('heard'), 600);
-          dismissSoldier();
-          return;
-        }
-
-        if (WAKE_WORDS.some(w => t.includes(w))) {
-          micBtn.classList.add('heard');
-          setTimeout(() => micBtn.classList.remove('heard'), 600);
-          const w = window.weekList?.[window.activeIdx];
-          const greeting = w
-            ? `Week ${w.week} — Level ${w.lfm2_level ?? w.gold_level} · ${ESCALATION[w.lfm2_level ?? w.gold_level]?.label ?? '—'}`
-            : GREETINGS[Math.floor(Math.random() * GREETINGS.length)];
-          activateSoldier(greeting);
+        if (listenMode === 'wake') {
+          if (DISMISS_WORDS.some(w => tLower.includes(w))) {
+            micBtn.classList.add('heard');
+            setTimeout(() => micBtn.classList.remove('heard'), 600);
+            speechSynthesis.cancel();
+            dismissSoldier();
+            return;
+          }
+          if (WAKE_WORDS.some(w => tLower.includes(w))) {
+            micBtn.classList.add('heard');
+            setTimeout(() => micBtn.classList.remove('heard'), 600);
+            const week = window.weekList?.[window.activeIdx];
+            const greeting = week
+              ? `Week ${week.week} — Level ${week.lfm2_level ?? week.gold_level} · ${ESCALATION[week.lfm2_level ?? week.gold_level]?.label ?? '—'}`
+              : GREETINGS[Math.floor(Math.random() * GREETINGS.length)];
+            activateSoldier(greeting);
+            listenMode = 'capture';
+            recognition.continuous = false; // switch to single-shot
+          }
+        } else {
+          // capture mode — show live transcript, submit on final
+          if (DISMISS_WORDS.some(w => tLower.includes(w))) {
+            speechSynthesis.cancel();
+            dismissSoldier();
+            listenMode = 'wake';
+            return;
+          }
+          inputEl.value = t; // live preview
+          if (isFinal && t.trim() && inferState !== 'generating') {
+            inputEl.dispatchEvent(new KeyboardEvent('keydown', { key: 'Enter', bubbles: true }));
+          }
         }
       }
     };
 
-    recognition.onend  = () => { if (wakeActive) recognition.start(); };
+    recognition.onend = () => {
+      if (!wakeActive) return;
+      // restart: wake mode is continuous, capture mode is single-shot (restarts after each utterance)
+      startRecognition();
+    };
     recognition.onerror = (ev) => {
       if (ev.error === 'not-allowed') {
         wakeActive = false;
@@ -1245,16 +1295,19 @@ if (SR) {
   micBtn.addEventListener('click', () => {
     if (!wakeActive) {
       wakeActive = true;
+      listenMode = 'wake';
       micBtn.classList.add('active');
-      startListening();
+      startRecognition();
     } else {
       wakeActive = false;
+      listenMode = 'wake';
       micBtn.classList.remove('active');
+      speechSynthesis.cancel();
       recognition?.stop();
     }
   });
 } else {
-  micBtn.title   = 'Speech recognition not supported in this browser';
+  micBtn.title         = 'Speech recognition not supported in this browser';
   micBtn.style.opacity = '0.35';
   micBtn.style.cursor  = 'not-allowed';
 }
