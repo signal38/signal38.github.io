@@ -9,6 +9,11 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet" />
 
+  <!-- onnxruntime-web must be importmap'd before any module script that imports it -->
+  <script type="importmap">
+  { "imports": { "onnxruntime-web": "https://cdn.jsdelivr.net/npm/onnxruntime-web@1.24.3/dist/ort.webgpu.bundle.min.mjs" } }
+  </script>
+
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -1283,7 +1288,7 @@ loadPrecomputedData();
 </div>
 
 <script type="module">
-import { pipeline, TextStreamer } from 'https://cdn.jsdelivr.net/npm/@huggingface/transformers@3';
+import { LFM2ForCausalLM, initRuntime } from '/lfm2.min.js';
 
 const SYSTEM = 'You are a geopolitical risk analyst specializing in North Korean military activity. Analyze GDELT event data and produce structured risk assessments in JSON format.';
 
@@ -1341,14 +1346,9 @@ async function loadModel() {
   statusEl.textContent = 'loading model…';
   respEl.textContent   = '';
   try {
-    pipe = await pipeline('text-generation', MODEL, {
-      device: 'auto',
-      dtype: 'q8',
-      progress_callback: (p) => {
-        if (p.status === 'progress' && p.progress != null)
-          statusEl.textContent = `loading · ${Math.round(p.progress)}%`;
-      },
-    });
+    const { device } = await initRuntime('webgpu');
+    statusEl.textContent = `loading · ${device}…`;
+    pipe = await LFM2ForCausalLM.fromHub(MODEL, { device, precision: 'q8' });
     state = 'ready';
     setIdleStatus();
   } catch (err) {
@@ -1414,18 +1414,15 @@ inputEl.addEventListener('keydown', async (e) => {
   respEl.textContent   = '';
 
   try {
-    const streamer = new TextStreamer(pipe.tokenizer, {
-      skip_prompt: true,
-      skip_special_tokens: true,
-      callback_function: (text) => {
-        respEl.textContent += text;
-        respEl.scrollTop = respEl.scrollHeight;
-      },
-    });
-
-    await pipe(
+    await pipe.chat(
       [{ role: 'system', content: SYSTEM }, { role: 'user', content: userMsg }],
-      { max_new_tokens: 450, do_sample: false, streamer },
+      {
+        maxNewTokens: 450,
+        onChunk: (text) => {
+          respEl.textContent += text;
+          respEl.scrollTop = respEl.scrollHeight;
+        },
+      },
     );
 
     state = 'ready';
