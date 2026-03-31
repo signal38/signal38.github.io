@@ -792,8 +792,10 @@
           <circle cx="13" cy="37" r="2.5" fill="#c8a882"/>
         </g>
         <g id="sl-flag">
-          <rect x="32" y="26" width="6" height="12" rx="3" fill="#4a5240"/>
-          <circle cx="35" cy="37" r="2.5" fill="#c8a882"/>
+          <g id="sl-arm-r">
+            <rect x="32" y="26" width="6" height="12" rx="3" fill="#4a5240"/>
+            <circle cx="35" cy="37" r="2.5" fill="#c8a882"/>
+          </g>
           <rect x="35" y="4"  width="1.5" height="26" fill="#c8a020" rx=".5"/>
           <rect x="36.5" y="4"  width="14" height="3" fill="#B22234" rx=".5"/>
           <rect x="36.5" y="7"  width="14" height="2" fill="#f5f5f5"/>
@@ -1013,6 +1015,7 @@ const bubble   = document.getElementById('soldier-bubble');
 const statusEl = document.getElementById('soldier-status');
 const respEl   = document.getElementById('soldier-resp');
 const armL     = document.getElementById('sl-arm-l');
+const armR     = document.getElementById('sl-arm-r');
 const flag     = document.getElementById('sl-flag');
 const legL     = document.getElementById('sl-leg-l');
 const legR     = document.getElementById('sl-leg-r');
@@ -1042,11 +1045,15 @@ let phase      = 0;
     const leg = Math.sin(phase) * 30;
     const arm = Math.sin(phase) * 25;
     const bob = Math.abs(Math.sin(phase)) * 2;
+    const s   = Math.sin(phase);
     legL.setAttribute('transform', `rotate(${leg},  20.5, 44)`);
     legR.setAttribute('transform', `rotate(${-leg}, 27.5, 44)`);
     armL.setAttribute('transform', `rotate(${-arm}, 13, 26)`);
     flag.setAttribute('transform', `rotate(${arm},  35, 26)`);
     body.setAttribute('transform', `translate(0, ${bob})`);
+    // Arm swinging forward is in front (full opacity); swinging back dims slightly
+    armL.style.opacity = 0.6 + 0.4 * Math.max(0,  s);
+    armR.style.opacity = 0.6 + 0.4 * Math.max(0, -s);
   }
   requestAnimationFrame(tick);
 })();
@@ -1055,6 +1062,7 @@ function resetLimbs() {
   legL.removeAttribute('transform'); legR.removeAttribute('transform');
   armL.removeAttribute('transform'); flag.removeAttribute('transform');
   body.removeAttribute('transform');
+  armL.style.opacity = 1; armR.style.opacity = 1;
 }
 
 // ── Model config ──────────────────────────────────────────────────────────
