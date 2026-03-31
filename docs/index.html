@@ -41,8 +41,10 @@
       --shadow:    0 1px 3px rgba(0,0,0,.10), 0 4px 16px rgba(0,0,0,.07);
     }
 
-    body {
-      background: var(--bg);
+    html, body {
+      height: 100%;
+      overflow: hidden;
+      background: var(--sidebar-bg);
       color: var(--text);
       font-family: 'DM Sans', system-ui, -apple-system, sans-serif;
       font-size: 14px;
@@ -50,225 +52,90 @@
       -webkit-font-smoothing: antialiased;
     }
 
+    /* ── Shell ── */
+    .shell { display: flex; flex-direction: column; height: 100vh; }
+
     /* ── Header ── */
     header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 52px;
+      flex-shrink: 0;
       background: var(--header-bg);
-      padding: 2.5rem 2rem 2rem;
-      text-align: center;
+      padding: 0 20px;
       border-bottom: 1px solid rgba(255,255,255,0.06);
     }
 
-    .eyebrow {
-      font-size: .72rem;
-      font-weight: 600;
-      letter-spacing: .1em;
-      text-transform: uppercase;
-      color: #5A7A9A;
-      margin-bottom: .6rem;
-      font-family: 'DM Mono', monospace;
-    }
-
-    header h1 {
-      font-size: 2rem;
-      font-weight: 700;
-      letter-spacing: -.02em;
-      color: var(--header-text);
-      margin-bottom: .5rem;
-    }
-
-    header p {
-      color: #7A8FA8;
-      font-size: .92rem;
-      max-width: 520px;
-      margin: 0 auto;
-      line-height: 1.65;
-    }
-
-    header nav {
-      margin-top: 1.5rem;
+    .wordmark {
       display: flex;
-      gap: .5rem;
-      justify-content: center;
-      flex-wrap: wrap;
-    }
-
-    .btn {
-      display: inline-flex;
       align-items: center;
-      gap: .3rem;
-      padding: .35rem .85rem;
-      border-radius: 6px;
-      font-size: .8rem;
-      font-weight: 500;
+      gap: 10px;
       text-decoration: none;
-      border: 1px solid rgba(255,255,255,0.12);
-      background: rgba(255,255,255,0.06);
-      color: var(--header-text);
-      transition: border-color .15s, background .15s;
+      color: inherit;
     }
 
-    .btn:hover { background: rgba(255,255,255,0.11); border-color: rgba(255,255,255,0.22); }
-
-    /* ── Main ── */
-    main { max-width: 960px; margin: 0 auto; padding: 2.5rem 1.5rem 4rem; }
-
-    section { margin-bottom: 2.5rem; }
-
-    h2 { font-size: 1.05rem; font-weight: 700; margin-bottom: .2rem; }
-
-    .subtitle { color: var(--text-2); font-size: .875rem; margin-bottom: 1.25rem; }
-
-    /* ── Score cards ── */
-    .score-cards {
-      display: flex;
-      align-items: center;
-      gap: .9rem;
-      flex-wrap: wrap;
-    }
-
-    .score-card {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      padding: 1rem 1.4rem;
-      text-align: center;
-      box-shadow: var(--shadow);
-      min-width: 120px;
-    }
-
-    .score-label {
-      font-size: .68rem;
-      font-weight: 600;
-      text-transform: uppercase;
-      letter-spacing: .07em;
-      color: var(--text-3);
-      margin-bottom: .3rem;
-    }
-
-    .score-value {
-      font-size: 1.9rem;
-      font-weight: 700;
-      letter-spacing: -.03em;
-    }
-
-    .score-value.muted  { color: var(--text-3); }
-    .score-value.accent { color: var(--accent); }
-    .score-value.green  { color: var(--green); }
-
-    .score-desc { font-size: .7rem; color: var(--text-3); margin-top: .2rem; }
-
-    .score-arrow { font-size: 1.2rem; color: var(--text-3); flex-shrink: 0; }
-
-    /* ── Example cards ── */
-    .example-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-      gap: 1rem;
-    }
-
-    .example-card {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      padding: 1.1rem 1.2rem;
-      box-shadow: var(--shadow);
-      font-size: .875rem;
-    }
-
-    .card-meta {
-      display: flex;
-      gap: .4rem;
-      flex-wrap: wrap;
-      margin-bottom: .65rem;
-      align-items: center;
-    }
-
-    .badge {
-      display: inline-block;
-      font-size: .67rem;
-      font-weight: 600;
-      border-radius: 4px;
-      padding: .14rem .42rem;
-      letter-spacing: .04em;
-      font-family: 'DM Mono', monospace;
-    }
-
-    .badge-week    { background: #f1f5f9; color: var(--text-2); border: 1px solid var(--border); }
-    .badge-correct { background: #f0fdf4; color: var(--green);  border: 1px solid #bbf7d0; }
-    .badge-missed  { background: #fef2f2; color: var(--red);    border: 1px solid #fecaca; }
-
-    .esc-chip {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      width: 20px;
-      height: 20px;
+    .wordmark-icon {
+      width: 26px; height: 26px;
+      background: #1E3A5F;
       border-radius: 5px;
-      font-size: 11px;
-      font-weight: 700;
-      font-family: 'DM Mono', monospace;
+      display: flex; align-items: center; justify-content: center;
       flex-shrink: 0;
     }
 
-    .card-summary {
-      font-size: .79rem;
-      color: var(--text-2);
-      line-height: 1.55;
-      margin-bottom: .75rem;
-      display: -webkit-box;
-      -webkit-line-clamp: 3;
-      -webkit-box-orient: vertical;
-      overflow: hidden;
+    .wordmark-text { font-size: 14px; font-weight: 600; letter-spacing: .02em; color: var(--header-text); }
+    .wordmark-sub  { font-size: 11px; font-weight: 400; color: #5A7A9A; margin-left: 2px; }
+
+    .header-nav { display: flex; align-items: center; gap: .4rem; }
+
+    .btn {
+      display: inline-flex; align-items: center; gap: .25rem;
+      padding: .28rem .7rem;
+      border-radius: 5px;
+      font-size: .75rem; font-weight: 500;
+      text-decoration: none;
+      border: 1px solid rgba(255,255,255,0.10);
+      background: rgba(255,255,255,0.05);
+      color: var(--sidebar-text-2);
+      transition: border-color .15s, background .15s, color .15s;
     }
 
-    .pred-row { display: grid; grid-template-columns: 1fr 1fr; gap: .5rem; }
+    .btn:hover { background: rgba(255,255,255,0.09); border-color: rgba(255,255,255,0.18); color: var(--header-text); }
 
-    .pred-box {
-      border-radius: 6px;
-      padding: .45rem .7rem;
-      font-size: .79rem;
+    #mic-btn {
+      display: flex; align-items: center; justify-content: center;
+      width: 28px; height: 28px;
+      border-radius: 5px;
+      border: 1px solid rgba(255,255,255,0.10);
+      background: rgba(255,255,255,0.05);
+      cursor: pointer;
+      transition: border-color .15s, background .15s;
+      color: var(--sidebar-text-2);
     }
 
-    .pred-box .pred-label {
-      font-size: .65rem;
-      font-weight: 600;
-      text-transform: uppercase;
-      letter-spacing: .05em;
-      margin-bottom: .18rem;
-    }
+    #mic-btn:hover { background: rgba(255,255,255,0.09); border-color: rgba(255,255,255,0.18); color: var(--header-text); }
+    #mic-btn.active { background: rgba(220,38,38,0.15); border-color: rgba(220,38,38,0.35); color: #f87171; }
+    #mic-btn.heard  { background: rgba(34,197,94,0.18); border-color: rgba(34,197,94,0.4);  color: #4ade80; }
 
-    .pred-box .pred-value { font-weight: 700; font-size: .9rem; }
-
-    .pred-box.wrong { background: #fef2f2; border: 1px solid #fecaca; color: var(--red); }
-    .pred-box.right { background: #f0fdf4; border: 1px solid #bbf7d0; color: var(--green); }
-    .pred-box.critical { background: #fef2f2; border: 1px solid #fecaca; color: #7F1D1D; }
-
-    /* ── Explorer ── */
-    .explorer-wrap {
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      overflow: hidden;
-      box-shadow: var(--shadow);
-      height: 560px;
+    /* ── Main ── */
+    main {
+      flex: 1;
       display: grid;
-      grid-template-columns: 270px 1fr;
+      grid-template-columns: 300px 1fr;
+      min-height: 0;
     }
 
-    /* Week panel */
+    /* ── Week panel ── */
     .week-panel {
       background: var(--sidebar-bg);
       border-right: 1px solid var(--sidebar-border);
+      display: flex; flex-direction: column;
       overflow: hidden;
-      display: flex;
-      flex-direction: column;
-      padding: 16px 0;
+      padding: 20px 0;
     }
 
     .panel-label {
-      font-size: 10px;
-      font-weight: 600;
-      letter-spacing: .1em;
-      text-transform: uppercase;
+      font-size: 10px; font-weight: 600; letter-spacing: .1em; text-transform: uppercase;
       color: var(--sidebar-text-2);
       margin-bottom: 8px;
       padding: 0 16px;
@@ -276,8 +143,7 @@
     }
 
     .week-table-wrap {
-      flex: 1;
-      overflow-y: auto;
+      flex: 1; overflow-y: auto;
       scrollbar-width: thin;
       scrollbar-color: var(--sidebar-border) transparent;
     }
@@ -286,8 +152,7 @@
 
     .week-table thead th {
       text-align: left;
-      font-size: 10px;
-      font-weight: 500;
+      font-size: 10px; font-weight: 500;
       color: var(--sidebar-text-2);
       padding: 0 10px 8px;
       border-bottom: 1px solid var(--sidebar-border);
@@ -303,8 +168,7 @@
 
     .week-table tbody td {
       padding: 6px 10px;
-      font-size: 12px;
-      color: var(--sidebar-text);
+      font-size: 12px; color: var(--sidebar-text);
       border-bottom: 1px solid rgba(255,255,255,0.03);
       transition: background .12s;
     }
@@ -312,125 +176,180 @@
     .week-table tbody td:first-child { padding-left: 16px; }
     .week-table tbody td:last-child  { padding-right: 16px; text-align: right; }
 
-    .td-date {
-      font-variant-numeric: tabular-nums;
-      font-family: 'DM Mono', monospace;
-      font-size: 12px;
-      white-space: nowrap;
-    }
-
+    .td-date { font-variant-numeric: tabular-nums; font-family: 'DM Mono', monospace; font-size: 12px; white-space: nowrap; }
     .td-goldstein { font-family: 'DM Mono', monospace; font-size: 12px; font-variant-numeric: tabular-nums; }
 
     .goldstein-neg { color: #F87171; }
     .goldstein-mid { color: #FBBF24; }
 
     .escalation-chip {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      width: 18px;
-      height: 18px;
+      display: inline-flex; align-items: center; justify-content: center;
+      width: 18px; height: 18px;
       border-radius: 4px;
-      font-size: 11px;
-      font-weight: 600;
-      font-family: 'DM Mono', monospace;
+      font-size: 11px; font-weight: 600; font-family: 'DM Mono', monospace;
     }
 
-    /* Results panel */
+    /* ── Results panel ── */
     .results-panel {
-      padding: 20px 26px;
+      padding: 28px 36px;
       background: var(--bg);
-      display: flex;
-      flex-direction: column;
+      display: flex; flex-direction: column;
       overflow-y: auto;
     }
 
+    /* ── Empty state (landing content) ── */
     .empty-state {
       flex: 1;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
+      display: flex; flex-direction: column;
+      gap: 0;
+      animation: fade-up .3s ease;
+    }
+
+    /* Score cards */
+    .scores-section { margin-bottom: 28px; }
+
+    .section-label {
+      font-size: 10px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase;
+      color: var(--text-3);
+      margin-bottom: 12px;
+    }
+
+    .score-cards {
+      display: flex; align-items: center;
+      gap: .75rem; flex-wrap: wrap;
+    }
+
+    .score-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: .9rem 1.25rem;
       text-align: center;
-      gap: 10px;
-      color: var(--text-3);
-      padding: 28px;
+      box-shadow: var(--shadow);
+      min-width: 112px;
     }
 
-    .empty-icon {
-      width: 38px;
-      height: 38px;
-      border-radius: 10px;
-      background: var(--panel);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      margin-bottom: 2px;
+    .score-label {
+      font-size: .67rem; font-weight: 600; text-transform: uppercase; letter-spacing: .07em;
+      color: var(--text-3); margin-bottom: .25rem;
     }
 
-    .empty-state h3 { font-size: 14px; font-weight: 500; color: var(--text-2); }
-    .empty-state p  { font-size: 12px; max-width: 230px; line-height: 1.6; }
+    .score-value { font-size: 1.75rem; font-weight: 700; letter-spacing: -.03em; }
 
-    .escalation-legend { margin-top: 16px; display: flex; flex-direction: column; align-items: center; gap: 8px; }
+    .score-value.muted  { color: var(--text-3); }
+    .score-value.accent { color: var(--accent); }
+    .score-value.green  { color: var(--green); }
 
-    .legend-label {
-      font-size: 10px;
-      font-weight: 600;
-      letter-spacing: .07em;
-      text-transform: uppercase;
-      color: var(--text-3);
+    .score-desc { font-size: .68rem; color: var(--text-3); margin-top: .18rem; }
+
+    .score-arrow { font-size: 1.1rem; color: var(--text-3); flex-shrink: 0; }
+
+    /* Example cards */
+    .examples-section { margin-bottom: 28px; }
+
+    .example-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: .75rem;
     }
 
-    .legend-items { display: flex; gap: 6px; }
-
-    .legend-item {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 3px;
-      font-size: 10px;
-      color: var(--ec);
+    .example-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: .9rem 1rem;
+      box-shadow: var(--shadow);
+      font-size: .875rem;
     }
 
-    .legend-item span {
-      width: 24px;
-      height: 24px;
-      border-radius: 6px;
-      background: var(--eb);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-weight: 600;
-      font-size: 12px;
+    .card-meta { display: flex; gap: .35rem; flex-wrap: wrap; margin-bottom: .55rem; align-items: center; }
+
+    .badge {
+      display: inline-block;
+      font-size: .65rem; font-weight: 600;
+      border-radius: 4px;
+      padding: .12rem .4rem;
+      letter-spacing: .04em;
       font-family: 'DM Mono', monospace;
     }
 
+    .badge-week    { background: #f1f5f9; color: var(--text-2); border: 1px solid var(--border); }
+    .badge-correct { background: #f0fdf4; color: var(--green);  border: 1px solid #bbf7d0; }
+    .badge-missed  { background: #fef2f2; color: var(--red);    border: 1px solid #fecaca; }
+
+    .esc-chip {
+      display: inline-flex; align-items: center; justify-content: center;
+      width: 19px; height: 19px;
+      border-radius: 5px;
+      font-size: 11px; font-weight: 700; font-family: 'DM Mono', monospace;
+      flex-shrink: 0;
+    }
+
+    .card-summary {
+      font-size: .76rem; color: var(--text-2); line-height: 1.5;
+      margin-bottom: .65rem;
+      display: -webkit-box;
+      -webkit-line-clamp: 3;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+
+    .pred-row { display: grid; grid-template-columns: 1fr 1fr; gap: .4rem; }
+
+    .pred-box { border-radius: 6px; padding: .42rem .65rem; font-size: .76rem; }
+
+    .pred-box .pred-label {
+      font-size: .63rem; font-weight: 600; text-transform: uppercase; letter-spacing: .05em; margin-bottom: .16rem;
+    }
+
+    .pred-box .pred-value { font-weight: 700; font-size: .88rem; }
+
+    .pred-box.wrong    { background: #fef2f2; border: 1px solid #fecaca; color: var(--red); }
+    .pred-box.right    { background: #f0fdf4; border: 1px solid #bbf7d0; color: var(--green); }
+    .pred-box.critical { background: #fef2f2; border: 1px solid #fecaca; color: #7F1D1D; }
+
+    /* Hint */
+    .explorer-hint {
+      display: flex; align-items: center; gap: 10px;
+      padding: 12px 16px;
+      background: var(--panel);
+      border-radius: var(--radius-sm);
+      font-size: 12px; color: var(--text-3);
+    }
+
+    .escalation-legend { display: flex; gap: 6px; }
+
+    .legend-item {
+      display: flex; flex-direction: column; align-items: center; gap: 3px;
+      font-size: 10px; color: var(--ec);
+    }
+
+    .legend-item span {
+      width: 22px; height: 22px;
+      border-radius: 5px; background: var(--eb);
+      display: flex; align-items: center; justify-content: center;
+      font-weight: 600; font-size: 11px; font-family: 'DM Mono', monospace;
+    }
+
+    /* Loading state */
     .loading-state {
-      display: none;
-      flex: 1;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      gap: 14px;
+      display: none; flex: 1;
+      flex-direction: column; align-items: center; justify-content: center; gap: 14px;
     }
 
     .spinner {
-      width: 22px;
-      height: 22px;
-      border: 2px solid var(--border);
-      border-top-color: var(--accent);
-      border-radius: 50%;
-      animation: spin .7s linear infinite;
+      width: 22px; height: 22px;
+      border: 2px solid var(--border); border-top-color: var(--accent);
+      border-radius: 50%; animation: spin .7s linear infinite;
     }
 
     @keyframes spin { to { transform: rotate(360deg); } }
 
     .loading-label { font-size: 12px; color: var(--text-2); font-family: 'DM Mono', monospace; }
 
+    /* Results content */
     .results-content {
-      display: none;
-      flex-direction: column;
-      gap: 18px;
+      display: none; flex-direction: column; gap: 20px;
       animation: fade-up .3s ease;
     }
 
@@ -440,21 +359,15 @@
     }
 
     .escalation-hero {
-      display: flex;
-      align-items: flex-start;
-      gap: 16px;
-      padding-bottom: 18px;
-      border-bottom: 1px solid var(--border-soft);
+      display: flex; align-items: flex-start; gap: 18px;
+      padding-bottom: 20px; border-bottom: 1px solid var(--border-soft);
     }
 
     .escalation-number-wrap { display: flex; flex-direction: column; align-items: center; gap: 5px; flex-shrink: 0; }
 
     .escalation-number {
-      font-size: 52px;
-      font-weight: 600;
-      line-height: 1;
-      letter-spacing: -.04em;
-      font-variant-numeric: tabular-nums;
+      font-size: 56px; font-weight: 600; line-height: 1;
+      letter-spacing: -.04em; font-variant-numeric: tabular-nums;
       transition: color .3s;
       animation: scale-in .4s cubic-bezier(0.34, 1.56, 0.64, 1);
     }
@@ -465,12 +378,8 @@
     }
 
     .escalation-level-label {
-      font-size: 10px;
-      font-weight: 600;
-      letter-spacing: .06em;
-      text-transform: uppercase;
-      padding: 2px 7px;
-      border-radius: 4px;
+      font-size: 10px; font-weight: 600; letter-spacing: .06em;
+      text-transform: uppercase; padding: 2px 7px; border-radius: 4px;
     }
 
     .escalation-scale { display: flex; gap: 3px; align-items: center; }
@@ -483,14 +392,11 @@
     .meta-key { color: var(--text-3); width: 96px; flex-shrink: 0; font-size: 11px; }
     .meta-val  { color: var(--text); font-family: 'DM Mono', monospace; font-size: 12px; }
 
-    .result-section { display: flex; flex-direction: column; gap: 8px; }
+    .result-section { display: flex; flex-direction: column; gap: 7px; }
 
     .result-section-title {
-      font-size: 10px;
-      font-weight: 600;
-      letter-spacing: .07em;
-      text-transform: uppercase;
-      color: var(--text-3);
+      font-size: 10px; font-weight: 600; letter-spacing: .07em;
+      text-transform: uppercase; color: var(--text-3);
     }
 
     .result-section-body { font-size: 13px; line-height: 1.65; color: var(--text); }
@@ -498,12 +404,8 @@
     .actor-list { display: flex; flex-direction: column; gap: 5px; }
 
     .actor-item {
-      display: flex;
-      align-items: flex-start;
-      gap: 10px;
-      padding: 7px 11px;
-      background: var(--panel);
-      border-radius: var(--radius-sm);
+      display: flex; align-items: flex-start; gap: 10px;
+      padding: 7px 11px; background: var(--panel); border-radius: var(--radius-sm);
     }
 
     .actor-name { font-weight: 500; font-size: 12px; flex-shrink: 0; width: 116px; }
@@ -512,61 +414,89 @@
     .indicator-list { list-style: none; display: flex; flex-direction: column; gap: 5px; }
 
     .indicator-list li {
-      display: flex;
-      align-items: flex-start;
-      gap: 8px;
-      font-size: 12px;
-      line-height: 1.5;
-      color: var(--text-2);
+      display: flex; align-items: flex-start; gap: 8px;
+      font-size: 12px; line-height: 1.5; color: var(--text-2);
     }
 
     .indicator-list li::before {
-      content: '';
-      width: 4px;
-      height: 4px;
-      border-radius: 50%;
-      background: var(--text-3);
-      flex-shrink: 0;
-      margin-top: 6px;
+      content: ''; width: 4px; height: 4px;
+      border-radius: 50%; background: var(--text-3);
+      flex-shrink: 0; margin-top: 6px;
     }
 
     .confidence-bar-wrap { display: flex; align-items: center; gap: 9px; }
-
-    .confidence-bar-bg { flex: 1; height: 3px; background: var(--border); border-radius: 2px; overflow: hidden; }
+    .confidence-bar-bg   { flex: 1; height: 3px; background: var(--border); border-radius: 2px; overflow: hidden; }
 
     .confidence-bar-fill {
-      height: 100%;
-      border-radius: 2px;
-      background: var(--accent);
+      height: 100%; border-radius: 2px; background: var(--accent);
       transition: width .6s cubic-bezier(0.4, 0, 0.2, 1);
     }
 
     .confidence-label { font-size: 11px; font-family: 'DM Mono', monospace; color: var(--text-2); flex-shrink: 0; width: 36px; text-align: right; }
 
+    /* ── Footer ── */
+    footer {
+      height: 36px; display: flex; align-items: center; justify-content: space-between;
+      background: var(--header-bg); padding: 0 24px; flex-shrink: 0;
+    }
+
+    .footer-text { font-size: 11px; color: var(--sidebar-text-2); font-family: 'DM Mono', monospace; letter-spacing: .02em; }
+    .footer-link { font-size: 11px; color: var(--sidebar-text-2); text-decoration: none; transition: color .15s; }
+    .footer-link:hover { color: var(--sidebar-text); }
+
+    /* Typewriter */
     .cursor {
-      display: inline-block;
-      width: 2px;
-      height: 1em;
-      background: var(--text-3);
-      margin-left: 1px;
-      vertical-align: text-bottom;
+      display: inline-block; width: 2px; height: 1em;
+      background: var(--text-3); margin-left: 1px; vertical-align: text-bottom;
       animation: blink 1s step-end infinite;
     }
 
     @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
 
-    /* ── Footer ── */
-    footer {
-      text-align: center;
-      padding: 1.5rem;
-      border-top: 1px solid var(--border);
-      font-size: .8rem;
-      color: var(--text-3);
+    /* ── Soldier widget ── */
+    #soldier-wrap {
+      position: fixed; bottom: 0; left: 0;
+      width: 100%; height: 0;
+      pointer-events: none; z-index: 9999;
     }
 
-    footer a { color: var(--text-3); text-decoration: none; }
-    footer a:hover { color: var(--text-2); }
+    #soldier-widget {
+      position: absolute; bottom: 0; left: -64px;
+      display: flex; flex-direction: column; align-items: flex-start;
+      pointer-events: all; cursor: default;
+    }
 
+    #soldier-bubble {
+      display: none;
+      position: absolute; bottom: 82px; left: 0;
+      width: 280px;
+      background: #fff;
+      border: 1.5px solid #1E3A5F;
+      border-radius: 8px;
+      padding: 10px 12px 8px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 11px; color: #0D1117;
+    }
+
+    #soldier-bubble::after {
+      content: '';
+      position: absolute; bottom: -7px; left: 18px;
+      border: 7px solid transparent;
+      border-top-color: #1E3A5F; border-bottom: 0;
+    }
+
+    #soldier-status {
+      font-size: 9px; color: #7A8FA8; margin-bottom: 5px;
+      font-family: 'DM Mono', monospace; text-transform: uppercase; letter-spacing: .06em;
+    }
+
+    #soldier-resp {
+      font-family: 'DM Mono', monospace; font-size: 10px; line-height: 1.55; color: #1E3A5F;
+      max-height: 160px; overflow-y: auto; white-space: pre-wrap; word-break: break-word;
+    }
+
+    /* Scrollbar */
     ::-webkit-scrollbar { width: 4px; }
     ::-webkit-scrollbar-track { background: transparent; }
     ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
@@ -574,246 +504,301 @@
 </head>
 <body>
 
+<div class="shell">
+
+  <!-- Header -->
   <header>
-    <div class="eyebrow">AIPI 590.03 · Intelligent Agents · Project 2</div>
-    <h1>Signal 38</h1>
-    <p>Fine-tuning LFM2-350M on GDELT v2 to produce structured geopolitical risk assessments for North Korean military activity.</p>
-    <nav>
+    <a class="wordmark" href="/">
+      <div class="wordmark-icon">
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+          <rect x="1" y="6"  width="12" height="1.5" rx=".75" fill="white" opacity=".9"/>
+          <rect x="1" y="3"  width="8"  height="1.5" rx=".75" fill="white" opacity=".5"/>
+          <rect x="1" y="9"  width="10" height="1.5" rx=".75" fill="white" opacity=".7"/>
+        </svg>
+      </div>
+      <span class="wordmark-text">Signal 38</span>
+      <span class="wordmark-sub">/ NK Risk Analyst</span>
+    </a>
+
+    <div class="header-nav">
       <a class="btn" href="https://github.com/signal38/signal38.github.io" target="_blank" rel="noopener">GitHub</a>
-      <a class="btn" href="https://colab.research.google.com/github/signal38/signal38.github.io/blob/main/notebooks/01_baseline_eval.ipynb" target="_blank" rel="noopener">01 Baseline</a>
-      <a class="btn" href="https://colab.research.google.com/github/signal38/signal38.github.io/blob/main/notebooks/02_dataset_prep.ipynb" target="_blank" rel="noopener">02 Dataset</a>
-      <a class="btn" href="https://colab.research.google.com/github/signal38/signal38.github.io/blob/main/notebooks/03_finetune.ipynb" target="_blank" rel="noopener">03 Fine-Tune</a>
-      <a class="btn" href="https://colab.research.google.com/github/signal38/signal38.github.io/blob/main/notebooks/04_export_onnx.ipynb" target="_blank" rel="noopener">04 Export</a>
-    </nav>
+      <a class="btn" href="https://colab.research.google.com/github/signal38/signal38.github.io/blob/main/notebooks/01_baseline_eval.ipynb" target="_blank" rel="noopener">01</a>
+      <a class="btn" href="https://colab.research.google.com/github/signal38/signal38.github.io/blob/main/notebooks/02_dataset_prep.ipynb" target="_blank" rel="noopener">02</a>
+      <a class="btn" href="https://colab.research.google.com/github/signal38/signal38.github.io/blob/main/notebooks/03_finetune.ipynb" target="_blank" rel="noopener">03</a>
+      <a class="btn" href="https://colab.research.google.com/github/signal38/signal38.github.io/blob/main/notebooks/04_export_onnx.ipynb" target="_blank" rel="noopener">04</a>
+      <button id="mic-btn" title="Say 'hey soldier' to activate · 'stand down' to stop">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"/>
+          <path d="M19 10v2a7 7 0 0 1-14 0v-2"/>
+          <line x1="12" y1="19" x2="12" y2="23"/>
+          <line x1="8"  y1="23" x2="16" y2="23"/>
+        </svg>
+      </button>
+    </div>
   </header>
 
+  <!-- Main -->
   <main>
 
-    <!-- Scores -->
-    <section>
-      <h2>Fine-tuning results</h2>
-      <p class="subtitle">59 held-out weeks · escalation level 1–5 · base LFM2-350M vs. QLoRA fine-tune on GDELT NK event clusters</p>
-      <div class="score-cards">
-        <div class="score-card">
-          <div class="score-label">Base LFM2-350M</div>
-          <div class="score-value muted">0%</div>
-          <div class="score-desc">valid JSON output</div>
-        </div>
-        <div class="score-arrow">→</div>
-        <div class="score-card">
-          <div class="score-label">Fine-tuned</div>
-          <div class="score-value green">89.8%</div>
-          <div class="score-desc">valid JSON output</div>
-        </div>
-        <div class="score-card" style="margin-left:.5rem;">
-          <div class="score-label">Accuracy</div>
-          <div class="score-value accent">39.5%</div>
-          <div class="score-desc">exact level match</div>
-        </div>
-        <div class="score-card">
-          <div class="score-label">MAE</div>
-          <div class="score-value accent">0.72</div>
-          <div class="score-desc">on 1–5 scale</div>
-        </div>
-        <div class="score-card">
-          <div class="score-label">Test set</div>
-          <div class="score-value muted">59</div>
-          <div class="score-desc">weekly samples</div>
-        </div>
+    <!-- Left: week selector -->
+    <div class="week-panel">
+      <div class="panel-label">Test weeks · <span id="weekCount">59</span> samples</div>
+      <div class="week-table-wrap">
+        <table class="week-table">
+          <thead>
+            <tr>
+              <th>Week</th>
+              <th>Goldstein</th>
+              <th>Level</th>
+            </tr>
+          </thead>
+          <tbody id="weekTableBody"></tbody>
+        </table>
       </div>
-    </section>
+    </div>
 
-    <!-- Example predictions -->
-    <section>
-      <h2>Example predictions</h2>
-      <p class="subtitle">Pre-computed assessments from the held-out test set — escalation level, key actors, and watch indicators</p>
-      <div class="example-grid">
+    <!-- Right: results + landing content -->
+    <div class="results-panel" id="resultsPanel">
 
-        <div class="example-card">
-          <div class="card-meta">
-            <span class="badge badge-week">2025-09-21</span>
-            <span class="esc-chip" style="background:#FFEDD5;color:#C2410C;">3</span>
-            <span class="badge badge-correct">correct</span>
-          </div>
-          <p class="card-summary">Intense military activity with 221 events across multiple locations. High volume of Assault (105) and Fight (50) events indicating heightened conflict posture and potential regional escalation.</p>
-          <div class="pred-row">
-            <div class="pred-box right">
-              <div class="pred-label">Predicted</div>
-              <div class="pred-value">Level 3 · Significant</div>
-            </div>
-            <div class="pred-box right">
-              <div class="pred-label">Ground truth</div>
-              <div class="pred-value">Level 3 · Significant</div>
-            </div>
-          </div>
-        </div>
+      <!-- Empty state: scores + examples -->
+      <div class="empty-state" id="emptyState">
 
-        <div class="example-card">
-          <div class="card-meta">
-            <span class="badge badge-week">2015-12-27</span>
-            <span class="esc-chip" style="background:#FEF3C7;color:#92400E;">2</span>
-            <span class="badge badge-correct">correct</span>
-          </div>
-          <p class="card-summary">High volume of coercive events (572 total) with diplomatic undertone — 325 Coerce events alongside 124 Fight events. Goldstein −6.4 signals tension without overt military action.</p>
-          <div class="pred-row">
-            <div class="pred-box right">
-              <div class="pred-label">Predicted</div>
-              <div class="pred-value">Level 2 · Elevated</div>
+        <div class="scores-section">
+          <div class="section-label">Fine-tuning results — 59-week test set</div>
+          <div class="score-cards">
+            <div class="score-card">
+              <div class="score-label">Base LFM2-350M</div>
+              <div class="score-value muted">0%</div>
+              <div class="score-desc">valid JSON output</div>
             </div>
-            <div class="pred-box right">
-              <div class="pred-label">Ground truth</div>
-              <div class="pred-value">Level 2 · Elevated</div>
+            <div class="score-arrow">→</div>
+            <div class="score-card">
+              <div class="score-label">Fine-tuned</div>
+              <div class="score-value green">89.8%</div>
+              <div class="score-desc">valid JSON output</div>
+            </div>
+            <div class="score-card" style="margin-left:.4rem;">
+              <div class="score-label">Accuracy</div>
+              <div class="score-value accent">39.5%</div>
+              <div class="score-desc">exact level match</div>
+            </div>
+            <div class="score-card">
+              <div class="score-label">MAE</div>
+              <div class="score-value accent">0.72</div>
+              <div class="score-desc">on 1–5 scale</div>
+            </div>
+            <div class="score-card">
+              <div class="score-label">Test set</div>
+              <div class="score-value muted">59</div>
+              <div class="score-desc">weekly samples</div>
             </div>
           </div>
         </div>
 
-        <div class="example-card">
-          <div class="card-meta">
-            <span class="badge badge-week">2021-09-26</span>
-            <span class="esc-chip" style="background:#FCE7E7;color:#7F1D1D;">5</span>
-            <span class="badge badge-missed">underestimated</span>
-          </div>
-          <p class="card-summary">Escalatory activity with 422 events dominated by Fight (218) and Exhibit Force (54) across Pyongyang and Kangwon-do — model rated Significant, actual level was Critical.</p>
-          <div class="pred-row">
-            <div class="pred-box wrong">
-              <div class="pred-label">Predicted</div>
-              <div class="pred-value">Level 3 · Significant</div>
-            </div>
-            <div class="pred-box critical">
-              <div class="pred-label">Ground truth</div>
-              <div class="pred-value">Level 5 · Critical</div>
-            </div>
-          </div>
-        </div>
+        <div class="examples-section">
+          <div class="section-label">Example predictions</div>
+          <div class="example-grid">
 
-      </div>
-    </section>
-
-    <!-- Week explorer -->
-    <section>
-      <h2>Week explorer</h2>
-      <p class="subtitle">All 59 test weeks — select any week to view the fine-tuned LFM2-350M assessment</p>
-      <div class="explorer-wrap">
-
-        <!-- Left: week list -->
-        <div class="week-panel">
-          <div class="panel-label">Test weeks · <span id="weekCount">59</span> samples</div>
-          <div class="week-table-wrap">
-            <table class="week-table">
-              <thead>
-                <tr>
-                  <th>Week</th>
-                  <th>Goldstein</th>
-                  <th>Level</th>
-                </tr>
-              </thead>
-              <tbody id="weekTableBody"></tbody>
-            </table>
-          </div>
-        </div>
-
-        <!-- Right: results -->
-        <div class="results-panel" id="resultsPanel">
-
-          <div class="empty-state" id="emptyState">
-            <div class="empty-icon">
-              <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
-                <rect x="3" y="9"  width="14" height="2" rx="1" fill="#A1A1AA"/>
-                <rect x="3" y="5"  width="10" height="2" rx="1" fill="#A1A1AA" opacity="0.5"/>
-                <rect x="3" y="13" width="12" height="2" rx="1" fill="#A1A1AA" opacity="0.7"/>
-              </svg>
-            </div>
-            <h3>Select a week</h3>
-            <p>Choose any week from the test set to view the pre-computed LFM2-350M assessment.</p>
-            <div class="escalation-legend">
-              <div class="legend-label">Escalation scale</div>
-              <div class="legend-items">
-                <div class="legend-item" style="--ec:#166534;--eb:#DCFCE7"><span>1</span>Routine</div>
-                <div class="legend-item" style="--ec:#92400E;--eb:#FEF3C7"><span>2</span>Elevated</div>
-                <div class="legend-item" style="--ec:#C2410C;--eb:#FFEDD5"><span>3</span>Significant</div>
-                <div class="legend-item" style="--ec:#B91C1C;--eb:#FEE2E2"><span>4</span>High</div>
-                <div class="legend-item" style="--ec:#7F1D1D;--eb:#FCE7E7"><span>5</span>Critical</div>
+            <div class="example-card">
+              <div class="card-meta">
+                <span class="badge badge-week">2025-09-21</span>
+                <span class="esc-chip" style="background:#FFEDD5;color:#C2410C;">3</span>
+                <span class="badge badge-correct">correct</span>
               </div>
-            </div>
-          </div>
-
-          <div class="loading-state" id="loadingState">
-            <div class="spinner"></div>
-            <div class="loading-label">Loading…</div>
-          </div>
-
-          <div class="results-content" id="resultsContent">
-
-            <div class="escalation-hero">
-              <div class="escalation-number-wrap">
-                <div class="escalation-number" id="escalationNumber">—</div>
-                <div class="escalation-scale">
-                  <div class="scale-pip" id="pip1"></div>
-                  <div class="scale-pip" id="pip2"></div>
-                  <div class="scale-pip" id="pip3"></div>
-                  <div class="scale-pip" id="pip4"></div>
-                  <div class="scale-pip" id="pip5"></div>
+              <p class="card-summary">Intense military activity with 221 events. High volume of Assault (105) and Fight (50) events indicating heightened conflict posture.</p>
+              <div class="pred-row">
+                <div class="pred-box right">
+                  <div class="pred-label">Predicted</div>
+                  <div class="pred-value">Level 3 · Significant</div>
                 </div>
-                <div class="escalation-level-label" id="escalationLabel">—</div>
-              </div>
-              <div class="escalation-meta">
-                <div class="meta-row">
-                  <span class="meta-key">Week</span>
-                  <span class="meta-val" id="metaWeek">—</span>
-                </div>
-                <div class="meta-row">
-                  <span class="meta-key">Events</span>
-                  <span class="meta-val" id="metaEvents">—</span>
-                </div>
-                <div class="meta-row">
-                  <span class="meta-key">Goldstein avg</span>
-                  <span class="meta-val" id="metaGoldstein">—</span>
-                </div>
-                <div class="meta-row">
-                  <span class="meta-key">Dominant type</span>
-                  <span class="meta-val" id="metaType">—</span>
-                </div>
-                <div class="meta-row" style="margin-top:5px;">
-                  <span class="meta-key">Confidence</span>
-                  <div style="flex:1;display:flex;align-items:center;gap:8px;">
-                    <div class="confidence-bar-bg">
-                      <div class="confidence-bar-fill" id="confBar" style="width:0%"></div>
-                    </div>
-                    <span class="confidence-label" id="confLabel">—</span>
-                  </div>
+                <div class="pred-box right">
+                  <div class="pred-label">Ground truth</div>
+                  <div class="pred-value">Level 3 · Significant</div>
                 </div>
               </div>
             </div>
 
-            <div class="result-section">
-              <div class="result-section-title">Situation summary</div>
-              <div class="result-section-body" id="sectionSummary"></div>
+            <div class="example-card">
+              <div class="card-meta">
+                <span class="badge badge-week">2015-12-27</span>
+                <span class="esc-chip" style="background:#FEF3C7;color:#92400E;">2</span>
+                <span class="badge badge-correct">correct</span>
+              </div>
+              <p class="card-summary">High volume of coercive events (572 total) — 325 Coerce alongside 124 Fight. Goldstein −6.4 signals tension without overt military action.</p>
+              <div class="pred-row">
+                <div class="pred-box right">
+                  <div class="pred-label">Predicted</div>
+                  <div class="pred-value">Level 2 · Elevated</div>
+                </div>
+                <div class="pred-box right">
+                  <div class="pred-label">Ground truth</div>
+                  <div class="pred-value">Level 2 · Elevated</div>
+                </div>
+              </div>
             </div>
 
-            <div class="result-section">
-              <div class="result-section-title">Key actors</div>
-              <div class="actor-list" id="sectionActors"></div>
-            </div>
-
-            <div class="result-section">
-              <div class="result-section-title">Watch indicators</div>
-              <ul class="indicator-list" id="sectionIndicators"></ul>
+            <div class="example-card">
+              <div class="card-meta">
+                <span class="badge badge-week">2021-09-26</span>
+                <span class="esc-chip" style="background:#FCE7E7;color:#7F1D1D;">5</span>
+                <span class="badge badge-missed">underestimated</span>
+              </div>
+              <p class="card-summary">422 events dominated by Fight (218) and Exhibit Force (54) across Pyongyang and Kangwon-do — model rated Significant, actual was Critical.</p>
+              <div class="pred-row">
+                <div class="pred-box wrong">
+                  <div class="pred-label">Predicted</div>
+                  <div class="pred-value">Level 3 · Significant</div>
+                </div>
+                <div class="pred-box critical">
+                  <div class="pred-label">Ground truth</div>
+                  <div class="pred-value">Level 5 · Critical</div>
+                </div>
+              </div>
             </div>
 
           </div>
         </div>
 
+        <div class="explorer-hint">
+          <div class="escalation-legend">
+            <div class="legend-item" style="--ec:#166534;--eb:#DCFCE7"><span>1</span>Routine</div>
+            <div class="legend-item" style="--ec:#92400E;--eb:#FEF3C7"><span>2</span>Elevated</div>
+            <div class="legend-item" style="--ec:#C2410C;--eb:#FFEDD5"><span>3</span>Significant</div>
+            <div class="legend-item" style="--ec:#B91C1C;--eb:#FEE2E2"><span>4</span>High</div>
+            <div class="legend-item" style="--ec:#7F1D1D;--eb:#FCE7E7"><span>5</span>Critical</div>
+          </div>
+          <span style="margin-left: 10px;">Select any week from the sidebar to view the full assessment.</span>
+        </div>
+
       </div>
-    </section>
+
+      <!-- Loading -->
+      <div class="loading-state" id="loadingState">
+        <div class="spinner"></div>
+        <div class="loading-label">Loading…</div>
+      </div>
+
+      <!-- Week results -->
+      <div class="results-content" id="resultsContent">
+
+        <div class="escalation-hero">
+          <div class="escalation-number-wrap">
+            <div class="escalation-number" id="escalationNumber">—</div>
+            <div class="escalation-scale">
+              <div class="scale-pip" id="pip1"></div>
+              <div class="scale-pip" id="pip2"></div>
+              <div class="scale-pip" id="pip3"></div>
+              <div class="scale-pip" id="pip4"></div>
+              <div class="scale-pip" id="pip5"></div>
+            </div>
+            <div class="escalation-level-label" id="escalationLabel">—</div>
+          </div>
+          <div class="escalation-meta">
+            <div class="meta-row"><span class="meta-key">Week</span><span class="meta-val" id="metaWeek">—</span></div>
+            <div class="meta-row"><span class="meta-key">Events</span><span class="meta-val" id="metaEvents">—</span></div>
+            <div class="meta-row"><span class="meta-key">Goldstein avg</span><span class="meta-val" id="metaGoldstein">—</span></div>
+            <div class="meta-row"><span class="meta-key">Dominant type</span><span class="meta-val" id="metaType">—</span></div>
+            <div class="meta-row" style="margin-top:5px;">
+              <span class="meta-key">Confidence</span>
+              <div style="flex:1;display:flex;align-items:center;gap:8px;">
+                <div class="confidence-bar-bg"><div class="confidence-bar-fill" id="confBar" style="width:0%"></div></div>
+                <span class="confidence-label" id="confLabel">—</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="result-section">
+          <div class="result-section-title">Situation summary</div>
+          <div class="result-section-body" id="sectionSummary"></div>
+        </div>
+
+        <div class="result-section">
+          <div class="result-section-title">Key actors</div>
+          <div class="actor-list" id="sectionActors"></div>
+        </div>
+
+        <div class="result-section">
+          <div class="result-section-title">Watch indicators</div>
+          <ul class="indicator-list" id="sectionIndicators"></ul>
+        </div>
+
+      </div>
+    </div>
 
   </main>
 
+  <!-- Footer -->
   <footer>
-    Signal 38 · LFM2-350M · GDELT v2 · QLoRA · Duke University AIPI 590.03 ·
-    <a href="https://github.com/signal38/signal38.github.io" target="_blank" rel="noopener">GitHub ↗</a>
+    <span class="footer-text">LFM2-350M · GDELT v2 · QLoRA · signal38.github.io</span>
+    <a class="footer-link" href="https://github.com/signal38/signal38.github.io" target="_blank" rel="noopener">GitHub ↗</a>
   </footer>
 
+</div>
+
+<!-- Soldier widget -->
+<div id="soldier-wrap">
+  <div id="soldier-widget">
+    <div id="soldier-bubble">
+      <div id="soldier-status">on patrol</div>
+      <div id="soldier-resp"></div>
+    </div>
+    <svg id="soldier-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 56 80" width="56" height="80">
+      <g id="sl-body">
+        <ellipse cx="24" cy="8" rx="10" ry="5" fill="#4a5240"/>
+        <rect x="14" y="10" width="20" height="3" rx="1" fill="#3a4230"/>
+        <text x="24" y="10" text-anchor="middle" font-size="6" fill="white" font-family="serif">★</text>
+        <rect x="18" y="12" width="12" height="11" rx="3" fill="#c8a882"/>
+        <circle cx="21" cy="16" r="1.2" fill="#2a1a0a"/>
+        <circle cx="27" cy="16" r="1.2" fill="#2a1a0a"/>
+        <rect x="21" y="20" width="6" height="1.5" rx=".7" fill="#a07050"/>
+        <rect x="22" y="23" width="4" height="3" fill="#c8a882"/>
+        <rect x="16" y="26" width="16" height="16" rx="2" fill="#4a5240"/>
+        <rect x="22" y="28" width="4" height="10" fill="#3a4230" rx="1"/>
+        <rect x="18" y="30" width="4" height="2" fill="#5a6250" rx="1"/>
+        <rect x="26" y="30" width="4" height="2" fill="#5a6250" rx="1"/>
+        <rect x="17" y="27" width="5" height="2" rx=".5" fill="#B22234"/>
+        <text x="19.5" y="28.8" text-anchor="middle" font-size="1.8" fill="white" font-family="sans-serif" font-weight="bold">USA</text>
+        <g id="sl-arm-l">
+          <rect x="10" y="26" width="6" height="12" rx="3" fill="#4a5240"/>
+          <rect x="4" y="32" width="13" height="2" rx="1" fill="#5a3a1a"/>
+          <rect x="3" y="30" width="2" height="5" rx="1" fill="#3a2010"/>
+        </g>
+        <g id="sl-flag">
+          <rect x="32" y="26" width="6" height="12" rx="3" fill="#4a5240"/>
+          <rect x="35" y="4"  width="1.5" height="26" fill="#c8a020" rx=".5"/>
+          <rect x="36.5" y="4"  width="14" height="3" fill="#B22234" rx=".5"/>
+          <rect x="36.5" y="7"  width="14" height="2" fill="#f5f5f5"/>
+          <rect x="36.5" y="9"  width="14" height="2" fill="#B22234"/>
+          <rect x="36.5" y="11" width="14" height="2" fill="#f5f5f5"/>
+          <rect x="36.5" y="13" width="14" height="2" fill="#B22234"/>
+          <rect x="36.5" y="4"  width="6"  height="7" fill="#3C3B6E" rx=".3"/>
+          <circle cx="38" cy="5.5" r=".7" fill="white"/>
+          <circle cx="40" cy="5.5" r=".7" fill="white"/>
+          <circle cx="42" cy="5.5" r=".7" fill="white"/>
+          <circle cx="38" cy="7.5" r=".7" fill="white"/>
+          <circle cx="40" cy="7.5" r=".7" fill="white"/>
+          <circle cx="42" cy="7.5" r=".7" fill="white"/>
+          <circle cx="39" cy="9.5" r=".7" fill="white"/>
+          <circle cx="41" cy="9.5" r=".7" fill="white"/>
+        </g>
+        <rect x="16" y="41" width="16" height="3" rx="1" fill="#3a2a10"/>
+        <rect x="22" y="41" width="4"  height="3" fill="#c8a020" rx=".5"/>
+        <g id="sl-leg-l">
+          <rect id="sl-ll-upper" x="17" y="44" width="7" height="14" rx="3" fill="#4a5240"/>
+          <rect x="15" y="55" width="9" height="5" rx="2" fill="#2a1a0a"/>
+        </g>
+        <g id="sl-leg-r">
+          <rect id="sl-lr-upper" x="24" y="44" width="7" height="14" rx="3" fill="#4a5240"/>
+          <rect x="24" y="55" width="9" height="5" rx="2" fill="#2a1a0a"/>
+        </g>
+      </g>
+    </svg>
+  </div>
+</div>
+
 <script>
+// ── Escalation ──────────────────────────────────────────────────────────────
 const ESCALATION = {
   1: { label: 'Routine',     color: '#166534', bg: '#DCFCE7' },
   2: { label: 'Elevated',    color: '#92400E', bg: '#FEF3C7' },
@@ -822,7 +807,9 @@ const ESCALATION = {
   5: { label: 'Critical',    color: '#7F1D1D', bg: '#FCE7E7' },
 };
 
-window.weekList = [];
+window.weekList  = [];
+window.activeIdx = null;
+let inferring    = false;
 
 function chipStyle(level) {
   const e = ESCALATION[level];
@@ -843,8 +830,8 @@ function renderTable() {
   const display = [...weekList].reverse();
   tbody.innerHTML = display.map((w, i) => {
     const origIdx = weekList.length - 1 - i;
-    const level = w.lfm2_level ?? w.gold_level;
-    const g = w.cluster_goldstein ?? 0;
+    const level   = w.lfm2_level ?? w.gold_level;
+    const g       = w.cluster_goldstein ?? 0;
     return `<tr data-idx="${origIdx}" onclick="selectWeek(${origIdx})">
       <td class="td-date">${w.week}</td>
       <td class="td-goldstein ${goldClass(g)}">${g.toFixed(1)}</td>
@@ -874,7 +861,7 @@ function typewrite(el, text, speed = 10) {
 }
 
 function setEscalation(level) {
-  const e = ESCALATION[level];
+  const e       = ESCALATION[level];
   const numEl   = document.getElementById('escalationNumber');
   const labelEl = document.getElementById('escalationLabel');
   numEl.textContent = level;
@@ -882,8 +869,8 @@ function setEscalation(level) {
   numEl.style.animation = 'none';
   void numEl.offsetWidth;
   numEl.style.animation = 'scale-in .4s cubic-bezier(0.34,1.56,0.64,1)';
-  labelEl.textContent = e.label;
-  labelEl.style.color = e.color;
+  labelEl.textContent  = e.label;
+  labelEl.style.color  = e.color;
   labelEl.style.background = e.bg;
   for (let p = 1; p <= 5; p++) {
     document.getElementById(`pip${p}`).style.background = p <= level ? e.color : 'var(--border)';
@@ -930,9 +917,6 @@ function confidenceFromString(s) {
   }
 }
 
-window.activeIdx = null;
-let inferring = false;
-
 async function selectWeek(idx) {
   if (inferring) return;
   inferring = true;
@@ -941,13 +925,13 @@ async function selectWeek(idx) {
   window.activeIdx = idx;
 
   const w = weekList[idx];
-  document.getElementById('emptyState').style.display    = 'none';
+  document.getElementById('emptyState').style.display     = 'none';
   document.getElementById('resultsContent').style.display = 'none';
-  document.getElementById('loadingState').style.display  = 'flex';
+  document.getElementById('loadingState').style.display   = 'flex';
 
   await new Promise(r => setTimeout(r, 300));
 
-  document.getElementById('loadingState').style.display  = 'none';
+  document.getElementById('loadingState').style.display   = 'none';
   document.getElementById('resultsContent').style.display = 'flex';
   document.getElementById('resultsContent').style.animation = 'none';
   void document.getElementById('resultsContent').offsetWidth;
@@ -987,6 +971,141 @@ async function loadData() {
 }
 
 loadData();
+
+// ── Soldier patrol ──────────────────────────────────────────────────────────
+const widget   = document.getElementById('soldier-widget');
+const bubble   = document.getElementById('soldier-bubble');
+const statusEl = document.getElementById('soldier-status');
+const respEl   = document.getElementById('soldier-resp');
+const armL     = document.getElementById('sl-arm-l');
+const flag     = document.getElementById('sl-flag');
+const legL     = document.getElementById('sl-leg-l');
+const legR     = document.getElementById('sl-leg-r');
+const body     = document.getElementById('sl-body');
+
+const GREETINGS = [
+  'HALT. Signal 38 perimeter secured.',
+  'At ease. Nothing moves without us knowing.',
+  'Eyes on the peninsula. All clear.',
+  'Perimeter check complete. Standing by.',
+];
+
+let x          = -64;
+let dir        = 1;
+let patrolling = true;
+let phase      = 0;
+
+(function tick() {
+  if (patrolling) {
+    x += dir * 1.5;
+    const W = window.innerWidth;
+    if (x > W + 10) { x = W + 10; dir = -1; widget.style.transform = 'scaleX(-1)'; }
+    if (x < -64)    { x = -64;    dir =  1; widget.style.transform = 'scaleX(1)'; }
+    widget.style.left = x + 'px';
+
+    phase = (phase + 0.19) % (Math.PI * 2);
+    const leg = Math.sin(phase) * 30;
+    const arm = Math.sin(phase) * 25;
+    const bob = Math.abs(Math.sin(phase)) * 2;
+    legL.setAttribute('transform', `rotate(${leg},  20.5, 44)`);
+    legR.setAttribute('transform', `rotate(${-leg}, 27.5, 44)`);
+    armL.setAttribute('transform', `rotate(${-arm}, 13, 26)`);
+    flag.setAttribute('transform', `rotate(${arm},  35, 26)`);
+    body.setAttribute('transform', `translate(0, ${bob})`);
+  }
+  requestAnimationFrame(tick);
+})();
+
+function resetLimbs() {
+  legL.removeAttribute('transform'); legR.removeAttribute('transform');
+  armL.removeAttribute('transform'); flag.removeAttribute('transform');
+  body.removeAttribute('transform');
+}
+
+function activateSoldier(greeting) {
+  patrolling = false;
+  widget.style.transform = 'scaleX(1)';
+  resetLimbs();
+  statusEl.textContent = 'standing by';
+  respEl.textContent   = greeting ?? GREETINGS[Math.floor(Math.random() * GREETINGS.length)];
+  bubble.style.display = 'block';
+}
+
+function dismissSoldier() {
+  bubble.style.display = 'none';
+  patrolling = true;
+}
+
+widget.addEventListener('mouseenter', () => activateSoldier());
+widget.addEventListener('mouseleave', dismissSoldier);
+
+// ── Voice commands ──────────────────────────────────────────────────────────
+const micBtn = document.getElementById('mic-btn');
+const SR     = window.SpeechRecognition || window.webkitSpeechRecognition;
+
+const WAKE_WORDS    = ['hey soldier', 'hey, soldier'];
+const DISMISS_WORDS = ['stand down', 'at ease', 'dismissed', 'stop soldier', 'halt'];
+
+if (SR) {
+  let recognition = null;
+  let wakeActive  = false;
+
+  function startListening() {
+    recognition = new SR();
+    recognition.continuous     = true;
+    recognition.interimResults = true;
+    recognition.lang           = 'en-US';
+
+    recognition.onresult = (ev) => {
+      for (let i = ev.resultIndex; i < ev.results.length; i++) {
+        const t = ev.results[i][0].transcript.toLowerCase().trim();
+
+        if (DISMISS_WORDS.some(w => t.includes(w))) {
+          micBtn.classList.add('heard');
+          setTimeout(() => micBtn.classList.remove('heard'), 600);
+          dismissSoldier();
+          return;
+        }
+
+        if (WAKE_WORDS.some(w => t.includes(w))) {
+          micBtn.classList.add('heard');
+          setTimeout(() => micBtn.classList.remove('heard'), 600);
+          const w = window.weekList?.[window.activeIdx];
+          const greeting = w
+            ? `Week ${w.week} — Level ${w.lfm2_level ?? w.gold_level} · ${ESCALATION[w.lfm2_level ?? w.gold_level]?.label ?? '—'}`
+            : GREETINGS[Math.floor(Math.random() * GREETINGS.length)];
+          activateSoldier(greeting);
+        }
+      }
+    };
+
+    recognition.onend  = () => { if (wakeActive) recognition.start(); };
+    recognition.onerror = (ev) => {
+      if (ev.error === 'not-allowed') {
+        wakeActive = false;
+        micBtn.classList.remove('active');
+      }
+    };
+
+    recognition.start();
+  }
+
+  micBtn.addEventListener('click', () => {
+    if (!wakeActive) {
+      wakeActive = true;
+      micBtn.classList.add('active');
+      startListening();
+    } else {
+      wakeActive = false;
+      micBtn.classList.remove('active');
+      recognition?.stop();
+    }
+  });
+} else {
+  micBtn.title   = 'Speech recognition not supported in this browser';
+  micBtn.style.opacity = '0.35';
+  micBtn.style.cursor  = 'not-allowed';
+}
 </script>
 
 </body>
