@@ -8,11 +8,20 @@
     "mae": 0.6949152542372882,
     "accuracy": 0.3898305084745763
   },
+  "base_lfm2_350m": {
+    "mae": null,
+    "accuracy": null,
+    "valid_json_rate": 1.0,
+    "field_completeness": 0.01016949152542373,
+    "parse_failures": 59,
+    "schema_compliance_rate": 0.0
+  },
   "lfm2_350m": {
     "mae": 0.7209302325581395,
     "accuracy": 0.3953488372093023,
     "valid_json_rate": 0.8983050847457628,
     "field_completeness": 0.6779661016949152,
-    "parse_failures": 16
+    "parse_failures": 16,
+    "schema_compliance_rate": 0.7288135593
   }
 }

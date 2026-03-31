@@ -6,6 +6,7 @@ All metrics operate on escalation_level predictions (integers 1-5).
 from __future__ import annotations
 
 import json
+import math
 import re
 from pathlib import Path
 
@@ -106,7 +107,18 @@ def goldstein_to_escalation(avg_goldstein: float) -> int:
 
 # ── Results serialization ─────────────────────────────────────────────────
 
+def _sanitize(obj):
+    """Replace NaN/Inf floats with None so the output is valid JSON."""
+    if isinstance(obj, float) and not math.isfinite(obj):
+        return None
+    if isinstance(obj, dict):
+        return {k: _sanitize(v) for k, v in obj.items()}
+    if isinstance(obj, list):
+        return [_sanitize(v) for v in obj]
+    return obj
+
+
 def save_results(results: dict, path: str | Path) -> None:
     Path(path).parent.mkdir(parents=True, exist_ok=True)
-    Path(path).write_text(json.dumps(results, indent=2))
+    Path(path).write_text(json.dumps(_sanitize(results), indent=2))
     print(f"Results saved to {path}")

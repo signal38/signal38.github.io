@@ -596,14 +596,14 @@
           <div class="score-cards">
             <div class="score-card">
               <div class="score-label">Base LFM2-350M</div>
-              <div class="score-value muted" id="scoreBaseJson">—</div>
-              <div class="score-desc">valid JSON output</div>
+              <div class="score-value muted" id="scoreBaseSchema">—</div>
+              <div class="score-desc">schema compliance</div>
             </div>
             <div class="score-arrow">→</div>
             <div class="score-card">
               <div class="score-label">Fine-tuned</div>
-              <div class="score-value green" id="scoreFinetunedJson">—</div>
-              <div class="score-desc">valid JSON output</div>
+              <div class="score-value green" id="scoreFinetunedSchema">—</div>
+              <div class="score-desc">schema compliance</div>
             </div>
             <div class="score-card" style="margin-left:.4rem;">
               <div class="score-label">Accuracy</div>
@@ -995,8 +995,8 @@ async function loadData() {
     if (predsRes.ok) window.weekList = await predsRes.json();
     if (metricsRes.ok) {
       const m = await metricsRes.json();
-      document.getElementById('scoreBaseJson').textContent      = pct(m.base_lfm2_350m?.valid_json_rate);
-      document.getElementById('scoreFinetunedJson').textContent = pct(m.lfm2_350m?.valid_json_rate);
+      document.getElementById('scoreBaseSchema').textContent      = pct(m.base_lfm2_350m?.schema_compliance_rate);
+      document.getElementById('scoreFinetunedSchema').textContent = pct(m.lfm2_350m?.schema_compliance_rate);
       document.getElementById('scoreAccuracy').textContent      = pct(m.lfm2_350m?.accuracy);
       document.getElementById('scoreMae').textContent           = m.lfm2_350m?.mae != null ? m.lfm2_350m.mae.toFixed(2) : '—';
       document.getElementById('scoreTestSet').textContent       = m.test_set_size ?? '—';
@@ -1207,12 +1207,34 @@ inputEl.addEventListener('keydown', async (e) => {
 });
 
 // ── TTS ───────────────────────────────────────────────────────────────────
+// Preferred male voices in priority order (cross-platform)
+const MALE_VOICE_NAMES = [
+  'Google UK English Male',
+  'Microsoft David',
+  'Microsoft Mark',
+  'Alex',       // macOS
+  'Daniel',     // macOS UK English
+  'Fred',       // macOS
+  'Google US English',
+];
+
+function pickMaleVoice() {
+  const voices = speechSynthesis.getVoices();
+  for (const name of MALE_VOICE_NAMES) {
+    const v = voices.find(v => v.name.includes(name));
+    if (v) return v;
+  }
+  return voices.find(v => v.lang.startsWith('en')) ?? null;
+}
+
 function speakText(text) {
   return new Promise(resolve => {
     speechSynthesis.cancel();
-    const utt = new SpeechSynthesisUtterance(text);
-    utt.rate  = 1.1;
-    utt.pitch = 0.9;
+    const utt   = new SpeechSynthesisUtterance(text);
+    const voice = pickMaleVoice();
+    if (voice) utt.voice = voice;
+    utt.rate  = 1.0;
+    utt.pitch = 0.85;
     utt.onend = utt.onerror = resolve;
     speechSynthesis.speak(utt);
   });
