@@ -493,8 +493,29 @@
 
     #soldier-resp {
       font-family: 'DM Mono', monospace; font-size: 10px; line-height: 1.55; color: #1E3A5F;
-      max-height: 160px; overflow-y: auto; white-space: pre-wrap; word-break: break-word;
+      max-height: 140px; overflow-y: auto; white-space: pre-wrap; word-break: break-word;
     }
+
+    #soldier-model-pick {
+      display: flex; gap: 4px; margin-bottom: 7px;
+    }
+    .smp-btn {
+      flex: 1; padding: 3px 0; font-size: 9px; font-family: 'DM Mono', monospace;
+      text-transform: uppercase; letter-spacing: .05em; cursor: pointer;
+      border: 1px solid #CBD0DC; border-radius: 4px;
+      background: transparent; color: #7A8FA8;
+      transition: background .15s, color .15s, border-color .15s;
+    }
+    .smp-btn:hover { background: #F0F4FF; color: #1E3A5F; }
+    .smp-btn.active { background: #1E3A5F; color: #fff; border-color: #1E3A5F; }
+
+    #soldier-input {
+      display: none; margin-top: 8px; width: 100%; box-sizing: border-box;
+      border: none; border-top: 1px solid #E5E7EB;
+      padding: 6px 0 2px; font-size: 11px; font-family: 'DM Sans', sans-serif;
+      color: #0D1117; background: transparent; outline: none;
+    }
+    #soldier-input::placeholder { color: #9CA3AF; }
 
     /* Scrollbar */
     ::-webkit-scrollbar { width: 4px; }
@@ -738,8 +759,13 @@
 <div id="soldier-wrap">
   <div id="soldier-widget">
     <div id="soldier-bubble">
+      <div id="soldier-model-pick">
+        <button class="smp-btn active" data-key="lfm2nk"  data-hub="signal38/lfm2-nk-risk">NK Risk</button>
+        <button class="smp-btn"        data-key="lfm2mini" data-hub="onnx-community/LFM2-350M-ONNX">LFM2 Mini</button>
+      </div>
       <div id="soldier-status">on patrol</div>
       <div id="soldier-resp"></div>
+      <input id="soldier-input" type="text" placeholder="ask a question · ↵ to send" autocomplete="off" />
     </div>
     <svg id="soldier-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 56 80" width="56" height="80">
       <g id="sl-body">
@@ -1027,22 +1053,143 @@ function resetLimbs() {
   body.removeAttribute('transform');
 }
 
+// ── Model config ──────────────────────────────────────────────────────────
+const TUNNEL = 'https://tunnel-registry.jonasneves.workers.dev';
+const MODEL_DEFS = {
+  'lfm2nk':  { label: 'NK Risk',    hub: 'signal38/lfm2-nk-risk'        },
+  'lfm2mini': { label: 'LFM2 Mini', hub: 'onnx-community/LFM2-350M-ONNX' },
+};
+let selectedKey = 'lfm2nk';
+const pipeCache = {};   // key → loaded pipe
+const inputEl   = document.getElementById('soldier-input');
+
+document.querySelectorAll('.smp-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    if (inferState === 'generating') return;
+    document.querySelectorAll('.smp-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    selectedKey = btn.dataset.key;
+    respEl.textContent   = '';
+    statusEl.textContent = MODEL_DEFS[selectedKey].label + ' · standing by';
+  });
+});
+
 function activateSoldier(greeting) {
   patrolling = false;
   widget.style.transform = 'scaleX(1)';
   resetLimbs();
-  statusEl.textContent = 'standing by';
   respEl.textContent   = greeting ?? GREETINGS[Math.floor(Math.random() * GREETINGS.length)];
+  statusEl.textContent = MODEL_DEFS[selectedKey].label + ' · standing by';
   bubble.style.display = 'block';
+  inputEl.style.display = 'block';
+  setTimeout(() => inputEl.focus(), 50);
 }
 
 function dismissSoldier() {
   bubble.style.display = 'none';
+  inputEl.style.display = 'none';
   patrolling = true;
 }
 
 widget.addEventListener('mouseenter', () => activateSoldier());
-widget.addEventListener('mouseleave', dismissSoldier);
+widget.addEventListener('mouseleave', () => {
+  if (inferState === 'generating') return;
+  dismissSoldier();
+});
+
+// ── Tunnel streaming ───────────────────────────────────────────────────────
+async function* streamTunnel(messages, modelKey) {
+  const resp = await fetch(`${TUNNEL}/v1/chat/completions`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ model: modelKey, messages, stream: true, max_tokens: 450 }),
+  });
+  if (!resp.ok) throw new Error(`tunnel ${resp.status}`);
+  const reader = resp.body.getReader();
+  const dec = new TextDecoder();
+  let buf = '';
+  while (true) {
+    const { done, value } = await reader.read();
+    if (done) break;
+    buf += dec.decode(value, { stream: true });
+    const lines = buf.split('\n');
+    buf = lines.pop() ?? '';
+    for (const line of lines) {
+      if (!line.startsWith('data: ')) continue;
+      const data = line.slice(6).trim();
+      if (data === '[DONE]') return;
+      try { const d = JSON.parse(data).choices?.[0]?.delta?.content; if (d) yield d; } catch {}
+    }
+  }
+}
+
+// ── In-browser fallback ────────────────────────────────────────────────────
+async function loadBrowserPipe(key) {
+  if (pipeCache[key]) return pipeCache[key];
+  statusEl.textContent = `loading ${MODEL_DEFS[key].label}…`;
+  const { LFM2ForCausalLM, initRuntime } = await import('/lfm2.min.js');
+  const { device } = await initRuntime('webgpu');
+  statusEl.textContent = `loading · ${device}…`;
+  const pipe = await LFM2ForCausalLM.fromHub(MODEL_DEFS[key].hub, { device, precision: 'q8' });
+  pipeCache[key] = pipe;
+  return pipe;
+}
+
+// ── Inference ─────────────────────────────────────────────────────────────
+const SYSTEM = 'You are a geopolitical risk analyst specializing in North Korean military activity. Analyze GDELT event data and produce structured risk assessments in JSON format.';
+let inferState = 'idle'; // idle | generating
+
+inputEl.addEventListener('keydown', async (e) => {
+  if (e.key !== 'Enter' || inferState === 'generating') return;
+  const question = inputEl.value.trim();
+  if (!question) return;
+
+  const w = window.weekList?.[window.activeIdx];
+  const clusterText = w ? window.clustersByWeek?.[w.week] : null;
+  const userMsg = clusterText
+    ? `${clusterText}\n\nQuestion: ${question}`
+    : question;
+
+  inputEl.value    = '';
+  inputEl.disabled = true;
+  inferState       = 'generating';
+  respEl.textContent = '';
+
+  const messages = [
+    { role: 'system', content: SYSTEM },
+    { role: 'user',   content: userMsg },
+  ];
+
+  let usedTunnel = false;
+  try {
+    statusEl.textContent = MODEL_DEFS[selectedKey].label + ' · tunnel…';
+    for await (const chunk of streamTunnel(messages, selectedKey)) {
+      respEl.textContent += chunk;
+      respEl.scrollTop = respEl.scrollHeight;
+    }
+    usedTunnel = true;
+  } catch (_) {
+    // Tunnel offline or error — fall back to in-browser
+    respEl.textContent = '';
+    try {
+      statusEl.textContent = MODEL_DEFS[selectedKey].label + ' · browser…';
+      const pipe = await loadBrowserPipe(selectedKey);
+      await pipe.chat(messages, {
+        maxNewTokens: 450,
+        onChunk: (text) => { respEl.textContent += text; respEl.scrollTop = respEl.scrollHeight; },
+      });
+    } catch (err) {
+      respEl.textContent = 'Error: ' + (err.message ?? 'check console');
+      console.error(err);
+    }
+  }
+
+  statusEl.textContent = MODEL_DEFS[selectedKey].label + (usedTunnel ? ' · server' : ' · browser') + ' · done';
+  inferState       = 'idle';
+  inputEl.disabled = false;
+  inputEl.focus();
+  patrolling = false;
+});
 
 // ── Voice commands ──────────────────────────────────────────────────────────
 const micBtn = document.getElementById('mic-btn');
