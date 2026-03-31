@@ -1227,13 +1227,15 @@ const DISMISS_WORDS = ['stand down', 'at ease', 'dismissed', 'stop soldier', 'ha
 
 // listenMode: 'wake' → watching for wake/dismiss words
 //             'capture' → capturing the user's question, auto-submits on final result
-let listenMode = 'wake';
-let recognition = null;
-let wakeActive  = false;
+let listenMode    = 'wake';
+let captureReady  = false; // true only after the new capture session's onstart fires
+let recognition   = null;
+let wakeActive    = false;
 
 function resumeCapture() {
   if (!wakeActive) return;
-  listenMode = 'capture';
+  listenMode   = 'capture';
+  captureReady = false;
   statusEl.textContent = MODEL_DEFS[selectedKey].label + ' · listening…';
   inputEl.value = '';
   recognition?.stop(); // onend restarts in capture mode after 800ms pause
@@ -1245,6 +1247,11 @@ if (SR) {
     recognition.continuous     = listenMode === 'wake';
     recognition.interimResults = true;
     recognition.lang           = 'en-US';
+
+    recognition.onstart = () => {
+      // Only mark capture as ready when the fresh session actually begins
+      if (listenMode === 'capture') captureReady = true;
+    };
 
     recognition.onresult = (ev) => {
       for (let i = ev.resultIndex; i < ev.results.length; i++) {
@@ -1264,12 +1271,13 @@ if (SR) {
             micBtn.classList.add('heard');
             setTimeout(() => micBtn.classList.remove('heard'), 600);
             activateSoldier();
-            // Stop current recognition — onend will restart in capture mode after a pause
-            listenMode = 'capture';
+            listenMode   = 'capture';
+            captureReady = false; // not ready until new session starts
             recognition.stop();
           }
         } else {
-          // capture mode — show live transcript, submit on final
+          // capture mode — only process results from the fresh session
+          if (!captureReady) return;
           if (DISMISS_WORDS.some(w => tLower.includes(w))) {
             speechSynthesis.cancel();
             dismissSoldier();
