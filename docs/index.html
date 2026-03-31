@@ -548,7 +548,6 @@
           <thead>
             <tr>
               <th>Week</th>
-              <th>Goldstein</th>
               <th>Level</th>
             </tr>
           </thead>
@@ -624,7 +623,7 @@
                 <span class="esc-chip" style="background:#FEF3C7;color:#92400E;">2</span>
                 <span class="badge badge-correct">correct</span>
               </div>
-              <p class="card-summary">High volume of coercive events (572 total) — 325 Coerce alongside 124 Fight. Goldstein −6.4 signals tension without overt military action.</p>
+              <p class="card-summary">High volume of coercive events (572 total) — 325 Coerce alongside 124 Fight events. Strong diplomatic undertone despite elevated tension level.</p>
               <div class="pred-row">
                 <div class="pred-box right">
                   <div class="pred-label">Predicted</div>
@@ -696,7 +695,6 @@
           <div class="escalation-meta">
             <div class="meta-row"><span class="meta-key">Week</span><span class="meta-val" id="metaWeek">—</span></div>
             <div class="meta-row"><span class="meta-key">Events</span><span class="meta-val" id="metaEvents">—</span></div>
-            <div class="meta-row"><span class="meta-key">Goldstein avg</span><span class="meta-val" id="metaGoldstein">—</span></div>
             <div class="meta-row"><span class="meta-key">Dominant type</span><span class="meta-val" id="metaType">—</span></div>
             <div class="meta-row" style="margin-top:5px;">
               <span class="meta-key">Confidence</span>
@@ -816,9 +814,6 @@ function chipStyle(level) {
   return `background:${e.bg};color:${e.color};`;
 }
 
-function goldClass(g) {
-  return g >= -4 ? 'goldstein-mid' : 'goldstein-neg';
-}
 
 function renderTable() {
   document.getElementById('weekCount').textContent = weekList.length;
@@ -830,11 +825,9 @@ function renderTable() {
   const display = [...weekList].reverse();
   tbody.innerHTML = display.map((w, i) => {
     const origIdx = weekList.length - 1 - i;
-    const level   = w.lfm2_level ?? w.gold_level;
-    const g       = w.cluster_goldstein ?? 0;
+    const level = w.lfm2_level ?? w.gold_level;
     return `<tr data-idx="${origIdx}" onclick="selectWeek(${origIdx})">
       <td class="td-date">${w.week}</td>
-      <td class="td-goldstein ${goldClass(g)}">${g.toFixed(1)}</td>
       <td><span class="escalation-chip" style="${chipStyle(level)}">${level}</span></td>
     </tr>`;
   }).join('');
@@ -942,7 +935,6 @@ async function selectWeek(idx) {
 
   document.getElementById('metaWeek').textContent      = w.week;
   document.getElementById('metaEvents').textContent    = w.cluster_events != null ? w.cluster_events.toLocaleString() + ' events' : '—';
-  document.getElementById('metaGoldstein').textContent = w.cluster_goldstein != null ? w.cluster_goldstein.toFixed(1) : '—';
   document.getElementById('metaType').textContent      = w.cluster_dominant ?? '—';
 
   setEscalation(level);
