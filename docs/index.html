@@ -170,6 +170,35 @@
       50% { opacity: 0.35; }
     }
 
+    /* ── Mic button ── */
+    #mic-btn {
+      display: flex; align-items: center; justify-content: center;
+      width: 32px; height: 32px;
+      border: 1px solid rgba(255,255,255,0.12);
+      border-radius: 6px;
+      background: rgba(255,255,255,0.05);
+      cursor: pointer;
+      transition: background 0.2s, border-color 0.2s;
+      flex-shrink: 0;
+    }
+    #mic-btn:hover { background: rgba(255,255,255,0.10); }
+    #mic-btn svg { display: block; }
+    #mic-btn.active {
+      background: rgba(34,197,94,0.15);
+      border-color: rgba(34,197,94,0.4);
+      animation: mic-pulse 1.8s ease-in-out infinite;
+    }
+    #mic-btn.active .mic-icon { fill: #4ADE80; stroke: #4ADE80; }
+    #mic-btn.heard {
+      background: rgba(99,179,237,0.25);
+      border-color: rgba(99,179,237,0.6);
+      animation: none;
+    }
+    @keyframes mic-pulse {
+      0%, 100% { box-shadow: 0 0 0 0 rgba(34,197,94,0); }
+      50% { box-shadow: 0 0 0 4px rgba(34,197,94,0.18); }
+    }
+
     /* ── Main content ── */
     main {
       flex: 1;
@@ -727,9 +756,19 @@
       <span class="wordmark-sub">/ NK Risk Analyst</span>
     </a>
 
-    <div class="status-pill" id="statusPill">
-      <div class="status-dot loading" id="statusDot"></div>
-      <span id="statusText">Loading model…</span>
+    <div style="display:flex;align-items:center;gap:10px;">
+      <button id="mic-btn" title="Say &quot;Hey Soldier&quot; to activate">
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+          <rect class="mic-icon" x="5" y="1" width="4" height="7" rx="2" fill="rgba(255,255,255,0.5)"/>
+          <path class="mic-icon" d="M2.5 7a4.5 4.5 0 009 0" stroke="rgba(255,255,255,0.5)" stroke-width="1.2" stroke-linecap="round" fill="none"/>
+          <line x1="7" y1="11.5" x2="7" y2="13" stroke="rgba(255,255,255,0.5)" stroke-width="1.2" stroke-linecap="round"/>
+          <line x1="5" y1="13" x2="9" y2="13" stroke="rgba(255,255,255,0.5)" stroke-width="1.2" stroke-linecap="round"/>
+        </svg>
+      </button>
+      <div class="status-pill" id="statusPill">
+        <div class="status-dot loading" id="statusDot"></div>
+        <span id="statusText">Loading model…</span>
+      </div>
     </div>
   </header>
 
@@ -1394,7 +1433,81 @@ widget.addEventListener('mouseleave', () => {
   bubble.style.display = 'none';
 });
 
-// ── Inference ─────────────────────────────────────────────────────────────
+// ── Wake word ─────────────────────────────────────────────────────────────
+const micBtn = document.getElementById('mic-btn');
+const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+
+function activateSoldier(prefill = '') {
+  patrolling = false;
+  widget.style.transform = 'scaleX(1)';
+  legL.removeAttribute('transform'); legR.removeAttribute('transform');
+  armL.removeAttribute('transform'); flag.removeAttribute('transform');
+  body.removeAttribute('transform');
+
+  bubble.style.display = 'block';
+  inputEl.style.display = 'block';
+  if (prefill) inputEl.value = prefill;
+
+  if (state === 'idle') {
+    respEl.textContent = greet();
+    loadModel();
+  } else if (state === 'ready') {
+    if (!respEl.textContent) respEl.textContent = greet();
+    setIdleStatus();
+  }
+  if (state === 'ready') setTimeout(() => inputEl.focus(), 50);
+}
+
+if (SR) {
+  let recognition = null;
+  let wakeActive = false;
+
+  function startWakeWord() {
+    recognition = new SR();
+    recognition.continuous = true;
+    recognition.interimResults = true;
+    recognition.lang = 'en-US';
+
+    recognition.onresult = (ev) => {
+      for (let i = ev.resultIndex; i < ev.results.length; i++) {
+        const t = ev.results[i][0].transcript.toLowerCase();
+        if (t.includes('hey soldier')) {
+          const after = t.replace(/.*hey soldier[,.]?\s*/i, '').trim();
+          micBtn.classList.add('heard');
+          setTimeout(() => micBtn.classList.remove('heard'), 800);
+          activateSoldier(after);
+        }
+      }
+    };
+
+    recognition.onend = () => { if (wakeActive) recognition.start(); };
+    recognition.onerror = (ev) => {
+      if (ev.error === 'not-allowed') {
+        wakeActive = false;
+        micBtn.classList.remove('active');
+      }
+    };
+
+    recognition.start();
+  }
+
+  micBtn.addEventListener('click', () => {
+    if (!wakeActive) {
+      wakeActive = true;
+      micBtn.classList.add('active');
+      startWakeWord();
+    } else {
+      wakeActive = false;
+      micBtn.classList.remove('active');
+      recognition?.stop();
+    }
+  });
+} else {
+  micBtn.title = 'Speech recognition not supported in this browser';
+  micBtn.style.opacity = '0.35';
+  micBtn.style.cursor = 'not-allowed';
+}
+
 inputEl.addEventListener('keydown', async (e) => {
   if (e.key !== 'Enter' || state !== 'ready') return;
 
