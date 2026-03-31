@@ -496,18 +496,22 @@
       max-height: 140px; overflow-y: auto; white-space: pre-wrap; word-break: break-word;
     }
 
-    #soldier-model-pick {
-      display: flex; gap: 4px; margin-bottom: 7px;
+    #model-pick {
+      display: flex; gap: 2px;
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.12);
+      border-radius: 6px; padding: 2px;
     }
     .smp-btn {
-      flex: 1; padding: 3px 0; font-size: 9px; font-family: 'DM Mono', monospace;
+      padding: 3px 10px; font-size: 10px; font-family: 'DM Mono', monospace;
       text-transform: uppercase; letter-spacing: .05em; cursor: pointer;
-      border: 1px solid #CBD0DC; border-radius: 4px;
-      background: transparent; color: #7A8FA8;
-      transition: background .15s, color .15s, border-color .15s;
+      border: none; border-radius: 4px;
+      background: transparent; color: rgba(255,255,255,0.45);
+      transition: background .15s, color .15s;
+      white-space: nowrap;
     }
-    .smp-btn:hover { background: #F0F4FF; color: #1E3A5F; }
-    .smp-btn.active { background: #1E3A5F; color: #fff; border-color: #1E3A5F; }
+    .smp-btn:hover { color: rgba(255,255,255,0.8); }
+    .smp-btn.active { background: rgba(255,255,255,0.12); color: #fff; }
 
     #soldier-input {
       display: none; margin-top: 8px; width: 100%; box-sizing: border-box;
@@ -547,6 +551,10 @@
       <a class="btn" href="https://colab.research.google.com/github/signal38/signal38.github.io/blob/main/notebooks/02_dataset_prep.ipynb" target="_blank" rel="noopener">02</a>
       <a class="btn" href="https://colab.research.google.com/github/signal38/signal38.github.io/blob/main/notebooks/03_finetune.ipynb" target="_blank" rel="noopener">03</a>
       <a class="btn" href="https://colab.research.google.com/github/signal38/signal38.github.io/blob/main/notebooks/04_export_onnx.ipynb" target="_blank" rel="noopener">04</a>
+      <div id="model-pick">
+        <button class="smp-btn" data-key="lfm2nk">NK Risk</button>
+        <button class="smp-btn" data-key="lfm2mini">LFM2 Mini</button>
+      </div>
       <button id="mic-btn" title="Say 'hey soldier' to activate · 'stand down' to stop">
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
           <path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"/>
@@ -759,10 +767,6 @@
 <div id="soldier-wrap">
   <div id="soldier-widget">
     <div id="soldier-bubble">
-      <div id="soldier-model-pick">
-        <button class="smp-btn active" data-key="lfm2nk"  data-hub="signal38/lfm2-nk-risk">NK Risk</button>
-        <button class="smp-btn"        data-key="lfm2mini" data-hub="onnx-community/LFM2-350M-ONNX">LFM2 Mini</button>
-      </div>
       <div id="soldier-status">on patrol</div>
       <div id="soldier-resp"></div>
       <input id="soldier-input" type="text" placeholder="ask a question · ↵ to send" autocomplete="off" />
@@ -1059,18 +1063,25 @@ const MODEL_DEFS = {
   'lfm2nk':  { label: 'NK Risk',    hub: 'signal38/lfm2-nk-risk'        },
   'lfm2mini': { label: 'LFM2 Mini', hub: 'onnx-community/LFM2-350M-ONNX' },
 };
-let selectedKey = 'lfm2nk';
+let selectedKey = localStorage.getItem('soldier_model') ?? 'lfm2nk';
 const pipeCache = {};   // key → loaded pipe
 const inputEl   = document.getElementById('soldier-input');
+
+function applyModelPick(key) {
+  selectedKey = key;
+  localStorage.setItem('soldier_model', key);
+  document.querySelectorAll('.smp-btn').forEach(b => b.classList.toggle('active', b.dataset.key === key));
+  if (statusEl) statusEl.textContent = MODEL_DEFS[key].label + ' · standing by';
+}
+
+// Init from stored preference
+applyModelPick(selectedKey);
 
 document.querySelectorAll('.smp-btn').forEach(btn => {
   btn.addEventListener('click', () => {
     if (inferState === 'generating') return;
-    document.querySelectorAll('.smp-btn').forEach(b => b.classList.remove('active'));
-    btn.classList.add('active');
-    selectedKey = btn.dataset.key;
-    respEl.textContent   = '';
-    statusEl.textContent = MODEL_DEFS[selectedKey].label + ' · standing by';
+    applyModelPick(btn.dataset.key);
+    respEl.textContent = '';
   });
 });
 
