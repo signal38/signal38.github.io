@@ -1052,8 +1052,8 @@ let phase      = 0;
     flag.setAttribute('transform', `rotate(${arm},  35, 26)`);
     body.setAttribute('transform', `translate(0, ${bob})`);
     // Arm swinging forward is in front (full opacity); swinging back dims slightly
-    armL.style.opacity = 0.6 + 0.4 * Math.max(0,  s);
-    armR.style.opacity = 0.6 + 0.4 * Math.max(0, -s);
+    armL.style.opacity = 0.6 + 0.4 * Math.max(0, -s);
+    armR.style.opacity = 0.6 + 0.4 * Math.max(0,  s);
   }
   requestAnimationFrame(tick);
 })();
