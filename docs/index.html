@@ -1354,21 +1354,24 @@ const MALE_VOICE_NAMES = [
   'Google US English',
 ];
 
-function pickMaleVoice() {
+let cachedVoice = null;
+function initVoice() {
   const voices = speechSynthesis.getVoices();
+  if (!voices.length) return;
   for (const name of MALE_VOICE_NAMES) {
     const v = voices.find(v => v.name.includes(name));
-    if (v) return v;
+    if (v) { cachedVoice = v; return; }
   }
-  return voices.find(v => v.lang.startsWith('en')) ?? null;
+  cachedVoice = voices.find(v => v.lang.startsWith('en')) ?? null;
 }
+speechSynthesis.addEventListener('voiceschanged', initVoice);
+initVoice();
 
 function speakText(text) {
   return new Promise(resolve => {
     speechSynthesis.cancel();
-    const utt   = new SpeechSynthesisUtterance(text);
-    const voice = pickMaleVoice();
-    if (voice) utt.voice = voice;
+    const utt = new SpeechSynthesisUtterance(text);
+    if (cachedVoice) utt.voice = cachedVoice;
     utt.rate  = 1.0;
     utt.pitch = 0.85;
     utt.onend = utt.onerror = resolve;
