@@ -3,6 +3,7 @@
 > **The 38th parallel.** North Korean military activity risk analysis — fine-tuned LFM2-350M evaluated against naive and classical ML baselines on 11 years of GDELT data.
 
 [![GitHub Pages](https://img.shields.io/badge/demo-live-brightgreen?logo=github)](https://signal38.github.io)
+[![Duke AIPI 540.01](https://img.shields.io/badge/Duke-AIPI%20540.01-012169)](https://masters.pratt.duke.edu/)
 [![Python 3.11+](https://img.shields.io/badge/python-3.11+-blue?logo=python)](https://www.python.org)
 [![Model: LFM2-350M](https://img.shields.io/badge/model-LFM2--350M-purple)](https://huggingface.co/LiquidAI/LFM2-350M)
 [![HuggingFace](https://img.shields.io/badge/🤗-signal38-yellow)](https://huggingface.co/signal38)
